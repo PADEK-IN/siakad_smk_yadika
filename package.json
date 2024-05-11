@@ -1,0 +1,34 @@
+{
+  "name": "siakad_smk_yadika",
+  "version": "1.0.0",
+  "description": "Siakad SMK Yadika Kota Jambi",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon main.js",
+    "start": "node main.js"
+  },
+  "keywords": [
+    "siakad",
+    "nodesjs",
+    "expressjs",
+    "ejs"
+  ],
+  "author": "ranting-id",
+  "license": "MIT",
+  "dependencies": {
+    "argon2": "^0.40.1",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.18.3",
+    "express-rate-limit": "^7.2.0",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.9.7",
+    "sequelize": "^6.37.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0",
+    "sequelize-cli": "^6.6.2",
+    "tailwindcss": "^3.4.1"
+  }
+}
