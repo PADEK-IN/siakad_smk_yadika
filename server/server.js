@@ -3,11 +3,16 @@ import { fileURLToPath } from 'url';
 import express from "express";
 import morgan from "morgan";
 
+// Import middleware
+import {notFoundHandler} from "./middlewares/errors.js";
+
+// Import WEB Pages Router
 import schaduleRouter from "./routes/web/schadule/schadule.router.js";
 import paymentRouter from "./routes/web/payment/payment.router.js";
-
 import indexRouter from "./routes/web/index/index.router.js";
-import {notFoundHandler} from "./middlewares/errors.js";
+
+// Import API Router
+import authRouter from "./routes/api/auth/auth.router.js";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -22,12 +27,17 @@ app.use(express.static(staticFolder));
 app.set('view engine', 'ejs');
 app.set('views', viewsFolder);
 
-// Routes Admin
+// Routes WEB Pages
+// Admin
 app.use("/schadule", schaduleRouter);
 app.use("/payment", paymentRouter);
 
-// Routes
+// Index
 app.use("/", indexRouter);
+
+// ROUTES API
+// Auth
+app.use("/api/auth", authRouter);
 
 // Routes Not Found
 app.use(notFoundHandler);
