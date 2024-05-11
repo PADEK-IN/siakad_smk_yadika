@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url';
 import express from "express";
 import morgan from "morgan";
 
+import userRouter from "./routes/web/user/user.router.js";
 import schaduleRouter from "./routes/web/schadule/schadule.router.js";
 import paymentRouter from "./routes/web/payment/payment.router.js";
 
@@ -23,6 +24,7 @@ app.set('view engine', 'ejs');
 app.set('views', viewsFolder);
 
 // Routes Admin
+app.use("/user", userRouter);
 app.use("/schadule", schaduleRouter);
 app.use("/payment", paymentRouter);
 
