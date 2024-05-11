@@ -5,7 +5,7 @@ export const hash = (pw) => {
   return argon.hash(pw);
 };
 
-export const compare = (pw, currentPw) => {
-  return argon.verify(pw, currentPw);
+export const compare = (hashedPw, pw) => {
+  return argon.verify(hashedPw, pw);
 };
 
