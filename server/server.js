@@ -25,6 +25,19 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(staticFolder));
+app.use(
+    session({
+        // store: new firestoreStore({
+        //     database: db
+        // }),
+        secret: process.env.SESSION_KEY,
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+            maxAge: 600000 * 24 //set to 24 hours
+        }
+    })
+);
 app.set('view engine', 'ejs');
 app.set('views', viewsFolder);
 
