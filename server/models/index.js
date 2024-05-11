@@ -1,11 +1,11 @@
 import sequelize from "../configs/database.js";
-
+import Users from "./users.model.js";
 
 const db = {};
 db.sequelize = sequelize;
 
 // Load Model
-
+db.users = Users;
 
 // Relation
 
