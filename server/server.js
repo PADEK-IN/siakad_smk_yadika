@@ -2,6 +2,10 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import express from "express";
 import morgan from "morgan";
+
+import schaduleRouter from "./routes/web/schadule/schadule.router.js";
+import paymentRouter from "./routes/web/payment/payment.router.js";
+
 import indexRouter from "./routes/web/index/index.router.js";
 import {notFoundHandler} from "./middlewares/errors.js";
 
@@ -17,6 +21,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(staticFolder));
 app.set('view engine', 'ejs');
 app.set('views', viewsFolder);
+
+// Routes Admin
+app.use("/schadule", schaduleRouter);
+app.use("/payment", paymentRouter);
 
 // Routes
 app.use("/", indexRouter);

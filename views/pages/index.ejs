@@ -1,0 +1,47 @@
+<%- include ('./../components/head.ejs')%>
+<body>
+    <div class="container-xxl position-relative bg-primary-subtle">
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+        <section id="hero" class="hero d-flex align-items-center justify-content-center vh-100">
+
+            <div class="container">
+            <div class="row">
+                <div class="col-lg-6 d-flex flex-column justify-content-center">
+                <h1 data-aos="fade-up">We offer modern solutions for growing your business</h1>
+                <h2 data-aos="fade-up" data-aos-delay="400">We are team of talented designers making websites with Bootstrap</h2>
+                <div data-aos="fade-up" data-aos-delay="600">
+                    <div class="text-center text-lg-start">
+                        <a href="/login" class="btn btn-outline-primary scrollto d-inline-flex align-items-center justify-content-center align-self-center">
+                            <span>Login</span>
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+
+                        <a href="/register" class="btn btn-outline-primary scrollto d-inline-flex align-items-center justify-content-center align-self-center">
+                            <span>Register</span>
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                        
+                        <a href="/dashboard" class="btn btn-outline-primary scrollto d-inline-flex align-items-center justify-content-center align-self-center">
+                            <span>Dashboard</span>
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                </div>
+                <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
+                <img src="images/hero-img.png" class="img-fluid" alt="">
+                </div>
+            </div>
+            </div>
+        
+        </section>
+        </div>
+      <%- include ('./../components/script.ejs')%>
+</body>
+</html>
