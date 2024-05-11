@@ -25,19 +25,17 @@ const Users = sequelize.define(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      set(value) {
-        this.setDataValue("password", hash(value));
-      },
     },
     role: {
       type: DataTypes.ENUM(["admin", "teacher", "student"]),
-      allowNull: false
+      allowNull: false,
+      defaultValue: "student"
     },
     status: {
-        type: DataTypes.ENUM(["valid","invalid"]),
-        allowNull: false,
-        defaultValue: "invalid"
-    }
+      type: DataTypes.ENUM(["valid", "invalid"]),
+      allowNull: false,
+      defaultValue: "invalid"
+    },
   },
 );
 
