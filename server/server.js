@@ -2,6 +2,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import express from "express";
 import morgan from "morgan";
+import session from 'express-session';
 
 // Import middleware
 import {notFoundHandler} from "./middlewares/errors.js";
