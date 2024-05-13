@@ -34,6 +34,9 @@ export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
+        if(!email) return responses.res400("Maaf, email belum diisi");
+        if(!password) return responses.res400("Maaf, password belum diisi");
+
         let user = await users.findOne({where: {email}});
 
         if(!user) return responses.res400("Maaf, email belum terdaftar", res);
@@ -43,13 +46,11 @@ export const login = async (req, res) => {
 
         if(!correctPassword) return responses.res400("Maaf, password anda salah", res);
 
-        const dataSession = {
+        req.session.user = {
            id: user.id,
            email: user.email,
            role: user.role
-        }
-
-        req.session.user = dataSession;
+        };
 
         responses.res200("Berhasil login", null, res);
     } catch (error) {
