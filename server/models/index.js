@@ -1,4 +1,5 @@
 import sequelize from "../configs/database.js";
+import Murid from "./murid.model.js";
 import Users from "./users.model.js";
 
 const db = {};
@@ -6,6 +7,7 @@ db.sequelize = sequelize;
 
 // Load Model
 db.users = Users;
+db.users = Murid;
 
 // Relation
 
