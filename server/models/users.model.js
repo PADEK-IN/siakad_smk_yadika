@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../configs/database.js";
-import { hash } from "../helpers/hashing.js";
 
 const Users = sequelize.define(
   "Users",
