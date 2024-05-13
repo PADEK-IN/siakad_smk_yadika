@@ -1,4 +1,5 @@
 import sequelize from "../configs/database.js";
+import Guru from "./guru.model.js";
 import Murid from "./murid.model.js";
 import Users from "./users.model.js";
 
@@ -8,6 +9,7 @@ db.sequelize = sequelize;
 // Load Model
 db.users = Users;
 db.users = Murid;
+db.users = Guru;
 
 // Relation
 
