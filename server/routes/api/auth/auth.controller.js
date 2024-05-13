@@ -15,7 +15,7 @@ export const register = async (req, res) => {
         let checkEmail = await users.findOne({where: {email}});
 
         if (checkEmail) {
-            throw new Error("Email sudah terdaftar");
+            return responses.res400("Email sudah terdaftar", res);
         }
 
         const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
