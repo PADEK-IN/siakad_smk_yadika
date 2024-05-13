@@ -9,14 +9,11 @@ export const register = async (req, res) => {
 
         if(!email) return responses.res400("Harap mengisi email", res);
         if(!password) return responses.res400("Harap mengisi password", res);
-
         if(password != confirmPassword) return responses.res400("Confirm password tidak sama", res);
 
         let checkEmail = await users.findOne({where: {email}});
 
-        if (checkEmail) {
-            return responses.res400("Email sudah terdaftar", res);
-        }
+        if (checkEmail) return responses.res400("Email sudah terdaftar", res);
 
         const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
         if (!passwordRegex.test(password)) {
