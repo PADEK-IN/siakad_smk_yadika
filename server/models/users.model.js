@@ -31,7 +31,7 @@ const Users = sequelize.define(
       allowNull: false,
       defaultValue: "student"
     },
-    status: {
+    isValid: {
       type: DataTypes.ENUM(["valid", "invalid"]),
       allowNull: false,
       defaultValue: "invalid"
