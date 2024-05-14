@@ -1,5 +1,7 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../configs/database.js";
+import { sequelize } from "../configs/database.js";
+import Murid from "./murid.model.js";
+import Guru from "./guru.model.js";
 
 const Kelas = sequelize.define(
   "Kelas",
@@ -29,12 +31,23 @@ const Kelas = sequelize.define(
       type: DataTypes.INTEGER(4),
       allowNull: false,
     },
+    id_wali_kelas: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: Guru,
+        key: "id"
+      }
+    },
     isActive: {
-      type: DataTypes.TINYINT,
+      type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: 1,
     },
   },
 );
+
+Guru.hasMany(Kelas, {foreignKey: "id_wali_kelas"});
+Kelas.belongsTo(Guru, {foreignKey: "id_wali_kelas"});
 
 export default Kelas;

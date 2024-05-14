@@ -1,5 +1,7 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../configs/database.js";
+import { sequelize } from "../configs/database.js";
+import Mata_Pelajaran from "./mata_pelajaran.model.js";
+import Users from "./users.model.js";
 
 const Guru = sequelize.define(
   "Guru",
@@ -12,6 +14,15 @@ const Guru = sequelize.define(
     },
     nip: {
       type: DataTypes.STRING(20),
+      allowNull: false,
+      unique: true,
+    },
+    email: {
+      type: DataTypes.STRING(70),
+      references: {
+        model: Users,
+        key: "email",
+      },
       allowNull: false,
       unique: true,
     },
@@ -47,6 +58,14 @@ const Guru = sequelize.define(
       type: DataTypes.STRING(70),
       allowNull: true,
     },
+    id_mata_pelajaran: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: Mata_Pelajaran,
+        key: "id"
+      }
+    },
     foto: {
       type: DataTypes.STRING(255),
       allowNull: false,
@@ -58,5 +77,10 @@ const Guru = sequelize.define(
     },
   },
 );
+
+Users.hasOne(Guru, {foreignKey: "email"});
+Guru.belongsTo(Users, {foreignKey: "email"});
+Mata_Pelajaran.hasOne(Guru, {foreignKey: "id_mata_pelajaran"});
+Guru.belongsTo(Mata_Pelajaran, {foreignKey: "id_mata_pelajaran"})
 
 export default Guru;

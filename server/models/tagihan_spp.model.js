@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../configs/database.js";
+import { sequelize } from "../configs/database.js";
+import Murid from "./murid.model.js";
 
 const Tagihan_Spp = sequelize.define(
   "Tagihan_Spp",
@@ -9,6 +10,14 @@ const Tagihan_Spp = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
       allowNull: false,
+    },
+    id_murid: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: Murid,
+        key: "id"
+      }
     },
     bayar: {
       type: DataTypes.DECIMAL(11, 2),
@@ -37,11 +46,14 @@ const Tagihan_Spp = sequelize.define(
       allowNull: false,
     },
     isPaid: {
-      type: DataTypes.TINYINT,
+      type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: 0,
     },
   },
 );
+
+Murid.hasMany(Tagihan_Spp, {foreignKey: "id_murid"});
+Tagihan_Spp.belongsTo(Murid, {foreignKey: "id_murid"});
 
 export default Tagihan_Spp;

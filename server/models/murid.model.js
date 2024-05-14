@@ -1,5 +1,9 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../configs/database.js";
+import { sequelize } from "../configs/database.js";
+import Users from "./users.model.js";
+import Wali_Murid from "./wali_murid.model.js";
+import Jurusan from "./jurusan.model.js";
+import Kelas from "./kelas.model.js";
 
 const Murid = sequelize.define(
   "Murid",
@@ -12,6 +16,15 @@ const Murid = sequelize.define(
     },
     nis: {
       type: DataTypes.STRING(20),
+      allowNull: false,
+      unique: true,
+    },
+    email: {
+      type: DataTypes.STRING(70),
+      references: {
+        model: Users,
+        key: "email",
+      },
       allowNull: false,
       unique: true,
     },
@@ -59,6 +72,30 @@ const Murid = sequelize.define(
       type: DataTypes.INTEGER(4),
       allowNull: false,
     },
+    id_wali: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: Wali_Murid,
+        key: "id"
+      }
+    },
+    id_jurusan: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: Jurusan,
+        key: "id"
+      }
+    },
+    id_kelas: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: Kelas,
+        key: "id"
+      }
+    },
     foto: {
       type: DataTypes.STRING(255),
       allowNull: false,
@@ -68,7 +105,17 @@ const Murid = sequelize.define(
       allowNull: false,
       defaultValue: "aktif"
     },
-  },
+  }
 );
+
+// Relations
+Users.hasOne(Murid, {foreignKey: "email"});
+Murid.belongsTo(Users, {foreignKey: "email"});
+Wali_Murid.hasOne(Murid, {foreignKey: "id_wali"});
+Murid.belongsTo(Wali_Murid, {foreignKey: "id_wali"});
+Jurusan.hasMany(Murid, {foreignKey: "id_jurusan"});
+Murid.belongsTo(Jurusan, {foreignKey: "id_jurusan"});
+Kelas.hasMany(Murid, {foreignKey: "id_kelas"});
+Murid.belongsTo(Kelas, {foreignKey: "id_kelas"});
 
 export default Murid;

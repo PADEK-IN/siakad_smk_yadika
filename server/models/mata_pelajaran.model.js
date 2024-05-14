@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../configs/database.js";
+import { sequelize } from "../configs/database.js";
 
 const Mata_Pelajaran = sequelize.define(
   "Mata_Pelajaran",
@@ -19,7 +19,7 @@ const Mata_Pelajaran = sequelize.define(
       allowNull: false,
     },
     isUse: {
-      type: DataTypes.TINYINT,
+      type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: 1,
     },

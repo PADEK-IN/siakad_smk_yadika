@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 
-const sequelize = new Sequelize(
+export const sequelize = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
   process.env.DB_PW,
@@ -15,4 +15,17 @@ const sequelize = new Sequelize(
   }
 );
 
-export default sequelize;
+// Database Synchron
+export const initializeDatabase = async () => {
+  try {
+      await sequelize.authenticate();
+      console.log("Connection has been established successfully.");
+
+      await sequelize.sync({ force: true }); // Sync models with the database
+      //   await sequelize.sync({ force: true }); // Drop all table and create new
+      console.log("Database synchronized.");
+  } catch (error) {
+      console.error("Unable to connect to the database:", error.message);
+      throw error; // rethrow the error to be caught in server.js
+  }
+};

@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import http from 'http';
 import app from './server/server.js';
-import { initializeDatabase } from './server/models/index.js';
+import { initializeDatabase } from './server/configs/database.js';
 
 const PORT = process.env.PORT || 5000;
 const server = http.createServer(app);

@@ -1,7 +1,6 @@
 import * as responses from "../../../helpers/response.js";
-import { db } from "../../../models/index.js";
 import { compare, hash } from "../../../helpers/hashing.js";
-const { users } = db;
+import Users from "../../../models/users.model.js";
 
 export const register = async (req, res) => {
     try {
@@ -11,7 +10,7 @@ export const register = async (req, res) => {
         if(!password) return responses.res400("Harap mengisi password", res);
         if(password != confirmPassword) return responses.res400("Confirm password tidak sama", res);
 
-        let checkEmail = await users.findOne({where: {email}});
+        let checkEmail = await Users.findOne({where: {email}});
 
         if (checkEmail) return responses.res400("Email sudah terdaftar", res);
 
@@ -21,7 +20,7 @@ export const register = async (req, res) => {
         }
 
         const hashedPassword = await hash(password);
-        await users.create({email, password: hashedPassword});
+        await Users.create({email, password: hashedPassword});
 
         responses.res201("Berhasil mendaftar", null, res);
     } catch (error) {
@@ -37,7 +36,7 @@ export const login = async (req, res) => {
         if(!email) return responses.res400("Maaf, email belum diisi");
         if(!password) return responses.res400("Maaf, password belum diisi");
 
-        let user = await users.findOne({where: {email}});
+        let user = await Users.findOne({where: {email}});
 
         if(!user) return responses.res400("Maaf, email belum terdaftar", res);
         if(user.status == "invalid") return responses.res400("Maaf, email belum tervalidasi", res);
