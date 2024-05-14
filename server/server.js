@@ -10,6 +10,7 @@ import {notFoundHandler} from "./middlewares/errors.js";
 // Import WEB Pages Router
 import userRouter from "./routes/web/user/user.router.js";
 import schaduleRouter from "./routes/web/schadule/schadule.router.js";
+import classRouter from "./routes/web/class/class.router.js";
 import paymentRouter from "./routes/web/payment/payment.router.js";
 import indexRouter from "./routes/web/index/index.router.js";
 
@@ -46,6 +47,7 @@ app.set('views', viewsFolder);
 // Admin
 app.use("/user", userRouter);
 app.use("/schadule", schaduleRouter);
+app.use("/class", classRouter);
 app.use("/payment", paymentRouter);
 
 // Index
