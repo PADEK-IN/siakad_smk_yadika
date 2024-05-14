@@ -15,8 +15,11 @@ const Kelas = sequelize.define(
       allowNull: false,
     },
     kode: {
-      type: DataTypes.CHAR(1),
+      type: DataTypes.CHAR(5),
       allowNull: false,
+      set(value) {
+        this.setDataValue("kode", value.toUpperCase());
+      },
     },
     jumlah_murid: {
       type: DataTypes.INTEGER(2),
