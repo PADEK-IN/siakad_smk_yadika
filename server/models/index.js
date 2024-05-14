@@ -1,11 +1,33 @@
 import sequelize from "../configs/database.js";
+import Absen from "./absen.model.js";
+import Guru from "./guru.model.js";
+import Jadwal_Absen from "./jadwal_absen.model.js";
+import Jadwal_Pelajaran from "./jadwal_pelajaran.model.js";
+import Jurusan from "./jurusan.model.js";
+import Kelas from "./kelas.model.js";
+import Mata_Pelajaran from "./mata_pelajaran.model.js";
+import Murid from "./murid.model.js";
+import Penilaian from "./penilaian.model.js";
+import Tagihan_Spp from "./tagihan_spp.model.js";
 import Users from "./users.model.js";
+import Wali_Murid from "./wali_murid.model.js";
 
 const db = {};
 db.sequelize = sequelize;
 
 // Load Model
 db.users = Users;
+db.users = Murid;
+db.users = Guru;
+db.users = Wali_Murid;
+db.users = Jurusan;
+db.users = Kelas;
+db.users = Jadwal_Pelajaran;
+db.users = Mata_Pelajaran;
+db.users = Jadwal_Absen;
+db.users = Absen;
+db.users = Tagihan_Spp;
+db.users = Penilaian;
 
 // Relation
 

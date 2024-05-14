@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../configs/database.js";
-import { hash } from "../helpers/hashing.js";
 
 const Users = sequelize.define(
   "Users",
@@ -31,7 +30,7 @@ const Users = sequelize.define(
       allowNull: false,
       defaultValue: "student"
     },
-    status: {
+    isValid: {
       type: DataTypes.ENUM(["valid", "invalid"]),
       allowNull: false,
       defaultValue: "invalid"

@@ -9,14 +9,11 @@ export const register = async (req, res) => {
 
         if(!email) return responses.res400("Harap mengisi email", res);
         if(!password) return responses.res400("Harap mengisi password", res);
-
         if(password != confirmPassword) return responses.res400("Confirm password tidak sama", res);
 
         let checkEmail = await users.findOne({where: {email}});
 
-        if (checkEmail) {
-            throw new Error("Email sudah terdaftar");
-        }
+        if (checkEmail) return responses.res400("Email sudah terdaftar", res);
 
         const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
         if (!passwordRegex.test(password)) {
@@ -37,6 +34,9 @@ export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
+        if(!email) return responses.res400("Maaf, email belum diisi");
+        if(!password) return responses.res400("Maaf, password belum diisi");
+
         let user = await users.findOne({where: {email}});
 
         if(!user) return responses.res400("Maaf, email belum terdaftar", res);
@@ -46,13 +46,11 @@ export const login = async (req, res) => {
 
         if(!correctPassword) return responses.res400("Maaf, password anda salah", res);
 
-        const dataSession = {
+        req.session.user = {
            id: user.id,
            email: user.email,
            role: user.role
-        }
-
-        req.session.user = dataSession;
+        };
 
         responses.res200("Berhasil login", null, res);
     } catch (error) {
