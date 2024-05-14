@@ -10,13 +10,15 @@ const server = http.createServer(app);
 const start = async () => {
   try {
     await initializeDatabase();
-    console.log("=====================================================");
-    listEndpoints(app).forEach((route) => {
-      route.methods.forEach((method) => {
-        console.log(`[ROUTE] : ${method} ${route.path}`);
+    if(process.env.ENV == "dev"){
+      console.log("=====================================================");
+      listEndpoints(app).forEach((route) => {
+        route.methods.forEach((method) => {
+          console.log(`[ROUTE] : ${method} ${route.path}`);
+        });
       });
-    });
-    console.log("=====================================================");
+      console.log("=====================================================");
+    };
     server.listen(PORT, () => {
       console.log(`🚀 [SERVER] is running on port http://localhost:${PORT}`);
     });
