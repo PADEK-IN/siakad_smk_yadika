@@ -18,36 +18,62 @@
             <!-- navar end -->
 
             <div class="container-fluid pt-4 px-4 pb-5">
-                <div class="bg-light text-center rounded p-4">
-                    <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">All User</h6>
-                        <a href="">Show All</a>
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0">Payment List</h6>
+                    <div>
+                        <a class="btn btn-sm btn-primary" href="/payment/add">Create SPP</a>
                     </div>
+                </div>
+                <div class="bg-light text-center rounded p-4">
                     <div class="table-responsive">
-                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                    
+                        <table id="example" class="table table-striped" style="width:100%">
                             <thead>
-                                <tr class="text-dark">
-                                    <th scope="col">No</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Invoice</th>
-                                    <th scope="col">Customer</th>
-                                    <th scope="col">Amount</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Action</th>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Office</th>
+                                    <th>Age</th>
+                                    <th>Start date</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>1</td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                                    <td><a href="/payment/102">Cara Stevens</a></td>
+                                    <td>Sales Assistant</td>
+                                    <td>New York</td>
+                                    <td>46</td>
+                                    <td>2011-12-06</td>
+                                    <td><span class="btn btn-success rounded-pill m-2 ">Accepted</span></td>
                                 </tr>
-
+                                <tr>
+                                    <td><a href="/payment/102">Cara Stevens</a></td>
+                                    <td>Sales Assistant</td>
+                                    <td>New York</td>
+                                    <td>46</td>
+                                    <td>2011-12-06</td>
+                                    <td><span class="btn btn-warning rounded-pill m-2">Pending</span></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="/payment/102">Cara Stevens</a></td>
+                                    <td>Sales Assistant</td>
+                                    <td>New York</td>
+                                    <td>46</td>
+                                    <td>2011-12-06</td>
+                                    <td><span class="btn btn-danger rounded-pill m-2">Rejected</span></td>
+                                </tr>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Office</th>
+                                    <th>Age</th>
+                                    <th>Start date</th>
+                                    <th>Salary</th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -55,8 +81,14 @@
             
         </div>
     </div>
-
     <%- include ('./../../../components/script.ejs')%>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+    <script>
+        new DataTable('#example');
+    </script>
 </body>
 
 </html>
