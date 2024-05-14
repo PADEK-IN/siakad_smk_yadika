@@ -1,4 +1,5 @@
 import sequelize from "../configs/database.js";
+import Absen from "./absen.model.js";
 import Guru from "./guru.model.js";
 import Jadwal_Absen from "./jadwal_absen.model.js";
 import Jadwal_Pelajaran from "./jadwal_pelajaran.model.js";
@@ -22,6 +23,7 @@ db.users = Kelas;
 db.users = Jadwal_Pelajaran;
 db.users = Mata_Pelajaran;
 db.users = Jadwal_Absen;
+db.users = Absen;
 
 // Relation
 
