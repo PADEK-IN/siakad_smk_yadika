@@ -205,3 +205,6 @@
     
 })(jQuery);
 
+
+
+new DataTable('#example');
