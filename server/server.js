@@ -16,6 +16,9 @@ import indexRouter from "./routes/web/index/index.router.js";
 
 // Import API Router
 import authRouter from "./routes/api/auth/auth.router.js";
+import adminUserRouter from "./routes/api/admin/users/users.router.js";
+import muridRouter from "./routes/api/murid/profile/profile.router.js";
+import guruRouter from "./routes/api/guru/profile/profile.router.js";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -56,6 +59,9 @@ app.use("/", indexRouter);
 // ROUTES API
 // Auth
 app.use("/api/auth", authRouter);
+app.use("/api/admin/user", adminUserRouter);
+app.use("/api/murid", muridRouter);
+app.use("/api/guru", guruRouter);
 
 // Routes Not Found
 app.use(notFoundHandler);
