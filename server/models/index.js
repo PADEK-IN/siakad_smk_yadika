@@ -3,6 +3,7 @@ import Guru from "./guru.model.js";
 import Jadwal_Pelajaran from "./jadwal_pelajaran.model.js";
 import Jurusan from "./jurusan.model.js";
 import Kelas from "./kelas.model.js";
+import Mata_Pelajaran from "./mata_pelajaran.model.js";
 import Murid from "./murid.model.js";
 import Users from "./users.model.js";
 import Wali_Murid from "./wali_murid.model.js";
@@ -18,6 +19,7 @@ db.users = Wali_Murid;
 db.users = Jurusan;
 db.users = Kelas;
 db.users = Jadwal_Pelajaran;
+db.users = Mata_Pelajaran;
 
 // Relation
 
