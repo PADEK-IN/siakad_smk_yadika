@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../configs/database.js";
+import {sequelize} from "../configs/database.js";
 
 const Users = sequelize.define(
   "Users",
@@ -26,14 +26,14 @@ const Users = sequelize.define(
       allowNull: false,
     },
     role: {
-      type: DataTypes.ENUM(["admin", "teacher", "student"]),
+      type: DataTypes.ENUM(["admin", "guru", "murid"]),
       allowNull: false,
-      defaultValue: "student"
+      defaultValue: "murid"
     },
     isValid: {
-      type: DataTypes.ENUM(["valid", "invalid"]),
+      type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: "invalid"
+      defaultValue: false
     },
   },
 );
