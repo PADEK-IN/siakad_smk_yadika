@@ -1,6 +1,7 @@
 import sequelize from "../configs/database.js";
 import Guru from "./guru.model.js";
 import Jurusan from "./jurusan.model.js";
+import Kelas from "./kelas.model.js";
 import Murid from "./murid.model.js";
 import Users from "./users.model.js";
 import Wali_Murid from "./wali_murid.model.js";
@@ -14,6 +15,7 @@ db.users = Murid;
 db.users = Guru;
 db.users = Wali_Murid;
 db.users = Jurusan;
+db.users = Kelas;
 
 // Relation
 
