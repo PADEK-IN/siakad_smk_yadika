@@ -72,14 +72,14 @@ const Murid = sequelize.define(
       type: DataTypes.INTEGER(4),
       allowNull: false,
     },
-    id_wali: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: Wali_Murid,
-        key: "id"
-      }
-    },
+    // id_wali: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: false,
+    //   references: {
+    //     model: Wali_Murid,
+    //     key: "id"
+    //   }
+    // },
     id_jurusan: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -97,8 +97,9 @@ const Murid = sequelize.define(
       }
     },
     foto: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.STRING(100),
       allowNull: false,
+      defaultValue: "blank.jpg"
     },
     status: {
       type: DataTypes.ENUM(["aktif", "lulus", "cuti", "berhenti"]),
@@ -111,8 +112,8 @@ const Murid = sequelize.define(
 // Relations
 Users.hasOne(Murid, {foreignKey: "email"});
 Murid.belongsTo(Users, {foreignKey: "email"});
-Wali_Murid.hasOne(Murid, {foreignKey: "id_wali"});
-Murid.belongsTo(Wali_Murid, {foreignKey: "id_wali"});
+// Wali_Murid.hasOne(Murid, {foreignKey: "id_wali"});
+// Murid.belongsTo(Wali_Murid, {foreignKey: "id_wali"});
 Jurusan.hasMany(Murid, {foreignKey: "id_jurusan"});
 Murid.belongsTo(Jurusan, {foreignKey: "id_jurusan"});
 Kelas.hasMany(Murid, {foreignKey: "id_kelas"});
