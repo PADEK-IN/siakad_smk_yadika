@@ -1,0 +1,534 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "api_siakad_smk_yadika",
+    "collectionId": "70d6e290-02d9-4418-be22-112066561896",
+    "dateExported": "2024-05-15T06:39:24.414Z",
+    "version": "1.2",
+    "folders": [
+        {
+            "_id": "9e0fb068-62e3-4b34-b6d3-d832a2c8df84",
+            "name": "auth",
+            "containerId": "",
+            "created": "2024-05-13T23:03:57.369Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "5d60f321-9760-4d7a-9167-74997aa79f33",
+            "name": "admin",
+            "containerId": "",
+            "created": "2024-05-15T03:15:43.425Z",
+            "sortNum": 40000
+        },
+        {
+            "_id": "ec6fd142-4294-4ead-98ea-fe2bdf390103",
+            "name": "users",
+            "containerId": "5d60f321-9760-4d7a-9167-74997aa79f33",
+            "created": "2024-05-15T03:15:50.848Z",
+            "sortNum": 50000
+        },
+        {
+            "_id": "7053af86-2e50-4688-8e1a-35952deb2416",
+            "name": "jurusan",
+            "containerId": "5d60f321-9760-4d7a-9167-74997aa79f33",
+            "created": "2024-05-15T04:23:30.586Z",
+            "sortNum": 60000
+        },
+        {
+            "_id": "e90e30c9-8941-426d-a368-0eddc78b2a71",
+            "name": "mata pelajaran",
+            "containerId": "5d60f321-9760-4d7a-9167-74997aa79f33",
+            "created": "2024-05-15T04:37:39.089Z",
+            "sortNum": 70000
+        },
+        {
+            "_id": "78eb2699-9d11-49a7-80ab-5ff4fe454f36",
+            "name": "kelas",
+            "containerId": "5d60f321-9760-4d7a-9167-74997aa79f33",
+            "created": "2024-05-15T05:57:02.893Z",
+            "sortNum": 75000
+        },
+        {
+            "_id": "dd4b85fe-6d73-4710-ae2f-d7cc3424c9b5",
+            "name": "guru",
+            "containerId": "5d60f321-9760-4d7a-9167-74997aa79f33",
+            "created": "2024-05-15T04:56:15.259Z",
+            "sortNum": 80000
+        },
+        {
+            "_id": "200c8a97-18ed-4275-bedd-c656e7adbff6",
+            "name": "murid",
+            "containerId": "5d60f321-9760-4d7a-9167-74997aa79f33",
+            "created": "2024-05-15T06:25:34.166Z",
+            "sortNum": 90000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "9be65cae-cc43-4799-89db-6955c802f045",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "9e0fb068-62e3-4b34-b6d3-d832a2c8df84",
+            "name": "register",
+            "url": "localhost:9000/api/auth/register",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-05-13T23:04:15.105Z",
+            "modified": "2024-05-15T02:56:02.191Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"user@gmail.com\",\n  \"password\": \"User@123\",\n  \"confirmPassword\": \"User@123\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "3007d29a-c4f6-4668-b600-d25a12978754",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "ec6fd142-4294-4ead-98ea-fe2bdf390103",
+            "name": "get all",
+            "url": "localhost:9000/api/admin/user",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-05-15T03:16:15.339Z",
+            "modified": "2024-05-15T03:16:47.254Z",
+            "headers": []
+        },
+        {
+            "_id": "a5f8e792-2097-495f-9fba-93e4f093c9a6",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "7053af86-2e50-4688-8e1a-35952deb2416",
+            "name": "get all",
+            "url": "localhost:9000/api/admin/jurusan",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-05-15T04:23:30.586Z",
+            "modified": "2024-05-15T04:23:41.486Z",
+            "headers": []
+        },
+        {
+            "_id": "d7e4510c-7520-4b7b-943b-3ea0390c5599",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "e90e30c9-8941-426d-a368-0eddc78b2a71",
+            "name": "get all",
+            "url": "localhost:9000/api/admin/mata-pelajaran",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-05-15T04:37:39.089Z",
+            "modified": "2024-05-15T04:38:03.049Z",
+            "headers": []
+        },
+        {
+            "_id": "24cb7dcf-ec37-485b-ac33-8193e5dad3f1",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "dd4b85fe-6d73-4710-ae2f-d7cc3424c9b5",
+            "name": "get all",
+            "url": "localhost:9000/api/admin/guru",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-05-15T04:56:15.259Z",
+            "modified": "2024-05-15T04:56:26.079Z",
+            "headers": []
+        },
+        {
+            "_id": "ff08dc9e-0532-455d-800c-69c49c7d18aa",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "78eb2699-9d11-49a7-80ab-5ff4fe454f36",
+            "name": "get all",
+            "url": "localhost:9000/api/admin/kelas",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-05-15T05:57:02.893Z",
+            "modified": "2024-05-15T05:57:23.364Z",
+            "headers": []
+        },
+        {
+            "_id": "94a38feb-087b-4a80-83c6-1a0999ec9916",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "200c8a97-18ed-4275-bedd-c656e7adbff6",
+            "name": "get all",
+            "url": "localhost:9000/api/admin/murid",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-05-15T06:25:34.166Z",
+            "modified": "2024-05-15T06:27:20.420Z",
+            "headers": []
+        },
+        {
+            "_id": "87fe7379-1597-42e6-b1a7-1542508ca267",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "9e0fb068-62e3-4b34-b6d3-d832a2c8df84",
+            "name": "login",
+            "url": "localhost:9000/api/auth/login",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-05-13T23:06:32.910Z",
+            "modified": "2024-05-14T14:57:43.649Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"admin@gmail.com\",\n  \"password\": \"Admin@123\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "a42b0865-cc06-4285-bf53-5d56879a4317",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "ec6fd142-4294-4ead-98ea-fe2bdf390103",
+            "name": "get one by id",
+            "url": "localhost:9000/api/admin/user/{{id}}",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-05-15T03:16:23.714Z",
+            "modified": "2024-05-15T03:19:06.189Z",
+            "headers": []
+        },
+        {
+            "_id": "a948f249-acc4-4744-8682-ec5e72cd92a2",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "7053af86-2e50-4688-8e1a-35952deb2416",
+            "name": "get one by id",
+            "url": "localhost:9000/api/admin/jurusan/{{id}}",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-05-15T04:23:30.587Z",
+            "modified": "2024-05-15T04:23:47.014Z",
+            "headers": []
+        },
+        {
+            "_id": "c6c3c3f8-9535-4586-84e3-ca8a6a5952b0",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "e90e30c9-8941-426d-a368-0eddc78b2a71",
+            "name": "get one by id",
+            "url": "localhost:9000/api/admin/mata-pelajaran/{{id}}",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-05-15T04:37:39.090Z",
+            "modified": "2024-05-15T04:38:02.467Z",
+            "headers": []
+        },
+        {
+            "_id": "fcfd6d95-313c-4b12-be66-69978bc67c4f",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "dd4b85fe-6d73-4710-ae2f-d7cc3424c9b5",
+            "name": "get one by id",
+            "url": "localhost:9000/api/admin/guru/{{id}}",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-05-15T04:56:15.260Z",
+            "modified": "2024-05-15T04:56:30.718Z",
+            "headers": []
+        },
+        {
+            "_id": "0ab70fab-6fd9-4ad5-b242-c24a9bebe8e2",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "78eb2699-9d11-49a7-80ab-5ff4fe454f36",
+            "name": "get one by id",
+            "url": "localhost:9000/api/admin/kelas/{{id}}",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-05-15T05:57:02.894Z",
+            "modified": "2024-05-15T05:57:27.665Z",
+            "headers": []
+        },
+        {
+            "_id": "07243c85-5bc9-45d3-94d6-2bb9d48e6b54",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "200c8a97-18ed-4275-bedd-c656e7adbff6",
+            "name": "get one by id",
+            "url": "localhost:9000/api/admin/murid/{{id}}",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-05-15T06:25:34.167Z",
+            "modified": "2024-05-15T06:27:27.177Z",
+            "headers": []
+        },
+        {
+            "_id": "d4567608-79a3-4174-882d-3f47dbb379f4",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "9e0fb068-62e3-4b34-b6d3-d832a2c8df84",
+            "name": "logout",
+            "url": "localhost:9000/api/auth/logout",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-05-13T23:06:50.007Z",
+            "modified": "2024-05-13T23:07:28.987Z",
+            "headers": []
+        },
+        {
+            "_id": "82614ed2-4f3f-4acf-bfe0-977579798120",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "ec6fd142-4294-4ead-98ea-fe2bdf390103",
+            "name": "create",
+            "url": "localhost:9000/api/admin/user/add",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-05-15T03:18:58.526Z",
+            "modified": "2024-05-15T03:20:18.609Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"Asep@gmail.com\",\n  \"password\": \"Asep@123\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "cf5bc204-5793-498b-8a0e-0915fac76ab3",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "7053af86-2e50-4688-8e1a-35952deb2416",
+            "name": "create",
+            "url": "localhost:9000/api/admin/jurusan",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-05-15T04:23:30.588Z",
+            "modified": "2024-05-15T04:28:10.324Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nama\": \"Teknik Mesin\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "2e10d06b-d2f8-4e02-ad10-11e70b5ad0c2",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "e90e30c9-8941-426d-a368-0eddc78b2a71",
+            "name": "create",
+            "url": "localhost:9000/api/admin/mata-pelajaran",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-05-15T04:37:39.091Z",
+            "modified": "2024-05-15T04:45:24.822Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nama\": \"Bahasa Indonesia\",\n  \"tingkat\": \"10\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "e929a214-ddf8-40dc-9214-97bcc8a0d394",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "dd4b85fe-6d73-4710-ae2f-d7cc3424c9b5",
+            "name": "create",
+            "url": "localhost:9000/api/admin/guru",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-05-15T04:56:15.261Z",
+            "modified": "2024-05-15T05:13:19.770Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nip\": \"1234567890\",\n  \"email\": \"user@gmail.com\",\n  \"nama\": \"Eneng, S.pd.\",\n  \"jenis_kelamin\": \"perempuan\",\n  \"tempat_lahir\": \"Bandung\",\n  \"tanggal_lahir\": \"1999-12-01\",\n  \"alamat\": \"Kota baru\",\n  \"agama\": \"Islam\",\n  \"no_hp\": \"628123456789\",\n  \"pendidikan\": \"S1 Sastra\",\n  \"id_mata_pelajaran\": \"yDapKwqdz1V\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "30dba976-650c-491f-886b-e141936ed2c0",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "78eb2699-9d11-49a7-80ab-5ff4fe454f36",
+            "name": "create",
+            "url": "localhost:9000/api/admin/kelas",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-05-15T05:57:02.895Z",
+            "modified": "2024-05-15T06:05:56.980Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"tingkat\": \"11\",\n  \"kode\": \"TKJ 1\",\n  \"id_wali_kelas\": \"vzwj6G2d5gE\",\n  \"tahun\": \"2024\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "e60e9dde-020e-48fa-a990-9b4d317554a5",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "200c8a97-18ed-4275-bedd-c656e7adbff6",
+            "name": "create",
+            "url": "localhost:9000/api/admin/murid",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-05-15T06:25:34.168Z",
+            "modified": "2024-05-15T06:34:02.666Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nis\": \"1234567890\",\n  \"email\": \"user@gmail.com\",\n  \"nama\": \"Eneng aja\",\n  \"jenis_kelamin\": \"perempuan\",\n  \"tempat_lahir\": \"Bandung\",\n  \"tanggal_lahir\": \"1999-12-01\",\n  \"alamat\": \"Kota baru\",\n  \"agama\": \"Islam\",\n  \"no_hp\": \"628123456789\",\n  \"hobi\": \"Membaca\",\n  \"sekolah_asal\": \"SMP 11 Kota Jambi\",\n  \"no_ijazah\": \"1u231i2uhkj\",\n  \"tahun_masuk\": \"2024\",\n  \"id_jurusan\": \"4ZnGd7gdro2\",\n  \"id_kelas\": \"4ZnGd7gdro2\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "6a86af35-e3a0-4420-ba93-34420094c600",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "ec6fd142-4294-4ead-98ea-fe2bdf390103",
+            "name": "update",
+            "url": "localhost:9000/api/admin/user/{{id}}",
+            "method": "PATCH",
+            "sortNum": 40000,
+            "created": "2024-05-15T03:19:00.454Z",
+            "modified": "2024-05-15T03:38:03.751Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"admin@gmail.com\",\n  \"role\": \"admin\",\n  \"isValid\": true\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "9fd072eb-b543-448c-aaf0-fc5a8d3e8f5a",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "7053af86-2e50-4688-8e1a-35952deb2416",
+            "name": "update",
+            "url": "localhost:9000/api/admin/jurusan/{{id}}",
+            "method": "PATCH",
+            "sortNum": 40000,
+            "created": "2024-05-15T04:23:30.589Z",
+            "modified": "2024-05-15T04:25:53.357Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nama\": \"Sistem Informasi\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "a2cf9098-cd49-4daa-b1b9-35fe96328858",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "e90e30c9-8941-426d-a368-0eddc78b2a71",
+            "name": "update",
+            "url": "localhost:9000/api/admin/mata-pelajaran/{{id}}",
+            "method": "PATCH",
+            "sortNum": 40000,
+            "created": "2024-05-15T04:37:39.092Z",
+            "modified": "2024-05-15T04:46:20.004Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nama\": \"Pendidikan Kewarganegaraan\",\n  \"tingkat\": \"10\",\n  \"isUse\": false\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "4328eebe-6a7b-4f87-af52-853973f3b0cb",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "dd4b85fe-6d73-4710-ae2f-d7cc3424c9b5",
+            "name": "update",
+            "url": "localhost:9000/api/admin/guru/{{id2}}",
+            "method": "PATCH",
+            "sortNum": 40000,
+            "created": "2024-05-15T04:56:15.262Z",
+            "modified": "2024-05-15T06:36:33.714Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nip\": \"0987654321\",\n  \"email\": \"admin@gmail.com\",\n  \"nama\": \"Asep, S.pd.\",\n  \"jenis_kelamin\": \"laki-laki\",\n  \"tempat_lahir\": \"Bandung\",\n  \"tanggal_lahir\": \"1999-12-01\",\n  \"alamat\": \"Kota baru\",\n  \"agama\": \"Islam\",\n  \"no_hp\": \"628123456789\",\n  \"pendidikan\": \"S1 Bahasa\",\n  \"id_mata_pelajaran\": \"yDapKwqdz1V\",\n  \"status\": \"cuti\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "1fece17b-2f8c-4e7c-b2e4-493fef84bb63",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "78eb2699-9d11-49a7-80ab-5ff4fe454f36",
+            "name": "update",
+            "url": "localhost:9000/api/admin/kelas/{{id}}",
+            "method": "PATCH",
+            "sortNum": 40000,
+            "created": "2024-05-15T05:57:02.896Z",
+            "modified": "2024-05-15T06:06:36.657Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"tingkat\": \"12\",\n  \"kode\": \"TKJ 2\",\n  \"id_wali_kelas\": \"vzwj6G2d5gE\",\n  \"tahun\": \"2024\",\n  \"isActive\": true\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "20c4f9da-67be-410e-94dd-9aabf6f6abbc",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "200c8a97-18ed-4275-bedd-c656e7adbff6",
+            "name": "update",
+            "url": "localhost:9000/api/admin/murid/{{id2}}",
+            "method": "PATCH",
+            "sortNum": 40000,
+            "created": "2024-05-15T06:25:34.169Z",
+            "modified": "2024-05-15T06:35:50.538Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nis\": \"0987654321\",\n  \"email\": \"admin@gmail.com\",\n  \"nama\": \"Ujang aja\",\n  \"jenis_kelamin\": \"laki-laki\",\n  \"tempat_lahir\": \"Bandung\",\n  \"tanggal_lahir\": \"1999-12-01\",\n  \"alamat\": \"Kota baru\",\n  \"agama\": \"Islam\",\n  \"no_hp\": \"628123456789\",\n  \"hobi\": \"Membaca\",\n  \"sekolah_asal\": \"SMP 11 Kota Jambi\",\n  \"no_ijazah\": \"1u231i2uhkj\",\n  \"tahun_masuk\": \"2024\",\n  \"id_jurusan\": \"vzwj6G2d5gE\",\n  \"id_kelas\": \"vzwj6G2d5gE\",\n  \"idValid\": true\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "c3222c15-58bc-4c5f-ba5d-535ec53fcc4d",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "ec6fd142-4294-4ead-98ea-fe2bdf390103",
+            "name": "delete",
+            "url": "localhost:9000/api/admin/user/ODB56MVKYGr",
+            "method": "DELETE",
+            "sortNum": 50000,
+            "created": "2024-05-15T03:40:52.143Z",
+            "modified": "2024-05-15T03:42:34.316Z",
+            "headers": []
+        },
+        {
+            "_id": "ed7ed961-3ce4-4093-abbd-a2256d2235d4",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "7053af86-2e50-4688-8e1a-35952deb2416",
+            "name": "delete",
+            "url": "localhost:9000/api/admin/jurusan/{{id3}}",
+            "method": "DELETE",
+            "sortNum": 50000,
+            "created": "2024-05-15T04:23:30.590Z",
+            "modified": "2024-05-15T04:28:49.935Z",
+            "headers": []
+        },
+        {
+            "_id": "1ec7414c-fe3e-48fd-9f0e-e7aecb6c8b36",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "e90e30c9-8941-426d-a368-0eddc78b2a71",
+            "name": "delete",
+            "url": "localhost:9000/api/admin/mata-pelajaran/{{id3}}",
+            "method": "DELETE",
+            "sortNum": 50000,
+            "created": "2024-05-15T04:37:39.093Z",
+            "modified": "2024-05-15T04:38:10.764Z",
+            "headers": []
+        },
+        {
+            "_id": "7a44da4b-872a-477e-935c-6cd51f243034",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "dd4b85fe-6d73-4710-ae2f-d7cc3424c9b5",
+            "name": "delete",
+            "url": "localhost:9000/api/admin/guru/{{id3}}",
+            "method": "DELETE",
+            "sortNum": 50000,
+            "created": "2024-05-15T04:56:15.263Z",
+            "modified": "2024-05-15T04:56:41.127Z",
+            "headers": []
+        },
+        {
+            "_id": "3b962e71-2875-40b3-bfef-4bf68797485c",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "78eb2699-9d11-49a7-80ab-5ff4fe454f36",
+            "name": "delete",
+            "url": "localhost:9000/api/admin/kelas/{{id3}}",
+            "method": "DELETE",
+            "sortNum": 50000,
+            "created": "2024-05-15T05:57:02.897Z",
+            "modified": "2024-05-15T05:59:04.019Z",
+            "headers": []
+        },
+        {
+            "_id": "697009b7-9279-44a4-84ef-ec211368dcd7",
+            "colId": "70d6e290-02d9-4418-be22-112066561896",
+            "containerId": "200c8a97-18ed-4275-bedd-c656e7adbff6",
+            "name": "delete",
+            "url": "localhost:9000/api/admin/guru/{{id3}}",
+            "method": "DELETE",
+            "sortNum": 50000,
+            "created": "2024-05-15T06:25:34.170Z",
+            "modified": "2024-05-15T06:25:34.166Z",
+            "headers": []
+        }
+    ],
+    "ref": "5_TzNCUk9iF0ZEfFMrhWiOHGo-eK8UKH6NTDQ87Wa1xp57bgoptZHk52GfGID6vXefoEGYkDHFa8SLyP-FyCWA"
+}
