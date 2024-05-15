@@ -69,6 +69,7 @@ const Guru = sequelize.define(
     foto: {
       type: DataTypes.STRING(255),
       allowNull: false,
+      defaultValue: "blank.js"
     },
     status: {
       type: DataTypes.ENUM(["aktif", "cuti", "berhenti"]),
