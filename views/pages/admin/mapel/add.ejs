@@ -1,0 +1,87 @@
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar-admin.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar-admin.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5">
+                <div class="d-flex mb-4">
+                    <a href="/admin/mapel" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
+                    <h6 class="px-3">Kembali</h6>
+                </div>
+                <div class="bg-light  rounded p-4">
+                    <div class="alert text-center alert-primary" role="alert">
+                        Edit Data Pelajaran
+                    </div>
+
+                    <!-- form Student -->
+                    <div class="bg-light rounded h-100 px-4">
+                        <form>
+                            <div class="mb-3">
+                                <label for="inputName" class="form-label">Nama Pelajaran</label>
+                                <input type="text" class="form-control" id="inputName">
+                            </div>
+                            <!-- Tingkat -->
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="floatingSelect"
+                                    aria-label="Floating label select example">
+                                    <option selected undefined disabled>Tingkat</option>
+                                    <option value="X">X</option>
+                                    <option value="XI">XI</option>
+                                    <option value="XII">XII</option>
+                                </select>
+                                <label for="floatingSelect">Tingkat</label>
+                            </div>
+
+                            <!-- Status -->
+                            <fieldset class="row mb-3">
+                                <legend class="col-form-label col-sm-2 pt-0">Status</legend>
+                                <div class="col-sm-10">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gridRadios"
+                                            id="gridActive" value="option1" checked>
+                                        <label class="form-check-label" for="gridActive">
+                                            Dipakai
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gridRadios"
+                                            id="gridUnActive" value="option2">
+                                        <label class="form-check-label" for="gridUnActive">
+                                            Tidak Terpakai
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include ('./../../../components/script.ejs')%>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+    <script>
+        new DataTable('#example');
+    </script>
+</body>
+
+</html>
