@@ -19,8 +19,8 @@
 
             <div class="container-fluid pt-4 px-4 pb-5">
                 <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0">All User</h6>
-                    <a class="btn btn-sm btn-primary" href="/user/add">Create User</a>
+                    <h6 class="mb-0">Semua Akun</h6>
+                    <a class="btn btn-sm btn-primary" href="/user/add">Buat Akun</a>
                 </div>
                 <div class="bg-light text-center rounded p-4">
                     <div class="table-responsive">
@@ -31,7 +31,8 @@
                                     <th>ID</th>
                                     <th>email</th>
                                     <th>role</th>
-                                    <th>Is Valid</th>
+                                    <th>Valid</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,42 +41,55 @@
                                     <td>joko@gmail.com</td>
                                     <td>
                                         <span class="badge bg-primary">Admin</span>
-                                        <a href="/user/01/edit" class="bi bi-pencil-square"></a>
                                     </td>
                                     <td>
                                         <span class="badge bg-success">Valid</span>
+                                    </td>
+                                    <td>
+                                        <a href="/user/01/edit" class="bi bi-pencil-square px-2"></a>
+                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>200237</td>
                                     <td>joko@gmail.com</td>
                                     <td>
-                                        <span class="badge bg-warning">Student</span>
-                                        <a href="/user/01/edit" class="bi bi-pencil-square"></a>
+                                        <span class="badge bg-warning">Murid</span>
                                     </td>
                                     <td>
                                         <span class="badge bg-success">Valid</span>
+                                    </td>
+                                    <td>
+                                        <a href="/user/01/edit" class="bi bi-pencil-square px-2"></a>
+                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>200237</td>
                                     <td>joko@gmail.com</td>
                                     <td>
-                                        <span class="badge bg-danger">Teacher</span>
-                                        <a href="/user/01/edit" class="bi bi-pencil-square"></a>
+                                        <span class="badge bg-danger">Guru</span>
                                     </td>
                                     <td>
                                         <span class="badge bg-success">Valid</span>
+                                    </td>
+                                    <td>
+                                        <a href="/user/01/edit" class="bi bi-pencil-square px-2"></a>
+                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>200237</td>
                                     <td>joko@gmail.com</td>
                                     <td>
-                                        <a href="/user/01/edit" class="bi bi-pencil-square"></a>
+                                        <i class="bi bi-dash-square"></i>
                                     </td>
                                     <td>
-                                        <span class="badge bg-danger">In Valid</span>
+                                        <span class="badge bg-danger">Tidak Valid</span>
+                                    </td>
+                                    <td>
+                                        <a href="/user/01/edit" class="bi bi-pencil-square px-2"></a>
+                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -84,7 +98,8 @@
                                     <th>ID</th>
                                     <th>email</th>
                                     <th>role</th>
-                                    <th>Is Valid</th>
+                                    <th>Valid</th>
+                                    <th>Action</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -96,7 +111,6 @@
     </div>
     <%- include ('./../../../components/script.ejs')%>
 
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
     <script>
