@@ -18,6 +18,7 @@ import indexRouter from "./routes/web/index/index.router.js";
 import authRouter from "./routes/api/auth/auth.router.js";
 import adminUserRouter from "./routes/api/admin/users/users.router.js";
 import adminJurusanRouter from "./routes/api/admin/jurusan/jurusan.router.js";
+import adminMataPelajaranRouter from "./routes/api/admin/mata_pelajaran/mata_pelajaran.router.js";
 import muridRouter from "./routes/api/murid/profile/profile.router.js";
 import guruRouter from "./routes/api/guru/profile/profile.router.js";
 
@@ -62,6 +63,7 @@ app.use("/", indexRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/admin/user", adminUserRouter);
 app.use("/api/admin/jurusan", adminJurusanRouter);
+app.use("/api/admin/mata-pelajaran", adminMataPelajaranRouter);
 app.use("/api/murid", muridRouter);
 app.use("/api/guru", guruRouter);
 
