@@ -15,12 +15,16 @@ import paymentRouter from "./routes/web/payment/payment.router.js";
 import indexRouter from "./routes/web/index/index.router.js";
 
 // Import API Router
+// Admin
 import authRouter from "./routes/api/auth/auth.router.js";
 import adminUserRouter from "./routes/api/admin/users/users.router.js";
 import adminJurusanRouter from "./routes/api/admin/jurusan/jurusan.router.js";
 import adminMataPelajaranRouter from "./routes/api/admin/mata_pelajaran/mata_pelajaran.router.js";
 import adminGuruRouter from "./routes/api/admin/guru/guru.router.js";
+import adminKelasRouter from "./routes/api/admin/kelas/kelas.router.js";
+// Murid
 import muridRouter from "./routes/api/murid/profile/profile.router.js";
+// Guru
 import guruRouter from "./routes/api/guru/profile/profile.router.js";
 
 const app = express();
@@ -62,11 +66,15 @@ app.use("/", indexRouter);
 // ROUTES API
 // Auth
 app.use("/api/auth", authRouter);
+// Admin
 app.use("/api/admin/user", adminUserRouter);
 app.use("/api/admin/jurusan", adminJurusanRouter);
 app.use("/api/admin/mata-pelajaran", adminMataPelajaranRouter);
 app.use("/api/admin/guru", adminGuruRouter);
+app.use("/api/admin/kelas", adminKelasRouter);
+// Murid
 app.use("/api/murid", muridRouter);
+// Guru
 app.use("/api/guru", guruRouter);
 
 // Routes Not Found
