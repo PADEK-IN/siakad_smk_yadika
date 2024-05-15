@@ -5,6 +5,10 @@ import * as user from "./users.controller.js";
 const router = express.Router();
 
 // Routes
-router.route("/create").post(user.create);
+router.route("/").get(user.getAll);
+router.route("/:id").get(user.getOneById);
+router.route("/add").post(user.create);
+router.route("/:id").patch(user.update);
+router.route("/:id").delete(user.del);
 
 export default router;
