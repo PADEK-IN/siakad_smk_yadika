@@ -9,17 +9,17 @@
         </div>
 
         <!-- sidebar start -->
-        <%- include ('./../../../components/sidebar.ejs')%>
+        <%- include ('./../../../components/sidebar-admin.ejs')%>
         <!-- sidebar end -->
 
         <div class="content">
             <!-- navbar start -->
-            <%- include ('./../../../components/navbar.ejs')%>
+            <%- include ('./../../../components/navbar-admin.ejs')%>
             <!-- navar end -->
 
             <div class="container-fluid pt-4 px-4 pb-5">
                 <div class="d-flex mb-4">
-                    <a href="/payment" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
+                    <a href="/admin/payment" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
                     <h6 class="px-3">Detail Payment</h6>
                 </div>
                 <div class="bg-light text-center rounded p-4">
@@ -58,21 +58,21 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="gridRadios"
                                                         id="gridRadios1" value="option1" checked>
-                                                    <label class="btn btn-success rounded-pill" for="gridRadios1">
+                                                    <label class="badge bg-success" for="gridRadios1">
                                                         Accepted
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="gridRadios"
                                                         id="gridRadios2" value="option2">
-                                                    <label class="btn btn-warning rounded-pill" for="gridRadios2">
+                                                    <label class="badge bg-warning" for="gridRadios2">
                                                         Pending
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="gridRadios"
                                                         id="gridRadios2" value="option2">
-                                                    <label class="btn btn-danger rounded-pill" for="gridRadios2">
+                                                    <label class="badge bg-danger" for="gridRadios2">
                                                         Rejected
                                                     </label>
                                                 </div>

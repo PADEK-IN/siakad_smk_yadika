@@ -10,4 +10,7 @@ export const addPaymentPage = (req, res) => {
 export const detailPaymentPage = (req, res) => {
     res.render("pages/admin/payment/detail.ejs");
   };
+export const getTransactionPage = (req, res) => {
+    res.render("pages/admin/payment/transaction.ejs");
+  };
   
