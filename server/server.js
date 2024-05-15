@@ -22,6 +22,7 @@ import adminJurusanRouter from "./routes/api/admin/jurusan/jurusan.router.js";
 import adminMataPelajaranRouter from "./routes/api/admin/mata_pelajaran/mata_pelajaran.router.js";
 import adminGuruRouter from "./routes/api/admin/guru/guru.router.js";
 import adminKelasRouter from "./routes/api/admin/kelas/kelas.router.js";
+import adminMuridRouter from "./routes/api/admin/murid/murid.router.js";
 // Murid
 import muridRouter from "./routes/api/murid/profile/profile.router.js";
 // Guru
@@ -72,6 +73,7 @@ app.use("/api/admin/jurusan", adminJurusanRouter);
 app.use("/api/admin/mata-pelajaran", adminMataPelajaranRouter);
 app.use("/api/admin/guru", adminGuruRouter);
 app.use("/api/admin/kelas", adminKelasRouter);
+app.use("/api/admin/murid", adminMuridRouter);
 // Murid
 app.use("/api/murid", muridRouter);
 // Guru
