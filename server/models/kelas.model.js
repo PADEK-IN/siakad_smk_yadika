@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/database.js";
-import Murid from "./murid.model.js";
 import Guru from "./guru.model.js";
 
 const Kelas = sequelize.define(
@@ -22,10 +21,6 @@ const Kelas = sequelize.define(
       set(value) {
         this.setDataValue("kode", value.toUpperCase());
       },
-    },
-    jumlah_murid: {
-      type: DataTypes.INTEGER(2),
-      allowNull: false,
     },
     tahun: {
       type: DataTypes.INTEGER(4),
