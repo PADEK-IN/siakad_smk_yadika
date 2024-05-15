@@ -1,1 +1,145 @@
-TEACHER DETAIL
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5">
+                <div class="d-flex mb-4">
+                    <a href="/user/teachers" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
+                    <h6 class="px-3">Kembali</h6>
+                </div>
+                <div class="bg-light  rounded p-4">
+                    <div class="alert text-center alert-danger" role="alert">
+                        Detail Data Guru
+                    </div>
+
+                    <div class="bg-light rounded">
+                        <div class="testimonial-item text-center">
+                            <h6 class="mb-4">67983423908</h6>
+                            <img class="img-fluid rounded-circle mx-auto mb-4" src="/images/user.jpg" style="width: 100px; height: 100px;">
+                            <h5 class="mb-1">Joko Widodo</h5>
+                            <p>aditya@gmail.com</p>
+                        </div>
+                    </div>
+                    <hr>
+                    
+                    <div class="bg-light rounded h-100 px-4">
+                        <h6 class="mb-4">Detail Guru</h6>
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <button class="nav-link active" id="nav-biodata-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-biodata" type="button" role="tab" aria-controls="nav-biodata"
+                                    aria-selected="true">Biodata</button>
+                                <button class="nav-link" id="nav-kelas-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-kelas" type="button" role="tab"
+                                    aria-controls="nav-kelas" aria-selected="false">Jadwal</button>
+                            </div>
+                        </nav>
+                        <div class="tab-content pt-3" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-biodata" role="tabpanel" aria-labelledby="nav-biodata-tab">
+                                <table class="table table-striped">
+                                    <tbody>
+                                        <tr>
+                                            <td class="fw-bold">NIP</td>
+                                            <td>32647895</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Tempat Lahir</td>
+                                            <td>Jambi</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Tanggal Lahir</td>
+                                            <td>27, 04, 1898</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Alamat</td>
+                                            <td>Jln. Singkarang Jambi Rt PAlanmsy Hhuidsf fdhsuifhwf </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Jenis Kelamain</td>
+                                            <td>Laki- Laki</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Agama</td>
+                                            <td>Islam</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Nomer Handphone</td>
+                                            <td>07834247829432</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Tahun Masuk</td>
+                                            <td>20001</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Pendidikan</td>
+                                            <td>Militer Angkatan Udara</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Jurusan</td>
+                                            <td>Teknik Bangunan</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="nav-kelas" role="tabpanel" aria-labelledby="nav-kelas-tab">
+                                <!-- <h6 class="mb-4">Accented Table</h6> -->
+                                <table class="table table-striped">
+                                    <tbody>
+                                        <tr>
+                                            <td class="fw-bold">Tingkat</td>
+                                            <td>XI</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Kode</td>
+                                            <td>A</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Wali Kelas</td>
+                                            <td>Indra Subakti, M.Pd</td>
+                                        </tr>
+                                    </tbody>
+                                    <!-- jadwal Kelas -->
+                                    <tbody>
+                                        <tr>
+                                            <td class="fw-bold text-bg-secondary text-center" colspan="2">Jadwal Pelajaran</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Wali Kelas</td>
+                                            <td>Indra Subakti, M.Pd</td>
+                                        </tr>
+                                    </tbody>
+                                </table>    
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div> 
+        </div>
+    </div>
+    <%- include ('./../../../components/script.ejs')%>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+    <script>
+        new DataTable('#example');
+    </script>
+</body>
+
+</html>
