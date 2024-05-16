@@ -8,12 +8,14 @@ import session from 'express-session';
 import { notFoundHandler } from './middlewares/errors.js';
 
 // Import WEB Pages Router
+import indexRouter from './routes/web/auth/auth.router.js';
+// Admin
 import userRouter from './routes/web/admin/user/user.router.js';
 import mapelRouter from './routes/web/admin/mapel/mapel.router.js';
 import schaduleRouter from './routes/web/admin/schadule/schadule.router.js';
 import classRouter from './routes/web/admin/class/class.router.js';
 import paymentRouter from './routes/web/admin/payment/payment.router.js';
-import indexRouter from './routes/web/admin/index/index.router.js';
+import indexAdminRouter from './routes/web/admin/index/index.router.js';
 
 // Import API Router
 // Admin
@@ -56,15 +58,17 @@ app.set('view engine', 'ejs');
 app.set('views', viewsFolder);
 
 // Routes WEB Pages
+app.use('/', indexRouter);
 // Admin
 app.use('/admin/user', userRouter);
 app.use('/admin/mapel', mapelRouter);
 app.use('/admin/schadule', schaduleRouter);
 app.use('/admin/class', classRouter);
 app.use('/admin/payment', paymentRouter);
+app.use('/', indexAdminRouter);
 
 // Index
-app.use('/', indexRouter);
+// app.use('/', indexRouter);
 
 // ROUTES API
 // Auth
