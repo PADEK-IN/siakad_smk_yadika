@@ -16,8 +16,10 @@ import schaduleRouter from './routes/web/admin/schadule/schadule.router.js';
 import classRouter from './routes/web/admin/class/class.router.js';
 import paymentRouter from './routes/web/admin/payment/payment.router.js';
 import indexAdminRouter from './routes/web/admin/index/index.router.js';
-// teacher
+// Guru
 import indexTeacherRouter from './routes/web/teacher/index/index.router.js';
+import classTeacherRouter from './routes/web/teacher/class/class.router.js';
+import schaduleTeacherRouter from './routes/web/teacher/schadule/schadule.router.js';
 
 // Import API Router
 // Admin
@@ -70,6 +72,10 @@ app.use('/admin/class', classRouter);
 app.use('/admin/payment', paymentRouter);
 // Teacher
 app.use('/teacher', indexTeacherRouter);
+app.use('/teacher/class', classTeacherRouter);
+app.use('/teacher/schadule', schaduleTeacherRouter);
+
+
 
 // // ROUTES API
 // Auth
