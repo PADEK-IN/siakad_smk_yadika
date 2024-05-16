@@ -16,6 +16,8 @@ import schaduleRouter from './routes/web/admin/schadule/schadule.router.js';
 import classRouter from './routes/web/admin/class/class.router.js';
 import paymentRouter from './routes/web/admin/payment/payment.router.js';
 import indexAdminRouter from './routes/web/admin/index/index.router.js';
+// teacher
+import indexTeacherRouter from './routes/web/teacher/index/index.router.js';
 
 // Import API Router
 // Admin
@@ -57,7 +59,7 @@ app.use(
 app.set('view engine', 'ejs');
 app.set('views', viewsFolder);
 
-// Routes WEB Pages
+// // Routes WEB Pages
 app.use('/', indexRouter);
 // Admin
 app.use('/admin', indexAdminRouter);
@@ -66,11 +68,10 @@ app.use('/admin/mapel', mapelRouter);
 app.use('/admin/schadule', schaduleRouter);
 app.use('/admin/class', classRouter);
 app.use('/admin/payment', paymentRouter);
+// Teacher
+app.use('/teacher', indexTeacherRouter);
 
-// Index
-// app.use('/', indexRouter);
-
-// ROUTES API
+// // ROUTES API
 // Auth
 app.use('/api/auth', authRouter);
 // Admin

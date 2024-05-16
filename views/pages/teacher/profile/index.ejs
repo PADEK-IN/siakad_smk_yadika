@@ -1,0 +1,74 @@
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar-teacher.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar-teacher.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5">
+                <div class="d-flex mb-4">
+                    <a href="/teacher/dashboard" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
+                    <h6 class="px-3">Kembali</h6>
+                </div>
+                <div class="bg-light  rounded p-4">
+                    <div class="alert alert-primary text-center" role="alert">
+                        <h5 class="">Detail Profile Guru</h5>
+                    </div>
+                    <div class="bg-light rounded h-100 ">
+                        <div class="testimonial-item p-2">
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td class="fw-bold">Id Transaksi</td>
+                                        <td>4672389</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Tingkatan</td>
+                                        <td>XI</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Tagihan Untuk Bulan</td>
+                                        <td>Januari</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Nama Siswa</td>
+                                        <td>Junaidi Sulaiman</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Tanggal Di Bayar</td>
+                                        <td>01 Januari 2022</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Bukti Pembayaran</td>
+                                        <td class="text-center"><img class="img-fluid mx-auto mb-4" src="/images/berkas.jpg" alt="" style="width: 500px; height: 500px;"></td>
+                                    </tr>
+                                </tbody>
+                            </table> 
+                            
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <%- include ('./../../../components/script.ejs')%>
+</body>
+
+</html>
