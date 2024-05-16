@@ -60,12 +60,12 @@ app.set('views', viewsFolder);
 // Routes WEB Pages
 app.use('/', indexRouter);
 // Admin
+app.use('/admin', indexAdminRouter);
 app.use('/admin/user', userRouter);
 app.use('/admin/mapel', mapelRouter);
 app.use('/admin/schadule', schaduleRouter);
 app.use('/admin/class', classRouter);
 app.use('/admin/payment', paymentRouter);
-app.use('/', indexAdminRouter);
 
 // Index
 // app.use('/', indexRouter);
