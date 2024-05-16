@@ -21,7 +21,7 @@
                 <div class="d-flex align-items-center justify-content-between mb-4">
                     <h6 class="mb-0">List SPP</h6>
                     <div>
-                        <a class="btn btn-sm btn-primary" href="/admin/payment/transaction">List Transaksi</a>
+                        <a class="btn btn-sm btn-primary" href="/admin/payment/transactions">List Transaksi</a>
                         <a class="btn btn-sm btn-primary" href="/admin/payment/add">Buat SPP</a>
                     </div>
                 </div>
@@ -31,48 +31,50 @@
                         <table id="example" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
+                                    <th>ID</th>
+                                    <th>Tingkat</th>
+                                    <th>Tagihan</th>
+                                    <th>Bulan</th>
+                                    <th>Tahun</th>
                                     <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><a href="/admin/payment/102">Cara Stevens</a></td>
-                                    <td>Sales Assistant</td>
-                                    <td>New York</td>
-                                    <td>46</td>
-                                    <td>2011-12-06</td>
-                                    <td><span class="badge bg-success">Accepted</span></td>
+                                    <td>23234</td>
+                                    <td>XII</td>
+                                    <td>Rp. 150.000</td>
+                                    <td>Januari</td>
+                                    <td>2025</td>
+                                    <td><span class="badge bg-success">Aktif</span></td>
+                                    <td>
+                                        <a href="/admin/payment/01/edit" class="bi bi-pencil-square px-2"></a>
+                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td><a href="/admin/payment/102">Cara Stevens</a></td>
-                                    <td>Sales Assistant</td>
-                                    <td>New York</td>
-                                    <td>46</td>
-                                    <td>2011-12-06</td>
-                                    <td><span class="badge bg-warning">Pending</span></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="/admin/payment/102">Cara Stevens</a></td>
-                                    <td>Sales Assistant</td>
-                                    <td>New York</td>
-                                    <td>46</td>
-                                    <td>2011-12-06</td>
-                                    <td><span class="badge bg-danger">Rejected</span></td>
+                                    <td>23234</td>
+                                    <td>XII</td>
+                                    <td>Rp. 150.000</td>
+                                    <td>Januari</td>
+                                    <td>2025</td>
+                                    <td><span class="badge bg-danger">Tidak Aktif</span></td>
+                                    <td>
+                                        <a href="/admin/payment/01/edit" class="bi bi-pencil-square px-2"></a>
+                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
+                                    </td>
                                 </tr>
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
+                                    <th>ID</th>
+                                    <th>Tingkat</th>
+                                    <th>Tagihan</th>
+                                    <th>Bulan</th>
+                                    <th>Tahun</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </tfoot>
                         </table>

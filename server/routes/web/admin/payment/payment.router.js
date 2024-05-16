@@ -7,8 +7,10 @@ const router = express.Router();
 // Routes
 router.route("/").get(index.getPaymentPage);
 router.route("/add").get(index.addPaymentPage);
-router.route("/:id").get(index.detailPaymentPage);
-router.route("/transaction").get(index.getTransactionPage);
+router.route("/:id/edit").get(index.editPaymentPage);
+// transaction
+router.route("/transactions").get(index.getTransactionPage);
+router.route("/transaction/:id/accept").get(index.acceptTransactionPage);
 
 
 export default router;

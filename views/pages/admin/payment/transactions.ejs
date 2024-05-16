@@ -19,11 +19,10 @@
 
             <div class="container-fluid pt-4 px-4 pb-5">
                 <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0">List SPP</h6>
-                    <div>
+                    <h6 class="mb-0">List Transaksi</h6>
+                    <!-- <div>
                         <a class="btn btn-sm btn-primary" href="/admin/payment/add">Buat SPP</a>
-                        <a class="btn btn-sm btn-primary" href="/admin/payment/transaction">List Transaksi</a>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="bg-light text-center rounded p-4">
                     <div class="table-responsive">
@@ -31,48 +30,46 @@
                         <table id="example" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
+                                    <th>Kelas</th>
+                                    <th>Tagihan Bulan</th>
+                                    <th>Nama Siswa</th>
+                                    <th>Tanggal Pembayaran</th>
                                     <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><a href="/admin/payment/102">Cara Stevens</a></td>
-                                    <td>Sales Assistant</td>
-                                    <td>New York</td>
-                                    <td>46</td>
-                                    <td>2011-12-06</td>
-                                    <td><span class="badge bg-success">Accepted</span></td>
+                                    <td>XII</td>
+                                    <td>Januari</td>
+                                    <td>Amianhudin</td>
+                                    <td>2021-12-06</td>
+                                    <td><span class="badge bg-success">Falid</span></td>
+                                    <td>
+                                        <a href="/admin/payment/transaction/32789/accept" class="bi bi-pencil-square px-2"></a>
+                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td><a href="/admin/payment/102">Cara Stevens</a></td>
-                                    <td>Sales Assistant</td>
-                                    <td>New York</td>
-                                    <td>46</td>
-                                    <td>2011-12-06</td>
-                                    <td><span class="badge bg-warning">Pending</span></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="/admin/payment/102">Cara Stevens</a></td>
-                                    <td>Sales Assistant</td>
-                                    <td>New York</td>
-                                    <td>46</td>
-                                    <td>2011-12-06</td>
-                                    <td><span class="badge bg-danger">Rejected</span></td>
+                                    <td>XII</td>
+                                    <td>Januari</td>
+                                    <td>Amianhudin</td>
+                                    <td>2021-12-06</td>
+                                    <td><span class="badge bg-danger">Tidak Falid</span></td>
+                                    <td>
+                                        <a href="/admin/payment/transaction/32789/accept" class="bi bi-pencil-square px-2"></a>
+                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
+                                    </td>
                                 </tr>
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
+                                    <th>Kelas</th>
+                                    <th>Tagihan Bulan</th>
+                                    <th>Nama Siswa</th>
+                                    <th>Tanggal Pembayaran</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </tfoot>
                         </table>

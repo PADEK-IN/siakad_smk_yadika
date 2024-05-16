@@ -19,32 +19,55 @@
 
             <div class="container-fluid pt-4 px-4 pb-5">
                 <div class="d-flex mb-4">
-                    <a href="/admin/payment" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
+                    <a href="/admin/payment/transactions" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
                     <h6 class="px-3">Detail Payment</h6>
                 </div>
-                <div class="bg-light text-center rounded p-4">
-                    <div class="alert alert-warning" role="alert">
-                        Status Payment Pending
+                <div class="bg-light  rounded p-4">
+                    <div class="alert alert-warning text-center" role="alert">
+                        Status Pembayaran Masih Belum Di Konfirmasi
+                    </div>
+                    <h5 class="">Detail Pembayaran</h5>
+                    <div class="bg-light rounded h-100 ">
+                        <div class="testimonial-item p-2">
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td class="fw-bold">Id Transaksi</td>
+                                        <td>4672389</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Tingkatan</td>
+                                        <td>XI</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Tagihan Untuk Bulan</td>
+                                        <td>Januari</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Nama Siswa</td>
+                                        <td>Junaidi Sulaiman</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Tanggal Di Bayar</td>
+                                        <td>01 Januari 2022</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Bukti Pembayaran</td>
+                                        <td class="text-center"><img class="img-fluid mx-auto mb-4" src="/images/berkas.jpg" alt="" style="width: 500px; height: 500px;"></td>
+                                    </tr>
+                                </tbody>
+                            </table> 
+                            
+                        </div>
                     </div>
 
-                        <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Detail SPP</h6>
-                            <div class="testimonial-item text-center">
-                                <img class="img-fluid rounded-circle mx-auto mb-4" src="/images/user.jpg" style="width: 100px; height: 100px;">
-                                <h5 class="mb-1">Nama User</h5>
-                                <p>XII A</p>
-                                <p class="mb-0">Dolor et eos labore, stet justo sed est sed. Diam sed sed dolor stet amet eirmod eos labore diam</p>
-                                <img class="img-fluid mx-auto mb-4" src="/images/berkas.jpg" alt="">
-                            </div>
-                        </div>
-
-                    <div class="accordion" id="accordionExample">
+                    <div class="accordion px-2" id="accordionExample">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingTwo">
                                 <button class="accordion-button collapsed" type="button"
                                     data-bs-toggle="collapse" data-bs-target="#collapseTwo"
                                     aria-expanded="false" aria-controls="collapseTwo">
-                                    Change Status
+                                    Seting Status Pembayaran
                                 </button>
                             </h2>
                             
@@ -59,26 +82,26 @@
                                                     <input class="form-check-input" type="radio" name="gridRadios"
                                                         id="gridRadios1" value="option1" checked>
                                                     <label class="badge bg-success" for="gridRadios1">
-                                                        Accepted
+                                                        Diterima
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="gridRadios"
                                                         id="gridRadios2" value="option2">
                                                     <label class="badge bg-warning" for="gridRadios2">
-                                                        Pending
+                                                        Diproses
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="gridRadios"
                                                         id="gridRadios2" value="option2">
                                                     <label class="badge bg-danger" for="gridRadios2">
-                                                        Rejected
+                                                        Ditolak
                                                     </label>
                                                 </div>
                                             </div>
                                         </fieldset>
-                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="submit" class="btn btn-primary">Simpan</button>
                                     </form>
                                 </div>
                             </div>

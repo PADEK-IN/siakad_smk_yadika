@@ -23,7 +23,7 @@
                         <a href="/admin/payment" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
                         <h6 class="d-inline px-2">Kembali</h6>
                     </div>
-                    <h6>Buat SPP</h6>
+                    <h6>Edit SPP</h6>
                     <hr>
                     <form>
                         <!-- Tingkatan -->
@@ -107,15 +107,21 @@
                             </div>
                         </fieldset>
 
-                        <button type="submit" class="btn btn-primary">Buat</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
                     </form>
                 </div>
             </div>
             
         </div>
     </div>
-
     <%- include ('./../../../components/script.ejs')%>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+    <script>
+        new DataTable('#example');
+    </script>
 </body>
 
 </html>
