@@ -35,6 +35,7 @@ import adminTransaksiRouter from './routes/api/admin/transaksi/transaksi.router.
 import adminPenilaianRouter from './routes/api/admin/penilaian/penilaian.router.js';
 import adminJadwalPelajaranRouter from './routes/api/admin/jadwal_pelajaran/jadwal_pelajaran.router.js';
 import adminJadwalAbsenRouter from './routes/api/admin/jadwal_absen/jadwal_absen.router.js';
+import adminAbsenRouter from './routes/api/admin/absen/absen.router.js';
 // Murid
 import muridRouter from './routes/api/murid/profile/profile.router.js';
 // Guru
@@ -97,6 +98,7 @@ app.use('/api/admin/transaksi', adminTransaksiRouter);
 app.use('/api/admin/penilaian', adminPenilaianRouter);
 app.use('/api/admin/jadwal-pelajaran', adminJadwalPelajaranRouter);
 app.use('/api/admin/jadwal-absen', adminJadwalAbsenRouter);
+app.use('/api/admin/absen', adminAbsenRouter);
 // Murid
 app.use('/api/murid', muridRouter);
 // Guru
