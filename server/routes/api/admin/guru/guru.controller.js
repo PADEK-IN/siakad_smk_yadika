@@ -1,5 +1,6 @@
 import * as responses from "../../../../helpers/response.js";
-import Guru from "../../../../models/guru.model.js";
+import {db} from "../../../../models/index.js";
+const {Guru} = db;
 import { checkValidId, hashids } from "../../../../helpers/isValidId.js";
 
 export const getAll = async (req, res) => {
