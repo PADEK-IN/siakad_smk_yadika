@@ -9,7 +9,9 @@ export const getAll = async (req, res) => {
         const data = dataTransaksi.map((Transaksi) => {
             return {
               ...Transaksi.dataValues,
-              id: hashids.encode(Transaksi.id)
+              id: hashids.encode(Transaksi.id),
+              id_murid: hashids.encode(Transaksi.id_murid),
+              id_spp: hashids.encode(Transaksi.id_spp)
             };
         });
 
@@ -32,6 +34,8 @@ export const getOneById = async (req, res) => {
         const data = {
             ...dataTransaksi.dataValues,
             id: hashids.encode(dataTransaksi.id),
+            id_murid: hashids.encode(Transaksi.id_murid),
+            id_spp: hashids.encode(Transaksi.id_spp)
         };
         
         responses.res200("Berhasil mengambil data transaksi", data, res);
