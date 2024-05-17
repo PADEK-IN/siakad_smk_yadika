@@ -13,24 +13,6 @@ import Transaksi from "./transaksi.model.js";
 import Users from "./users.model.js";
 import Wali_Murid from "./wali_murid.model.js";
 
-const db = {};
-
-db.Absen = Absen;
-db.Guru = Guru;
-db.Jadwal_Absen = Jadwal_Absen;
-db.Jadwal_Pelajaran = Jadwal_Pelajaran;
-db.Jurusan = Jurusan;
-db.Kelas = Kelas;
-db.Mata_Pelajaran = Mata_Pelajaran;
-db.Murid = Murid;
-db.Penilaian = Penilaian;
-db.Spp = Spp;
-db.Transaksi = Transaksi;
-db.User = Users;
-db.Wali_Murid = Wali_Murid;
-
-export { db };
-
 // Database Synchron
 export const initializeDatabase = async () => {
     try {
