@@ -36,60 +36,249 @@
                     </div>
                     <hr>
                     <div class="bg-light rounded h-100">
-                        <h6 class="mb-4">Detail Murid</h6>
-                        <table id="example" class="table table-striped text-center" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>NIS</th>
-                                    <th>Nama</th>
-                                    <th>Tugas</th>
-                                    <th>UTS</th>
-                                    <th>UAS</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>43536536</td>
-                                    <td><a href="/teacher/class/01/detail">XII TKJ</a></td>
-                                    <td><span class="badge bg-primary">80</span></td>
-                                    <td><span class="badge bg-secondary">-</span></td>
-                                    <td><span class="badge bg-secondary">-</span></td>
-                                    <td><span class="badge bg-success">Aktif</span></td>
-                                </tr>
-                                <tr>
-                                    <td>43536536</td>
-                                    <td><a href="/teacher/class/01/detail">XII TKJ</a></td>
-                                    <td><span class="badge bg-warning">60</span></td>
-                                    <td><span class="badge bg-secondary">-</span></td>
-                                    <td><span class="badge bg-secondary">-</span></td>
-                                    <td><span class="badge bg-success">Aktif</span></td>
-                                </tr>
-                                <tr>
-                                    <td>43536536</td>
-                                    <td><a href="/teacher/class/01/detail">XII TKJ</a></td>
-                                    <td><span class="badge bg-danger">30</span></td>
-                                    <td><span class="badge bg-secondary">-</span></td>
-                                    <td><span class="badge bg-secondary">-</span></td>
-                                    <td><span class="badge bg-success">Aktif</span></td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>NIS</th>
-                                    <th>Nama</th>
-                                    <th>Tugas</th>
-                                    <th>UTS</th>
-                                    <th>UAS</th>
-                                    <th>Status</th>
-                                </tr>
-                            </tfoot>
-                        </table>
+                        <h6 class="mb-4">List Murid</h6>
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <button class="nav-link active" id="nav-semua-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-semua" type="button" role="tab" aria-controls="nav-semua"
+                                    aria-selected="true">Semua</button>
+                                <button class="nav-link" id="nav-tugas-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-tugas" type="button" role="tab"
+                                    aria-controls="nav-tugas" aria-selected="false">Tugas</button>
+                                <button class="nav-link" id="nav-uts-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-uts" type="button" role="tab"
+                                    aria-controls="nav-uts" aria-selected="false">UTS</button>
+                                <button class="nav-link" id="nav-uas-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-uas" type="button" role="tab"
+                                    aria-controls="nav-uas" aria-selected="false">UAS</button>
+                            </div>
+                        </nav>
+                        <div class="tab-content pt-3" id="nav-tabContent">
+                            <!-- all start -->
+                            <div class="tab-pane fade show active" id="nav-semua" role="tabpanel" aria-labelledby="nav-semua-tab">
+                                <table id="example" class="table table-striped text-center" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>NIS</th>
+                                            <th>Nama</th>
+                                            <th>Tugas</th>
+                                            <th>UTS</th>
+                                            <th>UAS</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>43536536</td>
+                                            <td><a href="/teacher/class/01/detail">Joko Santoto</a></td>
+                                            <td><span class="badge bg-primary">80</span></td>
+                                            <td><span class="badge bg-secondary">-</span></td>
+                                            <td><span class="badge bg-secondary">-</span></td>
+                                            <td><span class="badge bg-success">Aktif</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>43536536</td>
+                                            <td><a href="/teacher/class/01/detail">Joko Santoto</a></td>
+                                            <td><span class="badge bg-warning">60</span></td>
+                                            <td><span class="badge bg-secondary">-</span></td>
+                                            <td><span class="badge bg-secondary">-</span></td>
+                                            <td><span class="badge bg-success">Aktif</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>43536536</td>
+                                            <td><a href="/teacher/class/01/detail">Joko Santoto</a></td>
+                                            <td><span class="badge bg-danger">30</span></td>
+                                            <td><span class="badge bg-secondary">-</span></td>
+                                            <td><span class="badge bg-secondary">-</span></td>
+                                            <td><span class="badge bg-success">Aktif</span></td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>NIS</th>
+                                            <th>Nama</th>
+                                            <th>Tugas</th>
+                                            <th>UTS</th>
+                                            <th>UAS</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <!-- all end -->
+                            <!-- tugas start -->
+                            <div class="tab-pane fade" id="nav-tugas" role="tabpanel" aria-labelledby="nav-tugas-tab">
+                                <!-- <h6 class="mb-4">Accented Table</h6>-->
+                                <form action="">
+                                    <table id="example" class="table table-striped text-center" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>NIS</th>
+                                                <th>Nama</th>
+                                                <th>Tugas</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>43536536</td>
+                                                <td>JOKO SANTOSO</td>
+                                                <td><input type="email" class="form-control" id="inputEmail"
+                                                    aria-describedby="emailHelp" value="80"></td>
+                                                <td><span class="badge bg-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>43536536</td>
+                                                <td>JOKO SANTOSO</td>
+                                                <td><input type="email" class="form-control" id="inputEmail"
+                                                    aria-describedby="emailHelp" value="80"></td>
+                                                <td><span class="badge bg-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>43536536</td>
+                                                <td>JOKO SANTOSO</td>
+                                                <td><input type="email" class="form-control" id="inputEmail"
+                                                    aria-describedby="emailHelp" value="80"></td>
+                                                <td><span class="badge bg-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>43536536</td>
+                                                <td>JOKO SANTOSO</td>
+                                                <td><input type="email" class="form-control" id="inputEmail"
+                                                    aria-describedby="emailHelp" value="80"></td>
+                                                <td><span class="badge bg-success">Aktif</span></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>NIS</th>
+                                                <th>Nama</th>
+                                                <th>Tugas</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                </form>
+                            </div>
+                            <!-- tugas end -->
+                            <!-- uts start -->
+                            <div class="tab-pane fade" id="nav-uts" role="tabpanel" aria-labelledby="nav-uts-tab">
+                                <!-- <h6 class="mb-4">Accented Table</h6>-->
+                                <form action="">
+                                    <table id="example" class="table table-striped text-center" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>NIS</th>
+                                                <th>Nama</th>
+                                                <th>UTS</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>43536536</td>
+                                                <td>JOKO SANTOSO</td>
+                                                <td><input type="email" class="form-control" id="inputEmail"
+                                                    aria-describedby="emailHelp"></td>
+                                                <td><span class="badge bg-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>43536536</td>
+                                                <td>JOKO SANTOSO</td>
+                                                <td><input type="email" class="form-control" id="inputEmail"
+                                                    aria-describedby="emailHelp"></td>
+                                                <td><span class="badge bg-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>43536536</td>
+                                                <td>JOKO SANTOSO</td>
+                                                <td><input type="email" class="form-control" id="inputEmail"
+                                                    aria-describedby="emailHelp"></td>
+                                                <td><span class="badge bg-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>43536536</td>
+                                                <td>JOKO SANTOSO</td>
+                                                <td><input type="email" class="form-control" id="inputEmail"
+                                                    aria-describedby="emailHelp"></td>
+                                                <td><span class="badge bg-success">Aktif</span></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>NIS</th>
+                                                <th>Nama</th>
+                                                <th>UTS</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                </form>
+                            </div>
+                            <!-- uts end -->
+                            <!-- uas start -->
+                            <div class="tab-pane fade" id="nav-uas" role="tabpanel" aria-labelledby="nav-uas-tab">
+                                <!-- <h6 class="mb-4">Accented Table</h6>-->
+                                <form action="">
+                                    <table id="example" class="table table-striped text-center" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>NIS</th>
+                                                <th>Nama</th>
+                                                <th>UAS</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>43536536</td>
+                                                <td>JOKO SANTOSO</td>
+                                                <td><input type="email" class="form-control" id="inputEmail"
+                                                    aria-describedby="emailHelp"></td>
+                                                <td><span class="badge bg-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>43536536</td>
+                                                <td>JOKO SANTOSO</td>
+                                                <td><input type="email" class="form-control" id="inputEmail"
+                                                    aria-describedby="emailHelp"></td>
+                                                <td><span class="badge bg-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>43536536</td>
+                                                <td>JOKO SANTOSO</td>
+                                                <td><input type="email" class="form-control" id="inputEmail"
+                                                    aria-describedby="emailHelp"></td>
+                                                <td><span class="badge bg-success">Aktif</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>43536536</td>
+                                                <td>JOKO SANTOSO</td>
+                                                <td><input type="email" class="form-control" id="inputEmail"
+                                                    aria-describedby="emailHelp"></td>
+                                                <td><span class="badge bg-success">Aktif</span></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>NIS</th>
+                                                <th>Nama</th>
+                                                <th>UAS</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                </form>
+                            </div>
+                            <!-- uas end -->
+                        </div>
                     </div>
                 </div>       
             </div>
         </div>
-
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
