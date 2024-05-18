@@ -9,7 +9,7 @@ const router = express.Router();
 router.route("/").get(murid.getAll);
 router.route("/:id").get(murid.getOneById);
 router.route("/").post(upload.single("foto"), murid.create);
-router.route("/:id").patch(murid.update);
+router.route("/:id").patch(upload.single("foto"),murid.update);
 router.route("/:id").delete(murid.del);
 
 export default router;
