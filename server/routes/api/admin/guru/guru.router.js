@@ -9,7 +9,7 @@ const router = express.Router();
 router.route("/").get(guru.getAll);
 router.route("/:id").get(guru.getOneById);
 router.route("/").post(upload.single('foto'), guru.create);
-router.route("/:id").patch(guru.update);
+router.route("/:id").patch(upload.single('foto'), guru.update);
 router.route("/:id").delete(guru.del);
 
 export default router;
