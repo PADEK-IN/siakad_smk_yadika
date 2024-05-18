@@ -1,11 +1,11 @@
 import express from "express";
-import * as profile from "./profile.controller.js";
+import * as jadwalPelajaran from "./jadwal_pelajaran.controller.js";
 // import {isAuth } from "../../../../middlewares/isAuthenticated.js";
 
 const router = express.Router();
 
 // Routes
-router.route("/").get(profile.getOneById);
-router.route("/:id").get(profile.update);
+router.route("/").get(jadwalPelajaran.getAll);
+router.route("/:id").get(jadwalPelajaran.getOneById);
 
 export default router;

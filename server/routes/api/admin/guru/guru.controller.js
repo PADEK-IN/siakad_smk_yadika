@@ -46,10 +46,11 @@ export const create = async (req, res) => {
         const { 
             email, nip, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, pendidikan, id_mata_pelajaran 
         } = req.body;
+        const foto = req.file.filename;
         const idMapel = checkValidId(id_mata_pelajaran);
         if(!idMapel) return responses.res400("ID mata pelajaran tidak valid", res);
         await Guru.create({
-            email, nip, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, pendidikan, id_mata_pelajaran: idMapel
+            email, nip, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, pendidikan, id_mata_pelajaran: idMapel, foto
         });
         responses.res201("Guru baru berhasil ditambahkan", null, res);
     } catch (err) {
@@ -60,18 +61,21 @@ export const create = async (req, res) => {
 
 export const update = async (req, res) => {
     try {
-        const { 
-            email, nip, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, pendidikan, id_mata_pelajaran, status 
-        } = req.body;
         const {id} = req.params;
         const validId = checkValidId(id);
         if(!validId) return responses.res400("ID Guru tidak valid", res);
+
+        const { 
+            email, nip, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, pendidikan, id_mata_pelajaran, status 
+        } = req.body;
         
         const idMapel = checkValidId(id_mata_pelajaran);
         if(!idMapel) return responses.res400("ID mata pelajaran tidak valid", res);
+        
+        const foto = req.file.filename;
 
         const respons = await Guru.update({
-            email, nip, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, pendidikan, id_mata_pelajaran: idMapel, status
+            email, nip, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, pendidikan, id_mata_pelajaran: idMapel, foto, status
         },{
             where: {
                 id: validId
