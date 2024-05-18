@@ -1,1 +1,87 @@
-INI PAGE CLASS USER
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar-murid.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar-murid.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5">
+                <div class="bg-light  rounded p-4">
+                    <div class="alert text-center alert-primary" role="alert">
+                        <h5 class="mb-1">Jadwal Kelas</h5>
+                    </div>
+                    <hr>
+                    <div class="bg-light rounded h-100">
+                        <h6 class="mb-4">TKJ XII</h6>
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            <!-- absensi content start -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingFIRST">
+                                    <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#flush-collapseFIRST"
+                                        aria-expanded="false" aria-controls="flush-collapseFIRST">
+                                        Januari 2027
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseFIRST" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-headingFIRST" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <table class="table table-striped">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="fw-bold text-bg-secondary text-center" colspan="2">Detail Transaksi</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-bold">Tagihan</td>
+                                                    <td>Rp. 150.000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-bold">Bayar</td>
+                                                    <td>Rp. 150.000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-bold">Status</td>
+                                                    <td><span class="badge bg-success">Lunas</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-bold">Bukti</td>
+                                                    <td class="text-center">
+                                                        <img class="img-fluid mx-auto mb-4" src="/images/berkas.jpg" alt="" style="width: 300px; height: 300px;">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>  
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- absensi content end -->
+
+                        </div>
+                    </div>
+                </div>       
+            </div>
+        </div>
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <%- include ('./../../../components/script.ejs')%>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+    <script>
+        new DataTable('#example');
+    </script>
+</body>
+
+</html>
