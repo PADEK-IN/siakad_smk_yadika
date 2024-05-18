@@ -57,6 +57,8 @@ export const create = async (req, res) => {
         const idKelas = checkValidId(id_kelas);
         if(!idKelas) return responses.res400("ID kelas tidak valid", res);
 
+        const foto = req.file.filename;
+
         const dataMurid = await Murid.findOne({
             where: {nis, email}
         })
@@ -65,7 +67,7 @@ export const create = async (req, res) => {
         await Murid.create({
             nis, email, nama, tempat_lahir, tanggal_lahir, alamat, jenis_kelamin,
             agama, hobi, no_hp, sekolah_asal, no_ijazah, tahun_masuk, 
-            id_jurusan: idJurusan, id_kelas: idKelas
+            id_jurusan: idJurusan, id_kelas: idKelas, foto
         })
         responses.res201("User baru berhasil ditambahkan", null, res);
     } catch (err) {
@@ -89,10 +91,12 @@ export const update = async (req, res) => {
         const idKelas = checkValidId(id_kelas);
         if(!idKelas) return responses.res400("ID kelas tidak valid", res);
         
+        const foto = req.file.filename;
+
         const respons = await Murid.update({
             nis, email, nama, tempat_lahir, tanggal_lahir, alamat, jenis_kelamin,
             agama, hobi, no_hp, sekolah_asal, no_ijazah, tahun_masuk, 
-            id_jurusan: idJurusan, id_kelas: idKelas, isActive
+            id_jurusan: idJurusan, id_kelas: idKelas, foto, isActive
         },{
             where: {
                 id: validId
