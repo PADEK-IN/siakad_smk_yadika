@@ -29,23 +29,23 @@ const Penilaian = sequelize.define(
       }
     },
     tugas: {
-      type: DataTypes.INTEGER(3),
-      allowNull: false,
+      type: DataTypes.DECIMAL(5,2),
+      allowNull: true,
     },
     uts: {
-      type: DataTypes.INTEGER(3),
-      allowNull: false,
+      type: DataTypes.DECIMAL(5,2),
+      allowNull: true,
     },
     uas: {
-      type: DataTypes.INTEGER(3),
-      allowNull: false,
+      type: DataTypes.DECIMAL(5,2),
+      allowNull: true,
     },
     tambahan: {
-      type: DataTypes.INTEGER(3),
+      type: DataTypes.DECIMAL(5,2),
       allowNull: true,
     },
     akhir: {
-      type: DataTypes.INTEGER(3),
+      type: DataTypes.DECIMAL(5,2),
       allowNull: true,
     },
     semester: {

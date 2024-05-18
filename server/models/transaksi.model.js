@@ -1,9 +1,10 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/database.js";
 import Murid from "./murid.model.js";
+import Spp from "./spp.model.js";
 
-const Tagihan_Spp = sequelize.define(
-  "Tagihan_Spp",
+const Transaksi = sequelize.define(
+  "Transaksi",
   {
     id: {
       type: DataTypes.INTEGER,
@@ -19,10 +20,13 @@ const Tagihan_Spp = sequelize.define(
         key: "id"
       }
     },
-    bayar: {
-      type: DataTypes.DECIMAL(11, 2),
+    id_spp: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 0,
+      references: {
+        model: Spp,
+        key: "id"
+      }
     },
     tanggal_bayar: {
       type: DataTypes.DATEONLY,
@@ -33,18 +37,6 @@ const Tagihan_Spp = sequelize.define(
       allowNull: false,
       defaultValue: "blank.jpg"
     },
-    tagihan: {
-      type: DataTypes.DECIMAL(11, 2),
-      allowNull: false,
-    },
-    bulan: {
-      type: DataTypes.INTEGER(1),
-      allowNull: false,
-    },
-    tahun: {
-      type: DataTypes.INTEGER(4),
-      allowNull: false,
-    },
     isPaid: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
@@ -53,7 +45,9 @@ const Tagihan_Spp = sequelize.define(
   },
 );
 
-Murid.hasMany(Tagihan_Spp, {foreignKey: "id_murid"});
-Tagihan_Spp.belongsTo(Murid, {foreignKey: "id_murid"});
+Murid.hasMany(Spp, {foreignKey: "id_murid"});
+Spp.belongsTo(Murid, {foreignKey: "id_murid"});
+Spp.hasMany(Transaksi, {foreignKey: "id_spp"});
+Transaksi.belongsTo(Spp, {foreignKey: "id_spp"});
 
-export default Tagihan_Spp;
+export default Transaksi;

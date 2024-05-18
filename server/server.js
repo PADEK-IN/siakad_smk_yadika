@@ -30,6 +30,12 @@ import adminMataPelajaranRouter from './routes/api/admin/mata_pelajaran/mata_pel
 import adminGuruRouter from './routes/api/admin/guru/guru.router.js';
 import adminKelasRouter from './routes/api/admin/kelas/kelas.router.js';
 import adminMuridRouter from './routes/api/admin/murid/murid.router.js';
+import adminSppRouter from './routes/api/admin/spp/spp.router.js';
+import adminTransaksiRouter from './routes/api/admin/transaksi/transaksi.router.js';
+import adminPenilaianRouter from './routes/api/admin/penilaian/penilaian.router.js';
+import adminJadwalPelajaranRouter from './routes/api/admin/jadwal_pelajaran/jadwal_pelajaran.router.js';
+import adminJadwalAbsenRouter from './routes/api/admin/jadwal_absen/jadwal_absen.router.js';
+import adminAbsenRouter from './routes/api/admin/absen/absen.router.js';
 // Murid
 import muridRouter from './routes/api/murid/profile/profile.router.js';
 // Guru
@@ -87,6 +93,12 @@ app.use('/api/admin/mata-pelajaran', adminMataPelajaranRouter);
 app.use('/api/admin/guru', adminGuruRouter);
 app.use('/api/admin/kelas', adminKelasRouter);
 app.use('/api/admin/murid', adminMuridRouter);
+app.use('/api/admin/spp', adminSppRouter);
+app.use('/api/admin/transaksi', adminTransaksiRouter);
+app.use('/api/admin/penilaian', adminPenilaianRouter);
+app.use('/api/admin/jadwal-pelajaran', adminJadwalPelajaranRouter);
+app.use('/api/admin/jadwal-absen', adminJadwalAbsenRouter);
+app.use('/api/admin/absen', adminAbsenRouter);
 // Murid
 app.use('/api/murid', muridRouter);
 // Guru
