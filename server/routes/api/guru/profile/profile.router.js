@@ -5,6 +5,7 @@ import * as profile from "./profile.controller.js";
 const router = express.Router();
 
 // Routes
-router.route("/create").post(profile.create);
+router.route("/").get(profile.getOneById);
+router.route("/:id").get(profile.update);
 
 export default router;
