@@ -49,8 +49,7 @@
         $("#login").on("click", () => {
             const email = $("#email").val();
             const password = $("#password").val();
-            console.log(email)
-            console.log(password)
+
             $.ajax({
                 url: "/api/auth/login",
                 method: "POST",
