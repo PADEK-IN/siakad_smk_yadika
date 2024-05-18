@@ -22,6 +22,8 @@ import classTeacherRouter from './routes/web/teacher/class/class.router.js';
 import schaduleTeacherRouter from './routes/web/teacher/schadule/schadule.router.js';
 // Murid
 import indexMuridRouter from './routes/web/murid/index/index.router.js';
+import classMuridRouter from './routes/web/murid/class/class.router.js';
+import paymentMuridRouter from './routes/web/murid/payment/payment.router.js';
 
 // Import API Router
 // Admin
@@ -92,6 +94,8 @@ app.use('/teacher/class', classTeacherRouter);
 app.use('/teacher/schadule', schaduleTeacherRouter);
 // Murid
 app.use('/murid', indexMuridRouter);
+app.use('/murid/class', classMuridRouter);
+app.use('/murid/payment', paymentMuridRouter);
 
 
 
