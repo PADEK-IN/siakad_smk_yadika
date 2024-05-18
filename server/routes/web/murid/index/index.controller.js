@@ -3,5 +3,5 @@ export const getIndexPage = (req, res) => {
 };
 
 export const getProfilePage = (req, res) => {
-    res.render("pages/teacher/profile/index");
+    res.render("pages/murid/profile/index");
 };
