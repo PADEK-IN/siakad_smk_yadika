@@ -14,7 +14,7 @@
 
         <div class="content">
             <!-- navbar start -->
-            <%- include ('./../../../components/navbar-teacher.ejs')%>
+            <i%- include ('./../../../components/navbar-teacher.ejs')%>
             <!-- navar end -->
 
             <div class="container-fluid pt-4 px-4 pb-5">
@@ -46,7 +46,7 @@
                                     <td>10.00</td>
                                     <td><span class="badge bg-success">Aktif</span></td>
                                     <td>
-                                        <a href="#" class="bi bi-plus-square  px-2"></a>
+                                        <i class="bi bi-plus-square  px-2" data-bs-toggle="modal" data-bs-target="#exampleModal" style="color: blue;"></i>
                                     </td>
                                 </tr>
                             </tbody>
@@ -61,12 +61,44 @@
                                 </tr>
                             </tfoot>
                         </table>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Buat Absensi</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="">
+                <table id="example" class="table table-striped" style="width:100%">
+                    <tr>
+                        <td>Kelas</td>
+                        <td>XII TKJ</td>
+                    </tr>
+                    <tr>
+                        <td>Tanggal</td>
+                        <td><input type="date" class="form-control" id="inputDate"
+                            aria-describedby="dateHelp"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+          <button type="button" class="btn btn-primary">Buat</button>
+        </div>
+      </div>
+    </div>
+  </div>
                     </div>
                 </div>
             </div>
         </div>
+        
 
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top" ><i class="bi bi-arrow-up"></i></a>
     </div>
 
     <%- include ('./../../../components/script.ejs')%>
@@ -74,6 +106,12 @@
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
     <script>
         new DataTable('#example');
+        var myModal = document.getElementById('myModal')
+        var myInput = document.getElementById('myInput')
+
+        myModal.addEventListener('shown.bs.modal', function () {
+        myInput.focus()
+        })
     </script>
 </body>
 
