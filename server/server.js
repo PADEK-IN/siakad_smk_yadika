@@ -20,6 +20,8 @@ import indexAdminRouter from './routes/web/admin/index/index.router.js';
 import indexTeacherRouter from './routes/web/teacher/index/index.router.js';
 import classTeacherRouter from './routes/web/teacher/class/class.router.js';
 import schaduleTeacherRouter from './routes/web/teacher/schadule/schadule.router.js';
+// Murid
+import indexMuridRouter from './routes/web/murid/index/index.router.js';
 
 // Import API Router
 // Admin
@@ -88,6 +90,8 @@ app.use('/admin/payment', paymentRouter);
 app.use('/teacher', indexTeacherRouter);
 app.use('/teacher/class', classTeacherRouter);
 app.use('/teacher/schadule', schaduleTeacherRouter);
+// Murid
+app.use('/murid', indexMuridRouter);
 
 
 
