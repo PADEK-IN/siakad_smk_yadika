@@ -33,8 +33,8 @@ export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        if(!email) return responses.res400("Maaf, email belum diisi");
-        if(!password) return responses.res400("Maaf, password belum diisi");
+        if(!email) return responses.res400("Maaf, email belum diisi", res);
+        if(!password) return responses.res400("Maaf, password belum diisi", res);
 
         let user = await Users.findOne({where: {email}});
 
@@ -44,14 +44,14 @@ export const login = async (req, res) => {
         const correctPassword = await compare(user.password, password);
 
         if(!correctPassword) return responses.res400("Maaf, password anda salah", res);
-
+        
         req.session.user = {
            id: user.id,
            email: user.email,
            role: user.role
         };
 
-        responses.res200("Berhasil login", null, res);
+        responses.res200("Berhasil login", user.role, res);
     } catch (error) {
         console.log(error.message);
         responses.res500(res);

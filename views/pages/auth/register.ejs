@@ -21,17 +21,21 @@
                             <h3 class="px-2">Sign Up</h3>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                            <input type="email" class="form-control" id="email" placeholder="your@email.com">
                             <label for="floatingInput">Email address</label>
                         </div>
                         <div class="form-floating mb-4">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                            <input type="password" class="form-control" id="password" placeholder="Password">
                             <label for="floatingPassword">Password</label>
+                        </div>
+                        <div class="form-floating mb-4">
+                            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
+                            <label for="floatingPassword">Confirm Password</label>
                         </div>
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <a href="">Forgot Password</a>
                         </div>
-                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Sign In</button>
+                        <button type="button" id="register" class="btn btn-primary py-3 w-100 mb-4">Sign In</button>
                         <p class="text-center mb-0">Don't have an Account? <a href="/login">Sign In</a></p>
                     </div>
                 </div>
@@ -41,6 +45,29 @@
     </div>
 
     <%- include ('./../../components/script.ejs')%>
+    <script>
+        $("#register").on("click", () => {
+            const email = $("#email").val();
+            const password = $("#password").val();
+            const confirmPassword = $("#confirmPassword").val();
+
+            $.ajax({
+                url: "/api/auth/register",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({email, password, confirmPassword}),
+                success: (response) => {
+                    alert(response.status.message);
+                    window.location.href = "/login";
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    alert(message);
+                }
+            });
+        });
+    </script>
+
 </body>
 
 </html>
