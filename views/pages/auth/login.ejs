@@ -32,7 +32,7 @@
                             <a href="">Forgot Password</a>
                         </div>
                         <button id="login" type="button" class="btn btn-primary py-3 w-100 mb-4">Sign In</button>
-                        <p class="text-center mb-0">Don't have an Account? <a href="/register">Sign Up</a></p>
+                        <p class="text-center mb-0">Don't have an Account? <a href="/register">Register</a></p>
                         <div class="justify-content-between">
                             <a href="/admin/dashboard">Admin</a>
                             <a href="/teacher/dashboard">Teacher</a>
@@ -45,30 +45,6 @@
         <!-- Sign In End -->
     </div>
     <%- include ('./../../components/script.ejs')%>
-    <script>
-        $("#login").on("click", () => {
-            const email = $("#email").val();
-            const password = $("#password").val();
-
-            $.ajax({
-                url: "/api/auth/login",
-                method: "POST",
-                contentType: "application/json",
-                data: JSON.stringify({email, password}),
-                success: (response) => {
-                    alert(response.status.message);
-                    const role = response.data;
-                    if(role == "admin") return window.location.href = `/${role}/dashboard`;
-                    if(role == "guru") return window.location.href = `/teacher/dashboard`;
-                    if(role == "murid") return window.location.href = `/${role}/dashboard`;
-                },
-                error: (response) => {
-                    const message = response.responseJSON.status.message
-                    alert(message);
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>
