@@ -40,6 +40,31 @@
         <!-- Sign In End -->
     </div>
     <%- include ('./../../components/script.ejs')%>
+    <script>
+        
+    $("#login").on("click", () => {
+        const email = $("#email").val();
+        const password = $("#password").val();
+        $.ajax({
+            url: "/api/auth/login",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({email, password}),
+            success: (response) => {
+                alert(response.status.message);
+                const role = response.data;
+                if(role == "admin") return window.location.href = `/${role}/dashboard`;
+                if(role == "guru") return window.location.href = `/teacher/dashboard`;
+                if(role == "murid") return window.location.href = `/${role}/dashboard`;
+            },
+            error: (response) => {
+                const message = response.responseJSON.status.message
+                alert(message);
+            }
+        });
+    });
+
+    </script>
 </body>
 
 </html>
