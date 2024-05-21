@@ -23,15 +23,26 @@
                     <h6 class="px-3">Kembali</h6>
                 </div>
                 <div class="bg-light  rounded p-4">
-                    <div class="alert text-center alert-primary" role="alert">
+                    <% if (mapel.isUse == 1) {%>
+                        <div class="alert text-center alert-primary" role="alert">
+                    <% } else { %>
+                        <div class="alert text-center alert-danger" role="alert">
+                    <% } %>
+                    <!-- <div class="alert text-center alert-primary" role="alert"> -->
                         Edit Data Pelajaran
                     </div>
 
                     <div class="bg-light rounded ">
                         <div class="testimonial-item text-center">
-                            <h5 class="mb-1">67983423908</h5>
-                            <p>aditya@gmail.com</p>
-                            <span class="badge bg-success">Dipakai</span>
+                            <p><%= mapel.id %></p>
+                            <h5 class="mb-1"><%= mapel.nama %></h5>
+                            <p><%= mapel.tingkat %></p>
+                            <% if (mapel.isUse == 1) {%>
+                                <span class="badge bg-success">Dipakai</span>
+                            <% } else { %>
+                                <span class="badge bg-danger">Tidak Terpakai</span>
+                            <% } %>
+                            <!-- <span class="badge bg-success">Dipakai</span> -->
                         </div>
                     </div>
                     <hr>
@@ -40,16 +51,16 @@
                         <form>
                             <div class="mb-3">
                                 <label for="inputName" class="form-label">Nama Pelajaran</label>
-                                <input type="text" class="form-control" id="inputName">
+                                <input type="text" class="form-control" id="inputName" value="<%= mapel.nama %>">
                             </div>
                             <!-- Tingkat -->
                             <div class="form-floating mb-3">
                                 <select class="form-select" id="floatingSelect"
                                     aria-label="Floating label select example">
-                                    <option selected undefined disabled>Tingkat</option>
-                                    <option value="X">X</option>
-                                    <option value="XI">XI</option>
-                                    <option value="XII">XII</option>
+                                    <!-- <option undefined disabled>Tingkat</option> -->
+                                    <option value="10" <%= mapel.tingkat === '10' ? 'selected' : '' %>>10</option>
+                                    <option value="11" <%= mapel.tingkat === '11' ? 'selected' : '' %>>11</option>
+                                    <option value="12" <%= mapel.tingkat === '12' ? 'selected' : '' %>>12</option>
                                 </select>
                                 <label for="floatingSelect">Tingkat</label>
                             </div>
@@ -75,7 +86,7 @@
                                 </div>
                             </fieldset>
 
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="submit" class="btn btn-primary">Edit</button>
                         </form>
                     </div>
                 </div>
@@ -89,6 +100,8 @@
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
     <script>
         new DataTable('#example');
+
+
     </script>
 </body>
 
