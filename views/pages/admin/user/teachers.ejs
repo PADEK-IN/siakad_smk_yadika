@@ -20,10 +20,10 @@
             <div class="container-fluid pt-4 px-4 pb-5">
                 <div class="d-flex align-items-center justify-content-between mb-4">
                     <h6 class="mb-0">List Semua Guru</h6>
+                    <a class="btn btn-sm btn-primary" href="/admin/mapel/add">Tambah Guru</a>
                 </div>
                 <div class="bg-light text-center rounded p-4">
                     <div class="table-responsive">
-                    
                         <table id="example" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
@@ -58,7 +58,6 @@
                                         <% } else { %>
                                             <span class="badge bg-danger ">Unactive</span>
                                         <% } %>
-                                        
                                     </td>
                                     <td>
                                         <a href="/admin/user/teacher/<%= data.id%>/edit" class="bi bi-pencil-square px-2"></a>
