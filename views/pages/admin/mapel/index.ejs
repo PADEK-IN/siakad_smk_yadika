@@ -36,33 +36,24 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <% for (const [index, data] of mapel.entries()) { %>
                                 <tr>
-                                    <td>200237</td>
-                                    <td>Ilmu Pendidikan</td>
+                                    <td><%= data.id %></td>
+                                    <td><%= data.nama %></td>
+                                    <td><%= data.tingkat %></td>
                                     <td>
-                                        XI
+                                        <% if (data.isUse == 1) {%>
+                                            <span class="badge bg-success">Dipakai</span>
+                                        <% } else { %>
+                                            <span class="badge bg-danger">Tidak Terpakai</span>
+                                        <% } %>
                                     </td>
                                     <td>
-                                        <span class="badge bg-success">Dipakai</span>
-                                    </td>
-                                    <td>
-                                        <a href="/admin/mapel/01/edit" class="bi bi-pencil-square px-2"></a>
-                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
-                                    </td>
-                                <tr>
-                                    <td>200237</td>
-                                    <td>Ilmu Pendidikan</td>
-                                    <td>
-                                        XI
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-danger">Tidak Terpakai</span>
-                                    </td>
-                                    <td>
-                                        <a href="/admin/mapel/01/edit" class="bi bi-pencil-square px-2"></a>
+                                        <a href="/admin/mapel/<%= data.id %>/edit" class="bi bi-pencil-square px-2"></a>
                                         <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
                                     </td>
                                 </tr>
+                                <% } %>
                             </tbody>
                             <tfoot>
                                 <tr>
