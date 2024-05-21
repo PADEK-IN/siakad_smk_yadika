@@ -27,6 +27,7 @@
                         <table id="example" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>No</th>
                                     <th>NIP</th>
                                     <th>Nama</th>
                                     <th>Email</th>
@@ -37,37 +38,38 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <% for (const [index, data] of guru.entries()) { %>                                
                                 <tr>
-                                    <td>200237</td>
-                                    <td><a href="/admin/user/teacher/200237">Joko Widodo</a></td>
-                                    <td>joko@gmail.com</td>
+                                    <td><%= index + 1 %></td>
+                                    <td><%= data.nip %></td>
+                                    <td><a href="/admin/user/teacher/<%= data.id %>"><%= data.nama %></a></td>
+                                    <td><%= data.email %></td>
                                     <td>
-                                        <span class="badge bg-success">LK</span>
+                                        <% if(data.jenis_kelamin == "laki-laki") { %>
+                                            <span class="badge bg-success">LK</span>
+                                        <% } else { %>
+                                            <span class="badge bg-danger">PR</span>
+                                        <% } %>
                                     </td>
-                                    <td>Pendidikan Mesin</td>
-                                    <td><span class="badge bg-success">Activated</span></td>
+                                    <td><%= data.pendidikan %></td>
                                     <td>
-                                        <a href="/admin/user/teacher/200237/edit" class="bi bi-pencil-square px-2"></a>
+                                        <% if(data.jenis_kelamin == "laki-laki") { %>
+                                            <span class="badge bg-success">Active</span>
+                                        <% } else { %>
+                                            <span class="badge bg-danger ">Unactive</span>
+                                        <% } %>
+                                        
+                                    </td>
+                                    <td>
+                                        <a href="/admin/user/teacher/<%= data.id%>/edit" class="bi bi-pencil-square px-2"></a>
                                         <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>200237</td>
-                                    <td><a href="/admin/user/teacher/200237">Joko Widodo</a></td>
-                                    <td>joko@gmail.com</td>
-                                    <td>
-                                        <span class="badge bg-warning">PR</span>
-                                    </td>
-                                    <td>Pendidikan Agama</td>
-                                    <td><span class="badge bg-danger">UnActivated</span></td>
-                                    <td>
-                                        <a href="/admin/user/teacher/200237/edit" class="bi bi-pencil-square px-2"></a>
-                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
-                                    </td>
-                                </tr>
+                                <% } %>
                             </tbody>
                             <tfoot>
                                 <tr>
+                                    <th>No</th>
                                     <th>NIP</th>
                                     <th>Nama</th>
                                     <th>Email</th>

@@ -1,3 +1,6 @@
+import Guru from "../../../../models/guru.model.js";
+import { checkValidId, hashids } from "../../../../helpers/isValidId.js";
+
 // user
 export const getUserPage = (req, res) => {
   res.render('pages/admin/user/index.ejs');
@@ -25,8 +28,23 @@ export const editStudentPage = (req, res) => {
 };
 
 // teacher
-export const getTeacherPage = (req, res) => {
-  res.render('pages/admin/user/teachers.ejs');
+export const getTeacherPage = async(req, res) => {
+  try {
+    const dataGuru = await Guru.findAll();
+
+    const guru = dataGuru.map((guru) => {
+        return {
+          ...guru.dataValues,
+          id: hashids.encode(guru.id)
+        };
+      });
+
+    res.render('pages/admin/user/teachers.ejs', {guru});
+} catch (err) {
+    console.log(err.message);
+    res.render("pages/errors/500");
+}
+
 };
 
 export const detailTeacherPage = (req, res) => {
