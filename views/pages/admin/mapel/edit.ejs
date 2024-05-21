@@ -86,7 +86,7 @@
                                 </div>
                             </fieldset>
 
-                            <button type="submit" class="btn btn-primary">Edit</button>
+                            <button type="button" id="edit-mapel" class="btn btn-primary">Edit</button>
                         </form>
                     </div>
                 </div>
@@ -99,8 +99,38 @@
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
     <script>
-        new DataTable('#example');
+        // new DataTable('#example');
+        import { checkValidId, hashids } from "../../../../server/helpers/isValidId.js";
 
+        let url = new URL(window.location.href);
+        let parts = url.pathname.split('/');
+        let mapelId = parts[parts.length - 2];
+
+        console.log({mapelId});
+        // console.log(mapel.data);
+        let decodedMapelId = hashids.decode(mapelId);
+        console.log({decodedMapelId});
+
+        $("#edit-mapel").on("click", () => {
+        const nama = $("#nama").val();
+        const tingkat = $("#tingkat").val();
+        const isUse = $("#isUse").val();
+            $.ajax({
+                url: "/api/admin/mata-pelajaran",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({nama, tingkat, isUse}),
+                success: (response) => {
+                    alert(response.status.message);
+                    console.log({nama, tingkat});
+                    return window.location.href = `/admin/mapel`;
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    alert(message);
+                }
+            });
+        });
 
     </script>
 </body>

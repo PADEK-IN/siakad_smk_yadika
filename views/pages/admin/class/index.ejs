@@ -30,7 +30,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Tingkat</th>
-                                    <th>Kode</th>
+                                    <th>Kelas</th>
                                     <th>Wali Kelas</th>
                                     <th>Tahun</th>
                                     <th>Status</th>
@@ -38,40 +38,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>200237</td>
-                                    <td>XI</td>
-                                    <td>A</td>
-                                    <td>Sri Hartanto, S.Pd</td>
-                                    <td>2024</td>
-                                    <td>
-                                        <span class="badge bg-success">Aktif</span>
-                                    </td>
-                                    <td>
-                                        <a href="/admin/class/01/edit" class="bi bi-pencil-square px-2"></a>
-                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>200237</td>
-                                    <td>XI</td>
-                                    <td>A</td>
-                                    <td>Sri Hartanto, S.Pd</td>
-                                    <td>2024</td>
-                                    <td>
-                                        <span class="badge bg-danger">Tidak Aktif</span>
-                                    </td>
-                                    <td>
-                                        <a href="/admin/class/01/edit" class="bi bi-pencil-square px-2"></a>
-                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
-                                    </td>
-                                </tr>   
+                                <% for (const [index, data] of kelas.entries()) { %>
+                                    <tr>
+                                        <td><%= data.id %></td>
+                                        <td><%= data.tingkat %></td>
+                                        <td><%= data.kode %></td>
+                                        <td><%= data.id_wali_kelas %></td>
+                                        <td><%= data.tahun %></td>
+                                        <td>
+                                            <% if (data.isActive == 1) {%>
+                                                <span class="badge bg-success">Aktif</span>
+                                            <% } else { %>
+                                                <span class="badge bg-danger">Tidak Aktif</span>
+                                            <% } %>
+                                        </td>
+                                        <td>
+                                            <a href="/admin/class/<%= data.id %>/edit" class="bi bi-pencil-square px-2"></a>
+                                            <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
+                                        </td>
+                                    </tr>
+                                <% } %> 
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <th>ID</th>
                                     <th>Tingkat</th>
-                                    <th>Kode</th>
+                                    <th>Kelas</th>
                                     <th>Wali Kelas</th>
                                     <th>Tahun</th>
                                     <th>Status</th>
