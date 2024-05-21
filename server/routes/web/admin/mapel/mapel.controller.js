@@ -18,6 +18,12 @@ export const getMapelPage = async (req, res) => {
   };
 
 export const addMapelPage = (req, res) => {
+  try {
+    
+  } catch (err) {
+    console.log(err.message);
+    res.render("pages/errors/500");
+  }
     res.render("pages/admin/mapel/add.ejs");
   };
   
