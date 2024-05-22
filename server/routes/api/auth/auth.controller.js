@@ -62,9 +62,11 @@ export const logout = (req, res) => {
     req.session.destroy((err) => {
         if (err) {
             console.error('Error destroying session:', err);
-            return responses.res500(res);
+            // return responses.res500(res);
+            return res.render("pages/error/500.ejs");
         }
         // Redirect atau response sesuai kebutuhan
-        responses.res200("Berhasil logout", null, res);
+        // responses.res200("Berhasil logout", null, res);
+        return res.redirect("/login");
     });
 };
