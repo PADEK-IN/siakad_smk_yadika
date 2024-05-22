@@ -28,33 +28,31 @@
                     <form>
                         <!-- Kelas -->
                         <div class="form-floating mb-3">
-                            <select class="form-select" id="floatingSelect"
+                            <select class="form-select" id="kelas"
                                 aria-label="Floating label select example">
                                 <option selected undefined disabled>Kelas</option>
-                                <option value="X">X</option>
-                                <option value="XI">XI</option>
-                                <option value="XII">XII</option>
+                                <% for (const data of kelas) {%>
+                                <option value="<%= data.id %>"><%= data.kode %></option>
+                                <% } %>
                             </select>
                             <label for="floatingSelect">Kelas</label>
                         </div>
 
                         <!-- pelajaran -->
                         <div class="form-floating mb-3">
-                            <select class="form-select" id="floatingSelect"
+                            <select class="form-select" id="mataPelajaran"
                                 aria-label="Floating label select example">
                                 <option selected undefined disabled>Pelajaran</option>
-                                <option value="ipa">IPA</option>
-                                <option value="ips">IPS</option>
-                                <option value="bahasa">Bahasa</option>
-                                <option value="agama">Agama</option>
-                                <option value="pendidikan">Pendidikan</option>
+                                <% for (const data of mataPelajaran) {%>
+                                <option value="<%= data.id %>"><%= data.nama %></option>
+                                <% } %>
                             </select>
                             <label for="floatingSelect">Pelajaran</label>
                         </div>
 
                         <!-- Hari -->
                         <div class="form-floating mb-3">
-                            <select class="form-select" id="floatingSelect"
+                            <select class="form-select" id="hari"
                                 aria-label="Floating label select example">
                                 <option selected undefined disabled>Hari</option>
                                 <option value="senin">Senin</option>
@@ -69,38 +67,16 @@
 
                         <div class="mb-3">
                             <label for="inputMulai" class="form-label">Jam Mulai</label>
-                            <input type="time" class="form-control" id="inputMulai"
+                            <input type="time" class="form-control" id="mulai"
                                 aria-describedby="mulaiHelp">
                         </div>
                         <div class="mb-3">
                             <label for="inputBerakhir" class="form-label">Jam Berakhir</label>
-                            <input type="time" class="form-control" id="inputBerakhir"
+                            <input type="time" class="form-control" id="selesai"
                                 aria-describedby="berakhirHelp">
                         </div>
 
-                        
-                        <!-- Status -->
-                        <fieldset class="row mb-3">
-                            <legend class="col-form-label col-sm-2 pt-0">Status</legend>
-                            <div class="col-sm-10">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="gridRadios"
-                                        id="gridActive" value="option1" checked>
-                                    <label class="form-check-label badge bg-success" for="gridActive">
-                                        Aktif
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="gridRadios"
-                                        id="gridUnActive" value="option2">
-                                    <label class="form-check-label badge bg-danger" for="gridUnActive">
-                                        Tidak Aktif
-                                    </label>
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <button type="submit" class="btn btn-primary">Buat</button>
+                        <button type="button" id="add-schadule" class="btn btn-primary">Buat</button>
                     </form>
                 </div>
             </div>
@@ -109,6 +85,31 @@
     </div>
 
     <%- include ('./../../../components/script.ejs')%>
+    <script>
+        $("#add-schadule").on("click", () => {
+        const id_kelas = $("#kelas").val();
+        const id_mata_pelajaran = $("#mataPelajaran").val();
+        const hari = $("#hari").val();
+        const waktu_mulai = $("#mulai").val();
+        const waktu_selesai = $("#selesai").val();
+        // console.log({id_kelas, id_mata_pelajaran, hari, waktu_mulai, waktu_selesai});
+        $.ajax({
+            url: "/api/admin/jadwal-pelajaran",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({id_kelas, id_mata_pelajaran, hari, waktu_mulai, waktu_selesai}),
+            success: (response) => {
+                alert(response.status.message);
+                console.log({id_kelas, id_mata_pelajaran, hari, waktu_mulai, waktu_selesai});
+                return window.location.href = `/admin/schadule`;
+            },
+            error: (response) => {
+                const message = response.responseJSON.status.message
+                alert(message);
+            }
+        });
+    });
+    </script>
 </body>
 
 </html>

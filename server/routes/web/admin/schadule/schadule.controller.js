@@ -10,25 +10,21 @@ export const getSchadulePage = async(req, res) => {
       include: [
         {
           model: Kelas,
-          // attributes: [ "kode" ],
-          // as: 'Kelas'
+          attributes: [ "tingkat", "kode" ]
         },
-        // {
-        //   model: Mata_Pelajaran,
-        //   attributes: [ "nama" ],
-        //   // as: 'Mata_Pelajaran'
-        // }
+        {
+          model: Mata_Pelajaran,
+          attributes: [ "nama" ]
+        }
       ]
     });
-    // console.log(dataJadwal[0].Kelas.kode); // Output: Nama Kelas
-    // console.log(dataJadwal[0].Mata_Pelajaran.nama); // Output: Nama Mata Pelajaran
 
     const jadwal = dataJadwal.map((jadwal) => {
       return {
         ...jadwal.dataValues,
         id: hashids.encode(jadwal.id),
-        // Kelas:  jadwal.Kelas.kode,
-        // Mata_Pelajaran: jadwal.Mata_Pelajaran.nama
+        Kela: jadwal.Kela.tingkat + "--" +  jadwal.Kela.kode,
+        Mata_Pelajaran: jadwal.Mata_Pelajaran.nama
       };
     });
     for (const data of jadwal){
@@ -42,8 +38,28 @@ export const getSchadulePage = async(req, res) => {
   }
   };
 
-export const addSchadulePage = (req, res) => {
-    res.render("pages/admin/schadule/add.ejs");
+export const addSchadulePage = async(req, res) => {
+  try {
+    const dataKelas = await Kelas.findAll();
+    const dataMataPelajaran = await Mata_Pelajaran.findAll();
+
+    const kelas = dataKelas.map((kelas) => {
+      return { 
+        ...kelas.dataValues,
+        id: hashids.encode(kelas.id),
+      };
+    })
+    const mataPelajaran = dataMataPelajaran.map((mataPelajaran) => {
+      return { 
+        ...mataPelajaran.dataValues,
+        id: hashids.encode(mataPelajaran.id),
+      };
+    })
+    res.render("pages/admin/schadule/add.ejs" , { kelas, mataPelajaran });
+  } catch (error) {
+    console.log(err.message);
+    res.render('pages/errors/500');
+  }
   };
 
 export const editSchadulePage = (req, res) => {
