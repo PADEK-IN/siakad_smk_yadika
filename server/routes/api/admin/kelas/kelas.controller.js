@@ -21,7 +21,6 @@ export const getAll = async (req, res) => {
                 id: hashids.encode(Kelas.id),
             };
         });
-        console.log({data});
 
         responses.res200("Berhasil mengambil data kelas", data, res);
     } catch (err) {

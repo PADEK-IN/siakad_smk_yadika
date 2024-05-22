@@ -6,13 +6,13 @@ export const getClassPage = async(req, res) => {
   try {
     const dataClass = await Kelas.findAll({
       include: [
-          {
-              model: Guru,
-              attributes: [ "nama"],
-          },
+        {
+          model: Guru,
+          attributes: [ "nama"],
+        },
       ]
-  });
-  // console.log({dataClass})
+    });
+        console.log(dataClass[0].Guru.nama); // Output: Nama Kelas
     const kelas = dataClass.map((kelas) => {
       return {
         ...kelas.dataValues,
@@ -20,7 +20,7 @@ export const getClassPage = async(req, res) => {
         Guru: kelas.Guru.nama,
       };
     });
-    // console.log({kelas});
+    console.log({kelas});
     res.render("pages/admin/class/index.ejs", {kelas});
   } catch (err) {
     console.log(err.message);

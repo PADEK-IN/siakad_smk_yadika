@@ -32,7 +32,6 @@
                                 <tr>
                                     <th>Kelas</th>
                                     <th>Pelajaran</th>
-                                    <th>Pengajar</th>
                                     <th>Hari</th>
                                     <th>Mulai</th>
                                     <th>Selesai</th>
@@ -41,38 +40,31 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <% for (const data of jadwal) {%>
                                 <tr>
-                                    <td>XII</td>
-                                    <td>IPA</td>
-                                    <td>Indra Subakti, S.Pd</td>
-                                    <td>Senin</td>
-                                    <td>10.00</td>
-                                    <td>11.00</td>
-                                    <td><span class="badge bg-success">Aktif</span></td>
+                                    <td><%= data.Kelas %></td>
+                                    <td><%= data.pelajaran %></td>
+                                    <td><%= data.hari%></td>
+                                    <td><%= data.waktu_mulai %></td>
+                                    <td><%= data.waktu_selesai %></td>
                                     <td>
-                                        <a href="/admin/schadule/01/edit" class="bi bi-pencil-square px-2"></a>
+                                        <% if (data.isUse == 1) {%>
+                                            <span class="badge bg-success">Aktif</span>
+                                        <% } else { %>
+                                            <span class="badge bg-danger">Tidak Aktif</span>
+                                        <% } %>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/schadule/<%= data.id %>/edit" class="bi bi-pencil-square px-2"></a>
                                         <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>XII</td>
-                                    <td>IPA</td>
-                                    <td>Indra Subakti, S.Pd</td>
-                                    <td>Senin</td>
-                                    <td>10.00</td>
-                                    <td>11.00</td>
-                                    <td><span class="badge bg-danger">Tidak Aktif</span></td>
-                                    <td>
-                                        <a href="/admin/schadule/01/edit" class="bi bi-pencil-square px-2"></a>
-                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
-                                    </td>
-                                </tr>
+                                <% } %>
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <th>Kelas</th>
                                     <th>Pelajaran</th>
-                                    <th>Pengajar</th>
                                     <th>Hari</th>
                                     <th>Mulai</th>
                                     <th>Selesai</th>
