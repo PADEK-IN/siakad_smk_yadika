@@ -36,35 +36,25 @@
                                     <th>Tagihan</th>
                                     <th>Bulan</th>
                                     <th>Tahun</th>
-                                    <th>Status</th>
+                                    <!-- <th>Status</th> -->
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <% for(const data of spp) { %>
                                 <tr>
-                                    <td>23234</td>
-                                    <td>XII</td>
-                                    <td>Rp. 150.000</td>
-                                    <td>Januari</td>
-                                    <td>2025</td>
-                                    <td><span class="badge bg-success">Aktif</span></td>
+                                    <td><%= data.id%></td>
+                                    <td><%= data.tingkat%></td>
+                                    <td>Rp. <%= data.tagihan %></td>
+                                    <td><%= data.bulan%></td>
+                                    <td><%= data.tahun %></td>
+                                    <!-- <td><span class="badge bg-success">Aktif</span></td> -->
                                     <td>
-                                        <a href="/admin/payment/01/edit" class="bi bi-pencil-square px-2"></a>
+                                        <a href="/admin/payment/<%= data.id %>/edit" class="bi bi-pencil-square px-2"></a>
                                         <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>23234</td>
-                                    <td>XII</td>
-                                    <td>Rp. 150.000</td>
-                                    <td>Januari</td>
-                                    <td>2025</td>
-                                    <td><span class="badge bg-danger">Tidak Aktif</span></td>
-                                    <td>
-                                        <a href="/admin/payment/01/edit" class="bi bi-pencil-square px-2"></a>
-                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
-                                    </td>
-                                </tr>
+                                <% }%>
                             </tbody>
                             <tfoot>
                                 <tr>
@@ -73,7 +63,7 @@
                                     <th>Tagihan</th>
                                     <th>Bulan</th>
                                     <th>Tahun</th>
-                                    <th>Status</th>
+                                    <!-- <th>Status</th> -->
                                     <th>Action</th>
                                 </tr>
                             </tfoot>

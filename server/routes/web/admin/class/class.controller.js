@@ -12,7 +12,8 @@ export const getClassPage = async(req, res) => {
         },
       ]
     });
-        console.log(dataClass[0].Guru.nama); // Output: Nama Kelas
+    // console.log(dataClass)
+        // console.log(dataClass[0].Guru.nama); // Output: Nama Kelas
     const kelas = dataClass.map((kelas) => {
       return {
         ...kelas.dataValues,
