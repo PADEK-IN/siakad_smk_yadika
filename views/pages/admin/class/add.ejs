@@ -35,48 +35,50 @@
                                 <select class="form-select" id="floatingSelect"
                                     aria-label="Floating label select example">
                                     <option selected undefined disabled>Tingkat</option>
-                                    <option value="X">X</option>
-                                    <option value="XI">XI</option>
-                                    <option value="XII">XII</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
                                 </select>
                                 <label for="floatingSelect">Tingkat</label>
                             </div>
                             <div class="mb-3">
-                                <label for="inputCode" class="form-label">Kode Kelas</label>
+                                <label for="inputCode" class="form-label">Kelas</label>
                                 <input type="text" class="form-control" id="inputCode">
                             </div>
+
+                            <tr>
+                                <td>kelas</td>
+                                <td>nama</td>
+                                <td>nama</td>
+                                <td>nama</td>
+                            </tr>
+                            <% for (const [data] of guru.entries()) { %>
+                                <tr>
+                                    <td><%= data.id %></td>
+                                    <td><%= data.nama %></td>
+                                </tr>
+                                <!-- <p><%= data.nama %></p>
+                                <p>Lorem, ipsum.</p> -->
+                            <% } %>
                             <!-- Wali Kelas -->
                             <div class="form-floating mb-3">
                                 <select class="form-select" id="floatingSelect"
                                     aria-label="Floating label select example">
                                     <option selected undefined disabled>Wali Kelas</option>
+                                    <!-- <% for (const [data] of guru.entries()) { %>
+                                    <option value="<%= data.id %>"><%= data.nama %></option>
+                                    <% } %> -->
+                                    <!-- <option value="Sri Hartanto, S.Pd">Sri Hartanto, S.Pd</option>
                                     <option value="Sri Hartanto, S.Pd">Sri Hartanto, S.Pd</option>
-                                    <option value="Sri Hartanto, S.Pd">Sri Hartanto, S.Pd</option>
-                                    <option value="Sri Hartanto, S.Pd">Sri Hartanto, S.Pd</option>
+                                    <option value="Sri Hartanto, S.Pd">Sri Hartanto, S.Pd</option> -->
                                 </select>
                                 <label for="floatingSelect">Wali Kelas</label>
                             </div>
+                            <div class="mb-3">
+                                <label for="inputCode" class="form-label">Tahun</label>
+                                <input type="number" class="form-control" id="inputCode" min="1900" max="2099">
+                            </div>
 
-                            <!-- Status -->
-                            <fieldset class="row mb-3">
-                                <legend class="col-form-label col-sm-2 pt-0">Status</legend>
-                                <div class="col-sm-10">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gridRadios"
-                                            id="gridActive" value="option1" checked>
-                                        <label class="form-check-label" for="gridActive">
-                                            Aktif
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gridRadios"
-                                            id="gridUnActive" value="option2">
-                                        <label class="form-check-label" for="gridUnActive">
-                                            Tidak Aktif
-                                        </label>
-                                    </div>
-                                </div>
-                            </fieldset>
 
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </form>
@@ -92,6 +94,26 @@
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
     <script>
         new DataTable('#example');
+
+        $("#add-class").on("click", () => {
+        const nama = $("#nama").val();
+        const tingkat = $("#tingkat").val();
+            $.ajax({
+                url: "/api/admin/mata-pelajaran",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({nama, tingkat}),
+                success: (response) => {
+                    alert(response.status.message);
+                    console.log({nama, tingkat});
+                    return window.location.href = `/admin/mapel`;
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    alert(message);
+                }
+            });
+        });
     </script>
 </body>
 
