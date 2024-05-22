@@ -50,7 +50,7 @@
                                     </td>
                                     <td>
                                         <a href="/admin/mapel/<%= data.id %>/edit" class="bi bi-pencil-square px-2"></a>
-                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
+                                        <a href="#" onclick="remove('<%= data.id %>')" class="bi bi-archive px-2" style="color: red;"></a>
                                     </td>
                                 </tr>
                                 <% } %>
@@ -77,6 +77,23 @@
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
     <script>
         new DataTable('#example');
+
+        function remove(id) {
+            console.log(id);
+            $.ajax({
+                url: '/api/admin/mata-pelajaran/' + id,
+                method: 'DELETE',
+                contentType: "application/json",
+                success: function(response) {
+                    alert(response.status.message);
+                    window.location.reload();
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    alert(message);
+                }
+            });
+        }
     </script>
 </body>
 
