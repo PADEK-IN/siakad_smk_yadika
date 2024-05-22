@@ -39,7 +39,6 @@ export const addClassPage = async(req, res) => {
       });
       for (const data of guru) {
         console.log({data});
-        console.log("nama :",data.nama);
       }
     res.render("pages/admin/class/add.ejs", {guru});
   } catch (err) {

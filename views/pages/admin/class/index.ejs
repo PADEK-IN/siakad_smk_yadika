@@ -54,8 +54,7 @@
                                         </td>
                                         <td>
                                             <a href="/admin/class/<%= data.id %>/edit" class="bi bi-pencil-square px-2"></a>
-                                            <button href="#" onclick="remove('<%= data.id %>')" class="bi bi-archive px-2" style="color: red;"></button>
-                                            <!-- <a href="#" class="bi bi-archive px-2 remove-btn" data-id="<%= data.id %>" style="color: red;"></a> -->
+                                            <a href="#" onclick="remove('<%= data.id %>')" class="bi bi-archive px-2" style="color: red;"></a>
                                         </td>
                                     </tr>
                                 <% } %> 
@@ -101,16 +100,6 @@
                 }
             });
         }
-    //     $(document).ready(function() {
-    //     $('.remove-btn').click(function(event) {
-    //     event.preventDefault(); // Mencegah perilaku default link
-
-    //     var guruId = $(this).data('id'); // Mengambil ID guru dari atribut data
-
-    //     // Panggil fungsi remove dengan ID guru sebagai argumen
-    //     remove(guruId);
-    //     });
-    // });
     </script>
 </body>
 
