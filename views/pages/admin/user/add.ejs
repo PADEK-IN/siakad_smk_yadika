@@ -28,102 +28,27 @@
                     <form>
                         <div class="mb-3">
                             <label for="inputEmail" class="form-label">Alamat Email</label>
-                            <input type="email" class="form-control" id="inputEmail"
+                            <input type="email" class="form-control" id="email"
                                 aria-describedby="emailHelp">
-                            <div id="emailHelp" class="form-text">Kami tidak akan pernah membagikan email Anda kepada orang lain.
+                            <div id="emailHelp" class="form-text text-danger "><em style="font-size: 10px;">Kami tidak akan pernah membagikan email Anda kepada orang lain.</em>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1">
+                            <input type="password" class="form-control" id="password">
                         </div>
-
                         <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Role</label>
-
-                            <fieldset class="row mb-3">
-                                <div class="bg-light rounded h-100 p-4">
-                                    <nav>
-                                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                            <button class="nav-link active" id="nav-admin-tab" data-bs-toggle="tab"
-                                                data-bs-target="#nav-admin" type="button" role="tab" aria-controls="nav-admin"
-                                                aria-selected="true">Admin</button>
-                                            <button class="nav-link" id="nav-teacher-tab" data-bs-toggle="tab"
-                                                data-bs-target="#nav-teacher" type="button" role="tab"
-                                                aria-controls="nav-teacher" aria-selected="false">Guru</button>
-                                        </div>
-                                    </nav>
-                                    <div class="tab-content pt-3" id="nav-tabContent">
-                                        <!-- form set admin -->
-                                        <div class="tab-pane fade show active" id="nav-admin" role="tabpanel" aria-labelledby="nav-admin-tab">
-                                            <div class="bg-light rounded h-100 p-4">
-                                                <div class="pb-4">
-                                                    <h6 class="d-inline px-2">Admin</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- form set Teacher -->
-                                        <div class="tab-pane fade" id="nav-teacher" role="tabpanel" aria-labelledby="nav-teacher-tab">
-                                            <div class="bg-light rounded h-100 p-4">
-                                                <h6 class="d-inline px-2">Form Guru</h6>
-                                                <hr>
-                                                <div class="mb-3">
-                                                    <label for="inputName" class="form-label">Name</label>
-                                                    <input type="text" class="form-control" id="inputName">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="inputTTL" class="form-label">Tanggal Lahir</label>
-                                                    <input type="date" class="form-control" id="inputTTL">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="inputAlamat" class="form-label">Alamat</label>
-                                                    <textarea name="" class="form-control" id="inputAlamat"></textarea>
-                                                </div>
-                                                <!-- pendidikan -->
-                                                <div class="form-floating mb-3">
-                                                    <select class="form-select" id="floatingSelect"
-                                                        aria-label="Floating label select example">
-                                                        <option selected undefined disabled>Pendidikan Terakhir</option>
-                                                        <option value="1">S1</option>
-                                                        <option value="2">SMA</option>
-                                                    </select>
-                                                    <label for="floatingSelect">Pendidikan Terakhir</label>
-                                                </div>
-                                                <!-- JK -->
-                                                <fieldset class="row mb-3">
-                                                    <legend class="col-form-label col-sm-2 pt-0">Jenis Kelamin</legend>
-                                                    <div class="col-sm-10">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="gridRadios"
-                                                                id="gridLaki" value="option1" checked>
-                                                            <label class="form-check-label" for="gridLaki">
-                                                                Laki-Laki
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="gridRadios"
-                                                                id="gridPerempuan" value="option2">
-                                                            <label class="form-check-label" for="gridPerempuan">
-                                                                Perempuan
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-
-                                                <div class="mb-3">
-                                                    <label for="inputHp" class="form-label">Nomer Handphone</label>
-                                                    <input type="number" class="form-control" id="inputHp">
-                                                </div>
-                    
-                                                <button type="submit" class="btn btn-primary">Create</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
+                            <label for="floatingSelect">Role</label>
+                            <select class="form-select" id="role"
+                                aria-label="Floating label select example">
+                                <option selected undefined disabled>Pilih Role</option>
+                                <option value="murid">Murid</option>
+                                <option value="guru">Guru</option>
+                                <option value="admin">Admin</option>
+                            </select>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Create</button>
+                        <button id="create" class="btn btn-primary">Create</button>
                     </form>
                 </div>
             </div>
@@ -132,6 +57,29 @@
     </div>
 
     <%- include ('./../../../components/script.ejs')%>
+    <script>
+        $("#create").on("click", (e) => {
+            e.preventDefault();
+            const email = $("#email").val();
+            const password = $("#password").val();
+            const role = $("#role").val();
+            if(!role) return alert("Maaf, harap memilih role");
+            $.ajax({
+                url: "/api/admin/user/add",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({email, password, role}),
+                success: (response) => {
+                    alert(response.status.message);
+                    window.location.href = "/admin/user";
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    alert(message);
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

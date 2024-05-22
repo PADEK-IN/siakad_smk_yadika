@@ -1,10 +1,31 @@
 import Guru from "../../../../models/guru.model.js";
+import Users from "../../../../models/users.model.js";
+import Mata_Pelajaran from "../../../../models/mata_pelajaran.model.js";
+import Kelas from "../../../../models/kelas.model.js";
+import Jadwal_Pelajaran from "../../../../models/jadwal_pelajaran.model.js";
 import { checkValidId, hashids } from "../../../../helpers/isValidId.js";
 
 // user
-export const getUserPage = (req, res) => {
-  res.render('pages/admin/user/index.ejs');
+export const getUserPage = async (req, res) => {
+  try {
+      const dataUsers = await Users.findAll({attributes: {
+          exclude: ["password"]
+      }});
+
+      const users = dataUsers.map((user) => {
+          return {
+            ...user.dataValues,
+            id: hashids.encode(user.id)
+          };
+        });
+
+        res.render('pages/admin/user/index.ejs', { users });
+  } catch (err) {
+      console.log(err.message);
+      res.render("pages/errors/500");
+  }
 };
+
 export const addUserPage = (req, res) => {
   res.render('pages/admin/user/add.ejs');
 };
@@ -12,7 +33,6 @@ export const addUserPage = (req, res) => {
 export const editUserPage = (req, res) => {
   res.render('pages/admin/user/edit.ejs');
 };
-
 
 // student
 export const getStudentPage = (req, res) => {
@@ -47,8 +67,42 @@ export const getTeacherPage = async(req, res) => {
 
 };
 
-export const detailTeacherPage = (req, res) => {
-  res.render('pages/admin/user/teacher-detail.ejs');
+export const addTeacherPage = async (req, res) => {
+  res.render('pages/admin/user/teacher-add.ejs');
+};
+
+export const detailTeacherPage = async (req, res) => {
+  try {
+    const {id} = req.params;
+    const validId = checkValidId(id);
+    if(!validId) return res.render("pages/errors/400", { message: "ID guru tidak valid" });
+    const dataGuru = await Guru.findOne({
+        where: { id: validId },
+    });
+
+    // const jadwal = await Jadwal_Pelajaran.findAll({
+    //   where: { id_mata_pelajaran: dataGuru.id_mata_pelajaran },
+    //   include: [
+    //     { model: Mata_Pelajaran},
+    //     { model: Kelas,
+    //       include:  [{
+    //         model: Guru
+    //       }]
+    //     },
+    //   ]
+    // })
+
+    const guru = {
+        ...dataGuru.dataValues,
+        id: hashids.encode(dataGuru.id),
+    };
+    
+    res.render('pages/admin/user/teacher-detail.ejs', { guru });
+  } catch (err) {
+    console.log(err.message);
+    res.render("pages/errors/500");
+
+  }
 };
 
 export const editTeacherPage = (req, res) => {

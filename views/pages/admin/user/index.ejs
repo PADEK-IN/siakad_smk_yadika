@@ -28,6 +28,7 @@
                         <table id="example" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>No</th>
                                     <th>ID</th>
                                     <th>email</th>
                                     <th>role</th>
@@ -36,65 +37,37 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <% for (const [index, user] of users.entries()) { %>           
                                 <tr>
-                                    <td>200237</td>
-                                    <td>joko@gmail.com</td>
+                                    <td><%= index+1 %></td>
+                                    <td><%= user.id %></td>
+                                    <td><%= user.email %></td>
                                     <td>
-                                        <span class="badge bg-primary">Admin</span>
+                                        <% if(user.role == "admin") { %>
+                                            <span class="badge bg-primary">Admin</span>
+                                        <% } if(user.role == "guru") { %>
+                                            <span class="badge bg-warning">Guru</span>
+                                        <% } if(user.role == "murid") {  %>
+                                            <span class="badge bg-info">Murid</span>                                            
+                                        <% } %>
                                     </td>
                                     <td>
-                                        <span class="badge bg-success">Valid</span>
+                                        <% if(user.isValid == true ) { %>
+                                            <span class="badge bg-success">Valid</span>
+                                        <% } else { %>
+                                            <span class="badge bg-danger">Tidak Valid</span>
+                                        <% } %>
                                     </td>
                                     <td>
-                                        <a href="/admin/user/01/edit" class="bi bi-pencil-square px-2"></a>
+                                        <a href="/admin/user/<%= user.id %>/edit" class="bi bi-pencil-square px-2"></a>
                                         <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>200237</td>
-                                    <td>joko@gmail.com</td>
-                                    <td>
-                                        <span class="badge bg-warning">Murid</span>
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-success">Valid</span>
-                                    </td>
-                                    <td>
-                                        <a href="/admin/user/01/edit" class="bi bi-pencil-square px-2"></a>
-                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>200237</td>
-                                    <td>joko@gmail.com</td>
-                                    <td>
-                                        <span class="badge bg-danger">Guru</span>
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-success">Valid</span>
-                                    </td>
-                                    <td>
-                                        <a href="/admin/user/01/edit" class="bi bi-pencil-square px-2"></a>
-                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>200237</td>
-                                    <td>joko@gmail.com</td>
-                                    <td>
-                                        <i class="bi bi-dash-square"></i>
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-danger">Tidak Valid</span>
-                                    </td>
-                                    <td>
-                                        <a href="/admin/user/01/edit" class="bi bi-pencil-square px-2"></a>
-                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
-                                    </td>
-                                </tr>
+                                <% } %> 
                             </tbody>
                             <tfoot>
                                 <tr>
+                                    <th>No</th>
                                     <th>ID</th>
                                     <th>email</th>
                                     <th>role</th>

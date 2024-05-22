@@ -12,22 +12,6 @@
 
 <script src="/js/main.js"></script>
 <script>
-    $("#logout").on("click", () => {
-        $.ajax({
-            url: "/api/auth/logout",
-            method: "GET",
-            contentType: "application/json",
-            success: (response) => {
-                alert(response.status.message);
-                return window.location.href = `/`;
-            },
-            error: (response) => {
-                const message = response.responseJSON.status.message
-                alert(message);
-            }
-        });
-    });
-
 
     // // // // TAKE PITCHURE
     

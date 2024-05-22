@@ -49,7 +49,7 @@ export const getOneById = async (req, res) => {
 
 export const create = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password, role } = req.body;
 
         if(!email) return responses.res400("Harap mengisi email", res);
         if(!password) return responses.res400("Harap mengisi password", res);
@@ -64,7 +64,7 @@ export const create = async (req, res) => {
         }
 
         const hashedPassword = await hash(password);
-        await Users.create({email, password: hashedPassword});
+        await Users.create({email, password: hashedPassword, role});
 
         responses.res201("User baru berhasil ditambahkan", null, res);
     } catch (err) {
