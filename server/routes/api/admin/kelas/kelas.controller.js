@@ -1,18 +1,27 @@
 import * as responses from "../../../../helpers/response.js";
 import Kelas from "../../../../models/kelas.model.js";
+import Guru from "../../../../models/guru.model.js";
 import { checkValidId, hashids } from "../../../../helpers/isValidId.js";
 
 export const getAll = async (req, res) => {
     try {
-        const dataKelas = await Kelas.findAll();
+        const dataKelas = await Kelas.findAll({
+            include: [
+                {
+                    model: Guru,
+                    attributes: [ "name"],
+                },
+            ]
+        });
+        console.log(dataKelas)
 
         const data = dataKelas.map((Kelas) => {
             return {
-              ...Kelas.dataValues,
-              id: hashids.encode(Kelas.id),
-              id_wali_kelas: hashids.encode(Kelas.id_wali_kelas),
+                ...Kelas.dataValues,
+                id: hashids.encode(Kelas.id),
             };
-          });
+        });
+        console.log({data});
 
         responses.res200("Berhasil mengambil data kelas", data, res);
     } catch (err) {

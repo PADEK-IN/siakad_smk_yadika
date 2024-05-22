@@ -4,13 +4,23 @@ import { checkValidId, hashids } from '../../../../helpers/isValidId.js';
 
 export const getClassPage = async(req, res) => {
   try {
-    const dataClass = await Kelas.findAll();
+    const dataClass = await Kelas.findAll({
+      include: [
+          {
+              model: Guru,
+              attributes: [ "nama"],
+          },
+      ]
+  });
+  // console.log({dataClass})
     const kelas = dataClass.map((kelas) => {
       return {
         ...kelas.dataValues,
         id: hashids.encode(kelas.id),
+        Guru: kelas.Guru.nama,
       };
     });
+    // console.log({kelas});
     res.render("pages/admin/class/index.ejs", {kelas});
   } catch (err) {
     console.log(err.message);
@@ -20,12 +30,17 @@ export const getClassPage = async(req, res) => {
 export const addClassPage = async(req, res) => {
   try {
     const dataGuru = await Guru.findAll();
-
     const guru = dataGuru.map((guru) => {
         return {
-          ...guru.dataValues
+          ...guru.dataValues,
+          // id: guru.id,
+          id: hashids.encode(guru.id)
         };
       });
+      for (const data of guru) {
+        console.log({data});
+        console.log("nama :",data.nama);
+      }
     res.render("pages/admin/class/add.ejs", {guru});
   } catch (err) {
     console.log(err.message);

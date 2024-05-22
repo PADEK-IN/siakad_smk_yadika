@@ -32,7 +32,7 @@
                         <form>
                             <!-- Tingkat -->
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="floatingSelect"
+                                <select class="form-select" id="tingkat"
                                     aria-label="Floating label select example">
                                     <option selected undefined disabled>Tingkat</option>
                                     <option value="10">10</option>
@@ -43,44 +43,35 @@
                             </div>
                             <div class="mb-3">
                                 <label for="inputCode" class="form-label">Kelas</label>
-                                <input type="text" class="form-control" id="inputCode">
+                                <input type="text" class="form-control" id="kode" maxlength="5" placeholder="TKJ-1">
+                                <div id="kode" class="form-text text-danger ">
+                                    <em style="font-size: 10px;">Inputan Maximal 5 Karakter</em>
+                                </div>
                             </div>
 
-                            <tr>
-                                <td>kelas</td>
-                                <td>nama</td>
-                                <td>nama</td>
-                                <td>nama</td>
-                            </tr>
-                            <% for (const [data] of guru.entries()) { %>
-                                <tr>
-                                    <td><%= data.id %></td>
-                                    <td><%= data.nama %></td>
-                                </tr>
-                                <!-- <p><%= data.nama %></p>
-                                <p>Lorem, ipsum.</p> -->
-                            <% } %>
                             <!-- Wali Kelas -->
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="floatingSelect"
+                                <select class="form-select" id="id_wali_kelas"
                                     aria-label="Floating label select example">
                                     <option selected undefined disabled>Wali Kelas</option>
-                                    <!-- <% for (const [data] of guru.entries()) { %>
-                                    <option value="<%= data.id %>"><%= data.nama %></option>
-                                    <% } %> -->
-                                    <!-- <option value="Sri Hartanto, S.Pd">Sri Hartanto, S.Pd</option>
-                                    <option value="Sri Hartanto, S.Pd">Sri Hartanto, S.Pd</option>
-                                    <option value="Sri Hartanto, S.Pd">Sri Hartanto, S.Pd</option> -->
+                                    <% for (const data of guru) { %>
+                                        <option value="<%= data.id %>"><%= data.nama %></option>
+                                    <% } %>
                                 </select>
                                 <label for="floatingSelect">Wali Kelas</label>
                             </div>
                             <div class="mb-3">
-                                <label for="inputCode" class="form-label">Tahun</label>
-                                <input type="number" class="form-control" id="inputCode" min="1900" max="2099">
+                                <select class="form-select" id="tahun"
+                                aria-label="Floating label select example">
+                                    <option selected undefined disabled>Tahun</option>
+                                    <% for (let i = 2020; i <= 2030; i++) { %>
+                                        <option value="<%= i %>" ><%= i %></option>
+                                    <% }%>
+                                </select>
                             </div>
 
 
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="submit" id="add-class" class="btn btn-primary">Simpan</button>
                         </form>
                     </div>
                 </div>
@@ -96,17 +87,19 @@
         new DataTable('#example');
 
         $("#add-class").on("click", () => {
-        const nama = $("#nama").val();
-        const tingkat = $("#tingkat").val();
+            const tingkat = $("#tingkat").val();
+            const kode = $("#kode").val();
+            const id_wali_kelas = $("#id_wali_kelas").val();
+            const tahun = $("#tahun").val();
             $.ajax({
-                url: "/api/admin/mata-pelajaran",
+                url: "/api/admin/kelas",
                 method: "POST",
                 contentType: "application/json",
-                data: JSON.stringify({nama, tingkat}),
+                data: JSON.stringify({tingkat, kode, id_wali_kelas, tahun}),
                 success: (response) => {
                     alert(response.status.message);
-                    console.log({nama, tingkat});
-                    return window.location.href = `/admin/mapel`;
+                    console.log({tingkat, kode, id_wali_kelas, tahun});
+                    return window.location.href = `/admin/class`;
                 },
                 error: (response) => {
                     const message = response.responseJSON.status.message
