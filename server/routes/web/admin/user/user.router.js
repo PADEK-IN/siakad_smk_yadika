@@ -14,7 +14,6 @@ router.route("/student/:id").get(index.detailStudentPage);
 router.route("/student/:id/edit").get(index.editStudentPage);
 
 router.route("/teachers").get(index.getTeacherPage);
-router.route("/teachers/add").get(index.addTeacherPage);
 router.route("/teacher/:id").get(index.detailTeacherPage);
 router.route("/teacher/:id/edit").get(index.editTeacherPage);
 
