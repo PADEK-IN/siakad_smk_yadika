@@ -21,16 +21,16 @@
                 <div class="d-flex align-items-center justify-content-between mb-4">
                     <h6 class="mb-0">List Jurusan</h6>
                     <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addJurusan">
                             Buat Jurusan
                         </button>
                         
                         <!-- Modal -->
-                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal fade" id="addJurusan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addJurusanLabel" aria-hidden="true">
                             <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Buat Jurusan</h5>
+                                <h5 class="modal-title" id="addJurusanLabel">Buat Jurusan</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
@@ -66,7 +66,29 @@
                                         <td><%= data.id %></td>
                                         <td><%= data.nama %></td>
                                         <td>
-                                            <a href="/admin/class/<%= data.id %>/edit" class="bi bi-pencil-square px-2"></a>
+                                            <!-- <a href="/admin/class/<%= data.id %>/edit" class="bi bi-pencil-square px-2"></a> -->
+                                            <a href="" class="bi bi-pencil-square px-2" data-bs-toggle="modal" data-bs-target="#editJurusan"></a>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="editJurusan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editJurusanLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                    <h5 class="modal-title" id="editJurusanLabel">Edit Jurusan</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="mb-3">
+                                                            <label for="inputCode" class="form-label">Nama Jurusan</label>
+                                                            <input type="text" class="form-control" id="nama"  value="<%= data.nama %>">
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                    <button type="button" onclick="edit('<%= data.id %>')" class="btn btn-primary">Edit</button>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
                                             <a href="#" onclick="remove('<%= data.id %>')" class="bi bi-archive px-2" style="color: red;"></a>
                                         </td>
                                     </tr>
@@ -103,7 +125,7 @@
                 data: JSON.stringify({nama}),
                 success: (response) => {
                     alert(response.status.message);
-                    return window.location.href = `/admin/jurusan`;
+                    window.location.reload();
                 },
                 error: (response) => {
                     const message = response.responseJSON.status.message
@@ -112,10 +134,28 @@
             });
         });
 
+        function edit(id) {
+        const nama = $("#nama").val();
+        $.ajax({
+            url: "/api/admin/jurusan/" + id,
+            method: "PATCH",
+            contentType: "application/json",
+            data: JSON.stringify({nama}),
+            success: (response) => {
+                alert(response.status.message);
+                window.location.reload();
+            },
+            error: (response) => {
+                const message = response.responseJSON.status.message
+                alert(message);
+            }
+        });
+        }
+
         function remove(id) {
             console.log(id);
             $.ajax({
-                url: '/api/admin/kelas/' + id,
+                url: '/api/admin/jurusan/' + id,
                 method: 'DELETE',
                 contentType: "application/json",
                 success: function(response) {
