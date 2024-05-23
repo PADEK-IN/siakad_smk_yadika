@@ -50,6 +50,28 @@ export const addClassPage = async(req, res) => {
 
 export const editClassPage = async(req, res) => {
   try {
+    const parts = req.url.split('/');
+    let classId = parts[parts.length - 2];
+    // console.log(classId);
+
+    const decodedClassId = hashids.decode(classId);
+    const dataClass = await Kelas.findOne({
+      where: { id: decodedClassId },
+      include: [
+        {
+          model: Guru,
+          attributes: [ "nama", "id" ],
+        },
+      ],
+    });
+    const kelas = {
+      ...dataClass.dataValues,
+      id: hashids.encode(dataClass.id),
+      GuruId: hashids.encode(dataClass.Guru.id),
+      // Guru: kelas.Guru.nama,
+    };
+    console.log({ kelas });
+
     const dataGuru = await Guru.findAll();
 
     const guru = dataGuru.map((guru) => {
@@ -58,7 +80,8 @@ export const editClassPage = async(req, res) => {
           id: hashids.encode(guru.id)
         };
       });
-    res.render("pages/admin/class/edit.ejs", {guru});
+      console.log({guru})
+    res.render("pages/admin/class/edit.ejs", { kelas, guru });
   } catch (err) {
     console.log(err.message);
     res.render('pages/errors/500');

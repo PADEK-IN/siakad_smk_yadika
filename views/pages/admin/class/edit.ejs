@@ -23,16 +23,24 @@
                     <h6 class="px-3">Kembali</h6>
                 </div>
                 <div class="bg-light  rounded p-4">
-                    <div class="alert text-center alert-primary" role="alert">
+                    <% if (kelas.isActive == 1) {%>
+                        <div class="alert text-center alert-primary" role="alert">
+                    <% } else { %>
+                        <div class="alert text-center alert-danger" role="alert">
+                    <% } %>
                         Edit Data Kelas
                     </div>
 
                     <div class="bg-light rounded ">
                         <div class="testimonial-item text-center">
-                            <h5 class="mb-1">XII <span>C</span></h5>
-                            <p>Sri Hartanto, S.Pd</p>
-                            <p>2024</p>
-                            <span class="badge bg-success">Aktif</span>
+                            <h5 class="mb-1"><%= kelas.kode %>---<span><%= kelas.tingkat %></span></h5>
+                            <p><%= kelas.Guru.nama %></p>
+                            <p><%= kelas.tahun %></p>
+                            <% if (kelas.isActive == 1) {%>
+                                <span class="badge bg-success">Dipakai</span>
+                            <% } else { %>
+                                <span class="badge bg-danger">Tidak Terpakai</span>
+                            <% } %>
                         </div>
                     </div>
                     <hr>
@@ -41,29 +49,39 @@
                         <form>
                             <!-- Tingkat -->
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="floatingSelect"
+                                <select class="form-select" id="tingkat"
                                     aria-label="Floating label select example">
-                                    <option selected undefined disabled>Tingkat</option>
-                                    <option value="X">X</option>
-                                    <option value="XI">XI</option>
-                                    <option value="XII">XII</option>
+                                    <!-- <option undefined disabled>Tingkat</option> -->
+                                    <option value="10" <%= kelas.tingkat === '10' ? 'selected' : '' %>>10</option>
+                                    <option value="11" <%= kelas.tingkat === '11' ? 'selected' : '' %>>11</option>
+                                    <option value="12" <%= kelas.tingkat === '12' ? 'selected' : '' %>>12</option>
                                 </select>
-                                <label for="floatingSelect">Tingkat</label>
+                                <label for="tingkat">Tingkat</label>
                             </div>
                             <div class="mb-3">
-                                <label for="inputCode" class="form-label">Kode Kelas</label>
-                                <input type="text" class="form-control" id="inputCode">
+                                <label for="kode" class="form-label">Kelas</label>
+                                <input type="text" class="form-control" id="kode" value="<%= kelas.kode %>">
                             </div>
                             <!-- Wali Kelas -->
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="floatingSelect"
+                                <select class="form-select" id="id_wali_kelas"
                                     aria-label="Floating label select example">
                                     <option selected undefined disabled>Wali Kelas</option>
-                                    <option value="Sri Hartanto, S.Pd">Sri Hartanto, S.Pd</option>
-                                    <option value="Sri Hartanto, S.Pd">Sri Hartanto, S.Pd</option>
-                                    <option value="Sri Hartanto, S.Pd">Sri Hartanto, S.Pd</option>
+                                    <% for (const data of guru) { %>
+                                        <option value="<%= data.id %>" <%= data.id === kelas.GuruId ? 'selected' : '' %>><%= data.nama %></option>
+                                    <% } %>
                                 </select>
                                 <label for="floatingSelect">Wali Kelas</label>
+                            </div>
+                            <!-- Tahun -->
+                            <div class="mb-3">
+                                <select class="form-select" id="tahun"
+                                aria-label="Floating label select example">
+                                    <option selected undefined disabled>Tahun</option>
+                                    <% for (let i = 2020; i <= 2030; i++) { %>
+                                        <option value="<%= i %>" <%= i === kelas.tahun ? 'selected' : '' %>><%= i %></option>
+                                    <% }%>
+                                </select>
                             </div>
 
                             <!-- Status -->
@@ -71,23 +89,22 @@
                                 <legend class="col-form-label col-sm-2 pt-0">Status</legend>
                                 <div class="col-sm-10">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gridRadios"
-                                            id="gridActive" value="option1" checked>
-                                        <label class="form-check-label" for="gridActive">
+                                        <input class="form-check-input" type="radio" name="status" id="isUse" value="true">
+                                        <label class="form-check-label" for="isUse">
                                             Aktif
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gridRadios"
-                                            id="gridUnActive" value="option2">
-                                        <label class="form-check-label" for="gridUnActive">
+                                        <input class="form-check-input" type="radio" name="status" id="isNotUse" value="false">
+                                        <label class="form-check-label" for="isNotUse">
                                             Tidak Aktif
                                         </label>
                                     </div>
                                 </div>
                             </fieldset>
+                            
 
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="button" onclick="edit('<%= kelas.id %>')" class="btn btn-primary">Edit</button>
                         </form>
                     </div>
                 </div>
@@ -100,7 +117,27 @@
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
     <script>
-        new DataTable('#example');
+        function edit(id) {
+        const tingkat = $("#tingkat").val();
+        const kode = $("#kode").val();
+        const id_wali_kelas = $("#id_wali_kelas").val();
+        const isActive = $("input[name='status']:checked").val();
+        console.log({id, kode, tingkat, id_wali_kelas, isUse});
+            $.ajax({
+                url: "/api/admin/kelas/" + id,
+                method: "PATCH",
+                contentType: "application/json",
+                data: JSON.stringify({kode, tingkat, id_wali_kelas, isActive}),
+                success: (response) => {
+                    alert(response.status.message);
+                    return window.location.href = `/admin/class/${id}/edit`;
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    alert(message);
+                }
+            });
+        }
     </script>
 </body>
 
