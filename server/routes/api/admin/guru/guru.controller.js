@@ -18,7 +18,7 @@ export const getAll = async (req, res) => {
         console.log(err.message);
         responses.res500(res);
     }
-}
+};
 
 export const getOneById = async (req, res) => {
     try {
@@ -39,19 +39,22 @@ export const getOneById = async (req, res) => {
         console.log(err.message);
         responses.res500(res);
     }
-}
+};
 
 export const create = async (req, res) => {
     try {
         const { 
             email, nip, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, pendidikan, id_mata_pelajaran 
-        } = req.body;
-        const foto = req.file.filename;
+        } = JSON.parse(req.body.data);
+
+        const foto = req.file?.filename;
         const idMapel = checkValidId(id_mata_pelajaran);
         if(!idMapel) return responses.res400("ID mata pelajaran tidak valid", res);
+
         await Guru.create({
             email, nip, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, pendidikan, id_mata_pelajaran: idMapel, foto
         });
+
         responses.res201("Guru baru berhasil ditambahkan", null, res);
     } catch (err) {
         console.log(err.message);
@@ -88,7 +91,7 @@ export const update = async (req, res) => {
         console.log(err.message);
         responses.res500(res);
     }
-}
+};
 
 export const del = async (req, res) => {
     try {
@@ -106,5 +109,5 @@ export const del = async (req, res) => {
         console.log(err.message);
         responses.res500(res);
     }
-}
+};
 

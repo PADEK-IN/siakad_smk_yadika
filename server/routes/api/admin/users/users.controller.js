@@ -1,7 +1,9 @@
 import * as responses from "../../../../helpers/response.js";
 import Users from "../../../../models/users.model.js";
+import Guru from "../../../../models/guru.model.js";
 import { hash } from "../../../../helpers/hashing.js";
 import { checkValidId, hashids } from "../../../../helpers/isValidId.js";
+import { Op } from 'sequelize';
 
 export const getAll = async (req, res) => {
     try {
@@ -43,6 +45,32 @@ export const getOneById = async (req, res) => {
         responses.res200("Berhasil mengambil data user", data, res);
     } catch (err) {
         console.log(err.message);
+        responses.res500(res);
+    }
+}
+
+export const getUserEmailByRole = async (req, res) => {
+    try {
+        const { role } = req.params;
+        let registerEmail = await Guru.findAll({
+            attributes: ["email"],
+            raw: true
+        });
+        registerEmail = registerEmail.map(guru=>guru.email);
+        const email = await Users.findAll({
+            attributes: ['email'],
+            where: {
+              role,
+              email: {
+                [Op.notIn]: registerEmail
+              }
+            },
+            raw: true
+          });
+
+        responses.res200("Berhasil mengambil data", email, res);
+    } catch (error) {
+        console.log(error.message);
         responses.res500(res);
     }
 }
