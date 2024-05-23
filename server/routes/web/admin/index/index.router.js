@@ -7,6 +7,7 @@ const router = express.Router();
 
 // Routes
 router.route("/dashboard").get(isAuth, isAdmin, index.dashboardAdminPage);
+router.route("/jurusan").get(index.jurusanAdminPage);
 
 
 export default router;
