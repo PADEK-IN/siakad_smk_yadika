@@ -20,6 +20,7 @@
             <div class="container-fluid pt-4 px-4 pb-5">
                 <div class="d-flex align-items-center justify-content-between mb-4">
                     <h6 class="mb-0">List Semua Murid</h6>
+                    <a class="btn btn-sm btn-primary" href="/admin/user/student/add">Tambah Murid</a>
                 </div>
                 <div class="bg-light text-center rounded p-4">
                     <div class="table-responsive">
@@ -27,6 +28,7 @@
                         <table id="example" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>No</th>
                                     <th>NIS</th>
                                     <th>Nama</th>
                                     <th>Email</th>
@@ -37,12 +39,18 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <% for (const [index, murid] of murids.entries()) { %>  
                                 <tr>
-                                    <td>200237</td>
-                                    <td><a href="/admin/user/student/200237">Joko Widodo</a></td>
-                                    <td>joko@gmail.com</td>
+                                    <td><%= index + 1 %></td>
+                                    <td><%= murid.nis %></td>
+                                    <td><a href="/admin/user/student/200237"><%= murid.nama %></a></td>
+                                    <td><%= murid.email %></td>
                                     <td>
-                                        <span class="badge bg-success">LK</span>
+                                        <% if(murid.jenis_kelamin == "laki-laki") { %>
+                                            <span class="badge bg-success">LK</span>
+                                        <% } else { %>
+                                            <span class="badge bg-danger">PR</span>
+                                        <% } %>
                                     </td>
                                     <td>X B</td>
                                     <td><span class="badge bg-success">Activated</span></td>
@@ -51,23 +59,11 @@
                                         <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>200237</td>
-                                    <td><a href="/admin/user/student/200237">Joko Widodo</a></td>
-                                    <td>joko@gmail.com</td>
-                                    <td>
-                                        <span class="badge bg-warning">PR</span>
-                                    </td>
-                                    <td>XII A</td>
-                                    <td><span class="badge bg-danger">UnActivated</span></td>
-                                    <td>
-                                        <a href="/admin/user/student/200237/edit" class="bi bi-pencil-square px-2"></a>
-                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
-                                    </td>
-                                </tr>
+                                <% } %>
                             </tbody>
                             <tfoot>
                                 <tr>
+                                    <th>No</th>
                                     <th>NIS</th>
                                     <th>Nama</th>
                                     <th>Email</th>
