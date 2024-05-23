@@ -28,12 +28,12 @@
                     <% } else { %>
                         <div class="alert text-center alert-danger" role="alert">
                     <% } %>
-                        Edit Data Kelas
+                        <h6>Edit Data Kelas</h6>
                     </div>
 
                     <div class="bg-light rounded ">
                         <div class="testimonial-item text-center">
-                            <h5 class="mb-1"><%= kelas.kode %>---<span><%= kelas.tingkat %></span></h5>
+                            <h5 class="mb-1"><%= kelas.tingkat %><span> | </span><%= kelas.kode %></h5>
                             <p><%= kelas.Guru.nama %></p>
                             <p><%= kelas.tahun %></p>
                             <% if (kelas.isActive == 1) {%>
@@ -51,7 +51,6 @@
                             <div class="form-floating mb-3">
                                 <select class="form-select" id="tingkat"
                                     aria-label="Floating label select example">
-                                    <!-- <option undefined disabled>Tingkat</option> -->
                                     <option value="10" <%= kelas.tingkat === '10' ? 'selected' : '' %>>10</option>
                                     <option value="11" <%= kelas.tingkat === '11' ? 'selected' : '' %>>11</option>
                                     <option value="12" <%= kelas.tingkat === '12' ? 'selected' : '' %>>12</option>
@@ -103,7 +102,6 @@
                                 </div>
                             </fieldset>
                             
-
                             <button type="button" onclick="edit('<%= kelas.id %>')" class="btn btn-primary">Edit</button>
                         </form>
                     </div>
@@ -113,7 +111,6 @@
     </div>
     <%- include ('./../../../components/script.ejs')%>
 
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
     <script>
@@ -122,7 +119,6 @@
         const kode = $("#kode").val();
         const id_wali_kelas = $("#id_wali_kelas").val();
         const isActive = $("input[name='status']:checked").val();
-        console.log({id, kode, tingkat, id_wali_kelas, isUse});
             $.ajax({
                 url: "/api/admin/kelas/" + id,
                 method: "PATCH",

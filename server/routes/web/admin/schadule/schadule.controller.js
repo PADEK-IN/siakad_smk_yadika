@@ -103,8 +103,6 @@ export const editSchadulePage = async(req, res) => {
       };
     })
 
-    console.log({jadwal, kelas, mataPelajaran});
-
     res.render("pages/admin/schadule/edit.ejs", { jadwal, kelas, mataPelajaran })
   } catch (err) {
     console.log(err.message);

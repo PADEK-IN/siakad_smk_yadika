@@ -31,13 +31,9 @@ export const addClassPage = async(req, res) => {
     const guru = dataGuru.map((guru) => {
         return {
           ...guru.dataValues,
-          // id: guru.id,
           id: hashids.encode(guru.id)
         };
       });
-      for (const data of guru) {
-        console.log({data});
-      }
     res.render("pages/admin/class/add.ejs", {guru});
   } catch (err) {
     console.log(err.message);

@@ -11,7 +11,6 @@ export const getPaymentPage = async(req, res) => {
         id: hashids.encode(spp.id),
       };
     });
-    console.log({spp});
     res.render("pages/admin/payment/index.ejs", { spp });
   } catch (err) {
     console.log(err.message);

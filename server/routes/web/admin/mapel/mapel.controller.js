@@ -30,7 +30,6 @@ export const editMapelPage = async (req, res) => {
     const dataMapel = await Mata_Pelajaran.findOne({
       where: { id: decodedMapelId },
     });
-    // console.log({ dataMapel });
 
     const mapel = {
       ...dataMapel.dataValues,

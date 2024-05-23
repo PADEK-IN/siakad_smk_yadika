@@ -28,8 +28,7 @@
                     <% } else { %>
                         <div class="alert text-center alert-danger" role="alert">
                     <% } %>
-                    <!-- <div class="alert text-center alert-primary" role="alert"> -->
-                        Edit Data Pelajaran
+                        <h6>Edit Data Mata Pelajaran</h6>
                     </div>
 
                     <div class="bg-light rounded ">
@@ -42,7 +41,6 @@
                             <% } else { %>
                                 <span class="badge bg-danger">Tidak Terpakai</span>
                             <% } %>
-                            <!-- <span class="badge bg-success">Dipakai</span> -->
                         </div>
                     </div>
                     <hr>
@@ -57,7 +55,6 @@
                             <div class="form-floating mb-3">
                                 <select class="form-select" id="tingkat"
                                     aria-label="Floating label select example">
-                                    <!-- <option undefined disabled>Tingkat</option> -->
                                     <option value="10" <%= mapel.tingkat === '10' ? 'selected' : '' %>>10</option>
                                     <option value="11" <%= mapel.tingkat === '11' ? 'selected' : '' %>>11</option>
                                     <option value="12" <%= mapel.tingkat === '12' ? 'selected' : '' %>>12</option>
@@ -95,7 +92,6 @@
     </div>
     <%- include ('./../../../components/script.ejs')%>
 
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
     <script>
@@ -103,15 +99,12 @@
         let parts = url.pathname.split('/');
         let mapelId = parts[parts.length - 2];
 
-        // console.log({mapelId});
         let decodedMapelId = hashids.decode(mapelId);
-        // console.log({decodedMapelId});
 
         function edit(id) {
         const nama = $("#nama").val();
         const tingkat = $("#tingkat").val();
         const isUse = $("input[name='status']:checked").val();
-        console.log({id, nama, tingkat, isUse});
             $.ajax({
                 url: "/api/admin/mata-pelajaran/" + id,
                 method: "PATCH",
@@ -119,7 +112,6 @@
                 data: JSON.stringify({nama, tingkat, isUse}),
                 success: (response) => {
                     alert(response.status.message);
-                    // console.log({nama, tingkat, isUse});
                     return window.location.href = `/admin/mapel`;
                 },
                 error: (response) => {
