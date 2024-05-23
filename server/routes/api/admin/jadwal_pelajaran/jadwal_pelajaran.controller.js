@@ -67,7 +67,7 @@ export const update = async (req, res) => {
         const validId = checkValidId(id);
         if(!validId) return responses.res400("ID mata pelajaran tidak valid", res);
 
-        const { hari, waktu_mulai, waktu_selesai, id_kelas, id_mata_pelajaran } = req.body;
+        const { hari, waktu_mulai, waktu_selesai, id_kelas, id_mata_pelajaran, isUse } = req.body;
         const validIdKelas = checkValidId(id_kelas);
         if(!validIdKelas) return responses.res400("ID kelas tidak valid", res);
         const validIdMaPel = checkValidId(id_mata_pelajaran);

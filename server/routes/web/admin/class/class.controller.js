@@ -12,8 +12,6 @@ export const getClassPage = async(req, res) => {
         },
       ]
     });
-    // console.log(dataClass)
-        // console.log(dataClass[0].Guru.nama); // Output: Nama Kelas
     const kelas = dataClass.map((kelas) => {
       return {
         ...kelas.dataValues,
@@ -21,7 +19,6 @@ export const getClassPage = async(req, res) => {
         Guru: kelas.Guru.nama,
       };
     });
-    console.log({kelas});
     res.render("pages/admin/class/index.ejs", {kelas});
   } catch (err) {
     console.log(err.message);
@@ -52,7 +49,6 @@ export const editClassPage = async(req, res) => {
   try {
     const parts = req.url.split('/');
     let classId = parts[parts.length - 2];
-    // console.log(classId);
 
     const decodedClassId = hashids.decode(classId);
     const dataClass = await Kelas.findOne({
@@ -68,9 +64,7 @@ export const editClassPage = async(req, res) => {
       ...dataClass.dataValues,
       id: hashids.encode(dataClass.id),
       GuruId: hashids.encode(dataClass.Guru.id),
-      // Guru: kelas.Guru.nama,
     };
-    console.log({ kelas });
 
     const dataGuru = await Guru.findAll();
 
@@ -80,7 +74,6 @@ export const editClassPage = async(req, res) => {
           id: hashids.encode(guru.id)
         };
       });
-      console.log({guru})
     res.render("pages/admin/class/edit.ejs", { kelas, guru });
   } catch (err) {
     console.log(err.message);

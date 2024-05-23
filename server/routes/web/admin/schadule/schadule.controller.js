@@ -27,10 +27,6 @@ export const getSchadulePage = async(req, res) => {
         Mata_Pelajaran: jadwal.Mata_Pelajaran.nama
       };
     });
-    for (const data of jadwal){
-        console.log({data});
-    }
-    console.log({ jadwal });
     res.render("pages/admin/schadule/index.ejs", {jadwal});
   } catch (err) {
     console.log(err.message);
@@ -56,13 +52,63 @@ export const addSchadulePage = async(req, res) => {
       };
     })
     res.render("pages/admin/schadule/add.ejs" , { kelas, mataPelajaran });
-  } catch (error) {
+  } catch (err) {
     console.log(err.message);
     res.render('pages/errors/500');
   }
   };
 
-export const editSchadulePage = (req, res) => {
-    res.render("pages/admin/schadule/edit.ejs");
+export const editSchadulePage = async(req, res) => {
+  try {
+    const parts = req.url.split('/');
+    let schaduleId = parts[parts.length - 2];
+    // console.log({schaduleId});
+    const decodedJadwalId = hashids.decode(schaduleId);
+    const dataJadwal = await Jadwal.findOne({
+      where: { id: decodedJadwalId },
+      include: [
+        {
+          model: Kelas,
+          attributes: [ "tingkat", "kode" ]
+        },
+        {
+          model: Mata_Pelajaran,
+          attributes: [ "nama" ]
+        }
+      ]
+    });
+
+    const jadwal = {
+      ...dataJadwal.dataValues,
+      id: hashids.encode(dataJadwal.id),
+      idKelas: hashids.encode(dataJadwal.id_kelas),
+      idPelajaran: hashids.encode(dataJadwal.id_mata_pelajaran),
+      Kela: dataJadwal.Kela.tingkat + "--" +  dataJadwal.Kela.kode,
+      Mata_Pelajaran: dataJadwal.Mata_Pelajaran.nama
+    };
+
+    const dataKelas = await Kelas.findAll();
+    const dataMataPelajaran = await Mata_Pelajaran.findAll();
+
+    const kelas = dataKelas.map((kelas) => {
+      return { 
+        ...kelas.dataValues,
+        id: hashids.encode(kelas.id),
+      };
+    })
+    const mataPelajaran = dataMataPelajaran.map((mataPelajaran) => {
+      return { 
+        ...mataPelajaran.dataValues,
+        id: hashids.encode(mataPelajaran.id),
+      };
+    })
+
+    console.log({jadwal, kelas, mataPelajaran});
+
+    res.render("pages/admin/schadule/edit.ejs", { jadwal, kelas, mataPelajaran })
+  } catch (err) {
+    console.log(err.message);
+    res.render('pages/errors/500');
+  }  
   };
   
