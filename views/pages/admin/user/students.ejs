@@ -34,7 +34,7 @@
                                     <th>Email</th>
                                     <th>JK</th>
                                     <th>Kelas</th>
-                                    <th>Aktif</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -43,7 +43,7 @@
                                 <tr>
                                     <td><%= index + 1 %></td>
                                     <td><%= murid.nis %></td>
-                                    <td><a href="/admin/user/student/200237"><%= murid.nama %></a></td>
+                                    <td><a href="/admin/user/student/<%= murid.id %>"><%= murid.nama %></a></td>
                                     <td><%= murid.email %></td>
                                     <td>
                                         <% if(murid.jenis_kelamin == "laki-laki") { %>
@@ -52,11 +52,21 @@
                                             <span class="badge bg-danger">PR</span>
                                         <% } %>
                                     </td>
-                                    <td>X B</td>
-                                    <td><span class="badge bg-success">Activated</span></td>
+                                    <td><%= murid.Kela %></td>
                                     <td>
-                                        <a href="/admin/user/student/200237/edit" class="bi bi-pencil-square px-2"></a>
-                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
+                                        <% if(murid.status=="aktif") { %>
+                                            <span class="badge bg-info">Aktif</span>
+                                        <% } else if(murid.status=="cuti") { %>
+                                            <span class="badge bg-warning">Cuti</span>
+                                        <% } else if(murid.status=="lulus") { %>
+                                            <span class="badge bg-success">Lulus</span>
+                                        <% } else { %>
+                                            <span class="badge bg-danger">Berhenti</span>
+                                        <% } %>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/user/student/<%= murid.id %>/edit" class="bi bi-pencil-square px-2"></a>
+                                        <a href="#" onclick="del('<%= murid.id %>', '<%= murid.nama %>')" class="bi bi-archive px-2" style="color: red;"></a>
                                     </td>
                                 </tr>
                                 <% } %>
@@ -87,6 +97,23 @@
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
     <script>
         new DataTable('#example');
+        function del(id, nama) {
+            const isSure = confirm(`Kamu yakin ingin menghapus data ${nama}`);
+            if(isSure){
+                $.ajax({
+                    url: `/api/admin/murid/${id}`,
+                    method: "DELETE",
+                    success: (response) => {
+                        alert(response.status.message);
+                        window.location.reload();
+                    },
+                    error: (response) => {
+                        const message = response.responseJSON.status.message;
+                        alert(message);
+                    }
+                });
+            }
+        }
     </script>
 </body>
 

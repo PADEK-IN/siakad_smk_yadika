@@ -18,21 +18,27 @@
             <!-- navar end -->
 
             <div class="container-fluid pt-4 px-4 pb-5">
-                <div class="d-flex mb-4">
-                    <a href="/admin/user/students" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
-                    <h6 class="px-3">Kembali</h6>
+                <div class="d-flex align-items-center justify-content-between mb-4"">
+                    <a href="/admin/user/students/" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"><h6 class="px-3">Kembali</h6></a>
+                    <a class="btn btn-sm btn-primary" href="/admin/user/student/<%= murid.id %>/edit">Edit Data Murid</a>
                 </div>
                 <div class="bg-light  rounded p-4">
-                    <div class="alert text-center alert-warning" role="alert">
-                        Detail Data Murid
-                    </div>
+                    <% if(murid.status=="aktif") { %>
+                        <div class="alert text-center alert-info" role="alert">Detail Data Murid</div>
+                    <% } else if(murid.status=="cuti") { %>
+                        <div class="alert text-center alert-warning" role="alert">Detail Data Murid</div>
+                    <% } else if(murid.status=="lulus") { %>
+                        <div class="alert text-center alert-success" role="alert">Detail Data Murid</div>
+                    <% } else { %>
+                        <div class="alert text-center alert-danger" role="alert">Detail Data Murid</div>
+                    <% } %>
 
                     <div class="bg-light rounded">
                         <div class="testimonial-item text-center">
-                            <h6 class="mb-4">67983423908</h6>
-                            <img class="img-fluid rounded-circle mx-auto mb-4" src="/images/user.jpg" style="width: 100px; height: 100px;">
-                            <h5 class="mb-1">Joko Widodo</h5>
-                            <p>aditya@gmail.com</p>
+                            <h6 class="mb-4"><%= murid.no_hp %></h6>
+                            <img class="img-fluid rounded-circle mx-auto mb-4" src="/uploads/<%= murid.foto %>" style="width: 100px; height: 100px;">
+                            <h5 class="mb-1"><%= murid.nama %></h5>
+                            <p><%= murid.email %></p>
                         </div>
                     </div>
                     <hr>
@@ -54,51 +60,51 @@
                                     <tbody>
                                         <tr>
                                             <td class="fw-bold">NIS</td>
-                                            <td>32647895</td>
+                                            <td><%= murid.email %></td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">Tempat Lahir</td>
-                                            <td>Jambi</td>
+                                            <td><%= murid.tempat_lahir %></td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">Tanggal Lahir</td>
-                                            <td>27, 04, 1898</td>
+                                            <td><%= murid.tanggal_lahir %></td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">Alamat</td>
-                                            <td>Jln. Singkarang Jambi Rt PAlanmsy Hhuidsf fdhsuifhwf </td>
+                                            <td><%= murid.alamat %></td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">Jenis Kelamain</td>
-                                            <td>Laki- Laki</td>
+                                            <td><%= murid.jenis_kelamin %></td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">Agama</td>
-                                            <td>Islam</td>
+                                            <td><%= murid.agama %></td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">Hobi</td>
-                                            <td>Memancing</td>
+                                            <td><%= murid.hobi %></td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">Nomer Handphone</td>
-                                            <td>07834247829432</td>
+                                            <td><%= murid.no_hp %></td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">Sekolah Asal</td>
-                                            <td>SMA TNI Nusa Bakti</td>
+                                            <td><%= murid.sekolah_asal %></td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">Nomer Ijazah</td>
-                                            <td>34267842</td>
+                                            <td><%= murid.no_ijazah %></td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">Tahun Masuk</td>
-                                            <td>20001</td>
+                                            <td><%= murid.tahun_masuk %></td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">Jurusan</td>
-                                            <td>Teknik Bangunan</td>
+                                            <td><%= murid.Jurusan %></td>
                                         </tr>
                                     </tbody>
                                     <!-- Wali -->
@@ -171,25 +177,15 @@
                                     <tbody>
                                         <tr>
                                             <td class="fw-bold">Tingkat</td>
-                                            <td>XI</td>
+                                            <td><%= murid.Kela.tingkat %></td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">Kode</td>
-                                            <td>A</td>
+                                            <td><%= murid.Kela.kode %></td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">Wali Kelas</td>
-                                            <td>Indra Subakti, M.Pd</td>
-                                        </tr>
-                                    </tbody>
-                                    <!-- jadwal Kelas -->
-                                    <tbody>
-                                        <tr>
-                                            <td class="fw-bold text-bg-secondary text-center" colspan="2">Jadwal Pelajaran</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="fw-bold">Wali Kelas</td>
-                                            <td>Indra Subakti, M.Pd</td>
+                                            <td><%= murid.Kela.Guru.nama %></td>
                                         </tr>
                                     </tbody>
                                 </table>    

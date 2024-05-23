@@ -5,6 +5,7 @@ import Mata_Pelajaran from "../../../../models/mata_pelajaran.model.js";
 import Kelas from "../../../../models/kelas.model.js";
 import Jadwal_Pelajaran from "../../../../models/jadwal_pelajaran.model.js";
 import { checkValidId, hashids } from "../../../../helpers/isValidId.js";
+import Jurusan from "../../../../models/jurusan.model.js";
 
 // user
 export const getUserPage = async (req, res) => {
@@ -38,34 +39,86 @@ export const editUserPage = (req, res) => {
 // student
 export const getStudentPage = async (req, res) => {
   try {
-      const dataMurid = await Murid.findAll();
+    const dataMurid = await Murid.findAll({
+      include: [{
+        model: Kelas
+      }]
+    });
 
-      const murids = dataMurid.map((murid) => {
-          return {
-            ...murid.dataValues,
-            id: hashids.encode(murid.id),
-            id_jurusan: hashids.encode(murid.id_jurusan),
-            id_kelas: hashids.encode(murid.id_kelas),
-          };
-        });
+    const murids = dataMurid.map((murid) => {
+        return {
+          ...murid.dataValues,
+          id: hashids.encode(murid.id),
+          id_jurusan: hashids.encode(murid.id_jurusan),
+          id_kelas: hashids.encode(murid.id_kelas),
+          Kela: murid.Kela.tingkat + " - " + murid.Kela.kode
+        };
+    });
 
-        res.render('pages/admin/user/students.ejs', {murids});
+    res.render('pages/admin/user/students.ejs', {murids});
   } catch (err) {
-      console.log(err.message);
-      res.render("pages/errors/500");
+    console.log(err.message);
+    res.render("pages/errors/500");
   }
 };
 
-export const detailStudentPage = (req, res) => {
-  res.render('pages/admin/user/student-detail.ejs');
+export const detailStudentPage = async (req, res) => {
+  try {
+    const {id} = req.params;
+    const validId = checkValidId(id);
+    if(!validId) return responses.res400("ID murid tidak valid", res);
+    const dataMurid = await Murid.findOne({
+      where: { id: validId },
+      include : [{
+        model: Kelas,
+        include: [{
+          model: Guru,
+          attributes: ["id", "nama"]
+        }]
+      },{
+        model: Jurusan
+      }]
+    });
+
+    const murid = {
+      ...dataMurid.dataValues,
+      id: hashids.encode(dataMurid.id),
+      id_jurusan: hashids.encode(dataMurid.id_jurusan),
+      id_kelas: hashids.encode(dataMurid.id_kelas),
+      Jurusan: dataMurid.Jurusan.nama
+    };
+    res.render('pages/admin/user/student-detail.ejs', {murid});
+  } catch (err) {
+    console.log(err.message);
+    res.render("pages/errors/500");
+  }
 };
 
 export const createStudentPage = (req, res) => {
   res.render('pages/admin/user/student-add.ejs');
 };
 
-export const editStudentPage = (req, res) => {
-  res.render('pages/admin/user/student-edit.ejs');
+export const editStudentPage = async (req, res) => {
+  try {
+    const {id} = req.params;
+    const validId = checkValidId(id);
+    if(!validId) return responses.res400("ID murid tidak valid", res);
+    const dataMurid = await Murid.findOne({
+      where: { id: validId },
+    });
+
+    const murid = {
+      ...dataMurid.dataValues,
+      id: hashids.encode(dataMurid.id),
+      id_jurusan: hashids.encode(dataMurid.id_jurusan),
+      id_kelas: hashids.encode(dataMurid.id_kelas),
+    };
+    
+    res.render('pages/admin/user/student-edit.ejs', {murid});
+  } catch (err) {
+    console.log(err.message);
+    res.render("pages/errors/500");
+  }
 };
 
 // teacher

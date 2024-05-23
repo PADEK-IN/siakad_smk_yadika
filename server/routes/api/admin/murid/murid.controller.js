@@ -50,9 +50,9 @@ export const create = async (req, res) => {
     try {
         const {
             nis, email, nama, tempat_lahir, tanggal_lahir, alamat, jenis_kelamin,
-            agama, hobi, no_hp, sekolah_asal, no_ijazah, tahun_masuk, id_jurusan, id_kelas
+            agama, hobi, no_hp, sekolah_asal, no_ijazah, tahun_masuk, id_jurusan, id_kelas, status
         } = JSON.parse(req.body.data);
-        console.log(JSON.parse(req.body.data))
+       
         const idJurusan = checkValidId(id_jurusan);
         if(!idJurusan) return responses.res400("ID jurusan tidak valid", res);
         const idKelas = checkValidId(id_kelas);
@@ -68,7 +68,7 @@ export const create = async (req, res) => {
         await Murid.create({
             nis, email, nama, tempat_lahir, tanggal_lahir, alamat, jenis_kelamin,
             agama, hobi, no_hp, sekolah_asal, no_ijazah, tahun_masuk, 
-            id_jurusan: idJurusan, id_kelas: idKelas, foto
+            id_jurusan: idJurusan, id_kelas: idKelas, foto, status
         });
 
         await Users.update({isValid: true},{where: {email}});
@@ -84,8 +84,8 @@ export const update = async (req, res) => {
     try {
         const {
             nis, email, nama, tempat_lahir, tanggal_lahir, alamat, jenis_kelamin, agama,
-            hobi, no_hp, sekolah_asal, no_ijazah, tahun_masuk, id_jurusan, id_kelas, isActive
-        } = req.body;
+            hobi, no_hp, sekolah_asal, no_ijazah, tahun_masuk, id_jurusan, id_kelas, status
+        } = JSON.parse(req.body.data);
         const {id} = req.params;
 
         const validId = checkValidId(id);
@@ -95,12 +95,12 @@ export const update = async (req, res) => {
         const idKelas = checkValidId(id_kelas);
         if(!idKelas) return responses.res400("ID kelas tidak valid", res);
         
-        const foto = req.file.filename;
+        const foto = req.file?.filename;
 
         const respons = await Murid.update({
             nis, email, nama, tempat_lahir, tanggal_lahir, alamat, jenis_kelamin,
             agama, hobi, no_hp, sekolah_asal, no_ijazah, tahun_masuk, 
-            id_jurusan: idJurusan, id_kelas: idKelas, foto, isActive
+            id_jurusan: idJurusan, id_kelas: idKelas, foto, status
         },{
             where: {
                 id: validId
