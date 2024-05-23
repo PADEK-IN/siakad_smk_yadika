@@ -50,19 +50,19 @@
                     <div class="bg-light rounded h-100 px-4">
                         <form>
                             <div class="mb-3">
-                                <label for="inputName" class="form-label">Nama Pelajaran</label>
-                                <input type="text" class="form-control" id="inputName" value="<%= mapel.nama %>">
+                                <label for="nama" class="form-label">Nama Pelajaran</label>
+                                <input type="text" class="form-control" id="nama" value="<%= mapel.nama %>">
                             </div>
                             <!-- Tingkat -->
                             <div class="form-floating mb-3">
-                                <select class="form-select" id="floatingSelect"
+                                <select class="form-select" id="tingkat"
                                     aria-label="Floating label select example">
                                     <!-- <option undefined disabled>Tingkat</option> -->
                                     <option value="10" <%= mapel.tingkat === '10' ? 'selected' : '' %>>10</option>
                                     <option value="11" <%= mapel.tingkat === '11' ? 'selected' : '' %>>11</option>
                                     <option value="12" <%= mapel.tingkat === '12' ? 'selected' : '' %>>12</option>
                                 </select>
-                                <label for="floatingSelect">Tingkat</label>
+                                <label for="tingkat">Tingkat</label>
                             </div>
 
                             <!-- Status -->
@@ -70,15 +70,15 @@
                                 <legend class="col-form-label col-sm-2 pt-0">Status</legend>
                                 <div class="col-sm-10">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gridRadios"
-                                            id="gridActive" value="option1" checked>
-                                        <label class="form-check-label" for="gridActive">
+                                        <input class="form-check-input" type="radio" name="status"
+                                            id="isUse" value="true">
+                                        <label class="form-check-label" for="isUse">
                                             Dipakai
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gridRadios"
-                                            id="gridUnActive" value="option2">
+                                        <input class="form-check-input" type="radio" name="status"
+                                            id="isUse" value="false">
                                         <label class="form-check-label" for="gridUnActive">
                                             Tidak Terpakai
                                         </label>
@@ -86,7 +86,7 @@
                                 </div>
                             </fieldset>
 
-                            <button type="button" id="edit-mapel" class="btn btn-primary">Edit</button>
+                            <button type="button" onclick="edit('<%= mapel.id %>')" class="btn btn-primary">Edit</button>
                         </form>
                     </div>
                 </div>
@@ -99,30 +99,27 @@
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
     <script>
-        // new DataTable('#example');
-        import { checkValidId, hashids } from "../../../../server/helpers/isValidId.js";
-
         let url = new URL(window.location.href);
         let parts = url.pathname.split('/');
         let mapelId = parts[parts.length - 2];
 
-        console.log({mapelId});
-        // console.log(mapel.data);
+        // console.log({mapelId});
         let decodedMapelId = hashids.decode(mapelId);
-        console.log({decodedMapelId});
+        // console.log({decodedMapelId});
 
-        $("#edit-mapel").on("click", () => {
+        function edit(id) {
         const nama = $("#nama").val();
         const tingkat = $("#tingkat").val();
-        const isUse = $("#isUse").val();
+        const isUse = $("input[name='status']:checked").val();
+        console.log({id, nama, tingkat, isUse});
             $.ajax({
-                url: "/api/admin/mata-pelajaran",
-                method: "POST",
+                url: "/api/admin/mata-pelajaran/" + id,
+                method: "PATCH",
                 contentType: "application/json",
                 data: JSON.stringify({nama, tingkat, isUse}),
                 success: (response) => {
                     alert(response.status.message);
-                    console.log({nama, tingkat});
+                    // console.log({nama, tingkat, isUse});
                     return window.location.href = `/admin/mapel`;
                 },
                 error: (response) => {
@@ -130,7 +127,7 @@
                     alert(message);
                 }
             });
-        });
+        }
 
     </script>
 </body>
