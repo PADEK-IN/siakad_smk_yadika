@@ -18,96 +18,42 @@
             <!-- navar end -->
 
             <div class="container-fluid pt-4 px-4 pb-5">
+                <div class="pb-4">
+                    <a href="/admin/payment" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
+                    <h6 class="d-inline px-2">Kembali</h6>
+                </div>
                 <div class="bg-light rounded h-100 p-4">
-                    <div class="pb-4">
-                        <a href="/admin/payment" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
-                        <h6 class="d-inline px-2">Kembali</h6>
-                    </div>
                     <h6>Edit SPP</h6>
                     <hr>
                     <form>
                         <!-- Tingkatan -->
                         <div class="form-floating mb-3">
-                            <select class="form-select" id="floatingSelect"
+                            <select class="form-select" id="tingkat"
                                 aria-label="Floating label select example">
-                                <option selected undefined disabled>Tingkatan</option>
-                                <option value="X">X</option>
-                                <option value="XI">XI</option>
-                                <option value="XII">XII</option>
+                                <option value="10" <%= spp.tingkat === '10' ? 'selected' : '' %>>10</option>
+                                <option value="11" <%= spp.tingkat === '11' ? 'selected' : '' %>>11</option>
+                                <option value="12" <%= spp.tingkat === '12' ? 'selected' : '' %>>12</option>
                             </select>
-                            <label for="floatingSelect">Tingkatan</label>
+                            <label for="tingkat">Tingkat</label>
                         </div>
 
                         <div class="mb-3">
                             <label for="inputTagihan" class="form-label">Jumlah Tagihan</label>
-                            <input type="number" class="form-control" id="inputTagihan"
-                                aria-describedby="tagihanHelp">
-                            <div id="tagihanHelp" class="form-text">Masukan Jumlah Tagihan Dalam Bentuk Rupiah...
+                            <input type="number" class="form-control" id="tagihan"
+                                aria-describedby="tagihanHelp" value="<%= spp.tagihan %>">
+                            <div id="kode" class="form-text text-danger ">
+                                <em style="font-size: 10px;">Masukan Jumlah Tagihan Dalam Bentuk Rupiah...</em>
                             </div>
                         </div>
 
                         <!-- Bulan -->
-                        <div class="form-floating mb-3">
-                            <select class="form-select" id="floatingSelect"
-                                aria-label="Floating label select example">
-                                <option selected undefined disabled>Bulan</option>
-                                <option value="januari">Januari</option>
-                                <option value="februari">Februari</option>
-                                <option value="maret">Maret</option>
-                                <option value="april">April</option>
-                                <option value="mei">Mei</option>
-                                <option value="juni">Juni</option>
-                                <option value="juli">Juli</option>
-                                <option value="agustus">Agustus</option>
-                                <option value="september">September</option>
-                                <option value="oktober">Oktober</option>
-                                <option value="november">November</option>
-                                <option value="desember">Desember</option>
-                            </select>
-                            <label for="floatingSelect">Bulan</label>
+                        <div class="mb-3">
+                            <label for="inputBulan" class="form-label">Bulan</label>
+                            <input type="month" class="form-control" id="bulan"
+                                aria-describedby="bulanHelp" value="<%= spp.periode %>">
                         </div>
 
-                        <!-- Tahun -->
-                        <div class="form-floating mb-3">
-                            <select class="form-select" id="floatingSelect"
-                                aria-label="Floating label select example">
-                                <option selected undefined disabled>Tahun</option>
-                                <option value="2022">2022</option>
-                                <option value="2023">2023</option>
-                                <option value="2024">2024</option>
-                                <option value="2025">2025</option>
-                                <option value="2026">2026</option>
-                                <option value="2027">2027</option>
-                                <option value="2028">2028</option>
-                                <option value="2029">2029</option>
-                                <option value="2030">2030</option>
-                            </select>
-                            <label for="floatingSelect">Tahun</label>
-                        </div>
-
-                        
-                        <!-- Status -->
-                        <fieldset class="row mb-3">
-                            <legend class="col-form-label col-sm-2 pt-0">Status</legend>
-                            <div class="col-sm-10">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="gridRadios"
-                                        id="gridActive" value="option1" checked>
-                                    <label class="form-check-label badge bg-success" for="gridActive">
-                                        Aktif
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="gridRadios"
-                                        id="gridUnActive" value="option2">
-                                    <label class="form-check-label badge bg-danger" for="gridUnActive">
-                                        Tidak Aktif
-                                    </label>
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="button" onclick="edit('<%= spp.id %>')" class="btn btn-primary">Edit</button>
                     </form>
                 </div>
             </div>
@@ -116,11 +62,29 @@
     </div>
     <%- include ('./../../../components/script.ejs')%>
 
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
     <script>
-        new DataTable('#example');
+        function edit(id) {
+        const tingkat = $("#tingkat").val();
+        const tagihan = $("#tagihan").val();
+        const periode = $("#bulan").val();
+        console.log({id,tingkat, tagihan, periode});
+        $.ajax({
+                url: "/api/admin/spp/"+ id,
+                method: "PATCH",
+                contentType: "application/json",
+                data: JSON.stringify({tingkat, tagihan, periode}),
+                success: (response) => {
+                    alert(response.status.message);
+                    return window.location.href = `/admin/payment`;
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    alert(message);
+                }
+            });
+        }
     </script>
 </body>
 
