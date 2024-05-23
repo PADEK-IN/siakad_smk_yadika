@@ -28,21 +28,22 @@
                     <form>
                         <!-- Tingkatan -->
                         <div class="form-floating mb-3">
-                            <select class="form-select" id="floatingSelect"
+                            <select class="form-select" id="tingkat"
                                 aria-label="Floating label select example">
                                 <option selected undefined disabled>Tingkatan</option>
-                                <option value="X">X</option>
-                                <option value="XI">XI</option>
-                                <option value="XII">XII</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
                             </select>
                             <label for="floatingSelect">Tingkatan</label>
                         </div>
 
                         <div class="mb-3">
                             <label for="inputTagihan" class="form-label">Jumlah Tagihan</label>
-                            <input type="number" class="form-control" id="inputTagihan"
-                                aria-describedby="tagihanHelp">
-                            <div id="tagihanHelp" class="form-text">Masukan Jumlah Tagihan Dalam Bentuk Rupiah...
+                            <input type="number" class="form-control" id="tagihan"
+                                aria-describedby="tagihanHelp" placeholder="Rp. 150000">
+                            <div id="kode" class="form-text text-danger ">
+                                <em style="font-size: 10px;">Masukan Jumlah Tagihan Dalam Bentuk Rupiah...</em>
                             </div>
                         </div>
 
@@ -68,51 +69,22 @@
                         </div> -->
                         <div class="mb-3">
                             <label for="inputBulan" class="form-label">Bulan</label>
-                            <input type="month" class="form-control" id="inputBulan"
+                            <input type="month" class="form-control" id="bulan"
                                 aria-describedby="bulanHelp">
                         </div>
 
                         <!-- Tahun -->
-                        <div class="form-floating mb-3">
-                            <select class="form-select" id="floatingSelect"
-                                aria-label="Floating label select example">
+                        <!-- <div class="mb-3">
+                            <select class="form-select" id="tahun"
+                            aria-label="Floating label select example">
                                 <option selected undefined disabled>Tahun</option>
-                                <option value="2022">2022</option>
-                                <option value="2023">2023</option>
-                                <option value="2024">2024</option>
-                                <option value="2025">2025</option>
-                                <option value="2026">2026</option>
-                                <option value="2027">2027</option>
-                                <option value="2028">2028</option>
-                                <option value="2029">2029</option>
-                                <option value="2030">2030</option>
+                                <% for (let i = 2020; i <= 2030; i++) { %>
+                                    <option value="<%= i %>" ><%= i %></option>
+                                <% }%>
                             </select>
-                            <label for="floatingSelect">Tahun</label>
-                        </div>
+                        </div> -->
 
-                        
-                        <!-- Status -->
-                        <fieldset class="row mb-3">
-                            <legend class="col-form-label col-sm-2 pt-0">Status</legend>
-                            <div class="col-sm-10">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="gridRadios"
-                                        id="gridActive" value="option1" checked>
-                                    <label class="form-check-label badge bg-success" for="gridActive">
-                                        Aktif
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="gridRadios"
-                                        id="gridUnActive" value="option2">
-                                    <label class="form-check-label badge bg-danger" for="gridUnActive">
-                                        Tidak Aktif
-                                    </label>
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <button type="submit" class="btn btn-primary">Buat</button>
+                        <button type="button" id="add-spp" class="btn btn-primary">Buat</button>
                     </form>
                 </div>
             </div>
@@ -121,6 +93,30 @@
     </div>
 
     <%- include ('./../../../components/script.ejs')%>
+    <script>
+        $("#add-spp").on("click", () => {
+        const tingkat = $("#tingkat").val();
+        const tagihan = $("#tagihan").val();
+        const periode = $("#bulan").val();
+        // const tahun = $("#tahun").val();
+        console.log({tingkat, tagihan, bulan});
+        $.ajax({
+            url: "/api/admin/spp",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({tingkat, tagihan, periode}),
+            success: (response) => {
+                alert(response.status.message);
+                // console.log({nama, tingkat, periode});
+                return window.location.href = `/admin/payment`;
+            },
+            error: (response) => {
+                const message = response.responseJSON.status.message
+                alert(message);
+            }
+        });
+    });
+    </script>
 </body>
 
 </html>

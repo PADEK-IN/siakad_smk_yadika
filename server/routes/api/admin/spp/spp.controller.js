@@ -45,8 +45,8 @@ export const create = async (req, res) => {
     try {
         const { tingkat, tagihan, periode } = req.body;
         const tagihanInt = parseFloat(tagihan);
-        const bulan = periode.split("-")[1];
         const tahun = periode.split("-")[0];
+        const bulan = periode.split("-")[1];
         
         const dataSpp = await Spp.findOne({
             where: {tingkat, tagihan:tagihanInt, bulan, tahun}
