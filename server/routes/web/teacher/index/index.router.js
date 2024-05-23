@@ -7,7 +7,7 @@ const router = express.Router();
 
 // Routes
 router.route("/dashboard").get(isAuth, isGuru, index.getIndexPage);
-router.route("/profile").get(index.getProfilePage);
+router.route("/profile").get( index.getProfilePage);
 
 
 export default router;

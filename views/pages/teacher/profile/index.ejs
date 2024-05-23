@@ -23,36 +23,65 @@
                     <h6 class="px-3">Kembali</h6>
                 </div>
                 <div class="bg-light  rounded p-4">
-                    <div class="alert alert-primary text-center" role="alert">
-                        <h5 class="">Detail Profile Guru</h5>
+                    <div class="text-center">
+                        <div class="alert alert-primary " role="alert">
+                            <h5 class="">Detail Profile Guru</h5>
+                        </div>
+                        <img class="img-fluid rounded-circle mx-auto mb-4" src="/uploads/<%= guru.foto %>" style="width: 100px; height: 100px;">
+                        <div>
+                            <% if(guru.status=="aktif") { %>
+                                <div class="badge bg-info">Aktif</div>
+                            <% } else if(guru.status=="cuti") { %>
+                                <div class="badge bg-warning">Cuti</div>
+                            <% } else { %>
+                                <div class="badge bg-danger">Berhenti</div>
+                            <% } %>
+                        </div>
                     </div>
+                    <hr>
                     <div class="bg-light rounded h-100 ">
                         <div class="testimonial-item p-2">
                             <table class="table table-striped">
                                 <tbody>
                                     <tr>
-                                        <td class="fw-bold">Id Transaksi</td>
-                                        <td>4672389</td>
+                                        <td class="fw-bold">NIP</td>
+                                        <td><%= guru.nip %></td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-bold">Tingkatan</td>
-                                        <td>XI</td>
+                                        <td class="fw-bold">Nama</td>
+                                        <td><%= guru.nama %></td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-bold">Tagihan Untuk Bulan</td>
-                                        <td>Januari</td>
+                                        <td class="fw-bold">Email</td>
+                                        <td><%= guru.email %></td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-bold">Nama Siswa</td>
-                                        <td>Junaidi Sulaiman</td>
+                                        <td class="fw-bold">Tempat Lahir</td>
+                                        <td><%= guru.tempat_lahir %></td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-bold">Tanggal Di Bayar</td>
-                                        <td>01 Januari 2022</td>
+                                        <td class="fw-bold">Tanggal Lahir</td>
+                                        <td><%= guru.tanggal_lahir %></td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-bold">Bukti Pembayaran</td>
-                                        <td class="text-center"><img class="img-fluid mx-auto mb-4" src="/images/berkas.jpg" alt="" style="width: 500px; height: 500px;"></td>
+                                        <td class="fw-bold">Alamat</td>
+                                        <td><%= guru.alamat %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Jenis Kelamin</td>
+                                        <td><%= guru.jenis_kelamin %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Agama</td>
+                                        <td><%= guru.agama %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">No Handphone</td>
+                                        <td><%= guru.no_hp %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Pendidikan</td>
+                                        <td><%= guru.pendidikan %></td>
                                     </tr>
                                 </tbody>
                             </table> 
