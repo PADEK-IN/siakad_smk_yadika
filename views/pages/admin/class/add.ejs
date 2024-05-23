@@ -24,9 +24,9 @@
                 </div>
                 <div class="bg-light  rounded p-4">
                     <div class="alert text-center alert-primary" role="alert">
-                        Buat Data Kelas
+                        <h6>Buat Data Kelas</h6>
                     </div>
-
+                    <hr>
                     <!-- form Student -->
                     <div class="bg-light rounded h-100 px-4">
                         <form>
@@ -70,7 +70,6 @@
                                 </select>
                             </div>
 
-
                             <button type="submit" id="add-class" class="btn btn-primary">Simpan</button>
                         </form>
                     </div>
@@ -80,7 +79,6 @@
     </div>
     <%- include ('./../../../components/script.ejs')%>
 
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
     <script>
@@ -98,7 +96,6 @@
                 data: JSON.stringify({tingkat, kode, id_wali_kelas, tahun}),
                 success: (response) => {
                     alert(response.status.message);
-                    console.log({tingkat, kode, id_wali_kelas, tahun});
                     return window.location.href = `/admin/class`;
                 },
                 error: (response) => {

@@ -23,7 +23,9 @@
                         <a href="/admin/schadule" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
                         <h6 class="d-inline px-2">Kembali</h6>
                     </div>
-                    <h6>Buat Jadwal</h6>
+                    <div class="alert text-center alert-primary" role="alert">
+                        <h6>Buat Jadwal</h6>
+                    </div>
                     <hr>
                     <form>
                         <!-- Kelas -->
@@ -92,7 +94,6 @@
         const hari = $("#hari").val();
         const waktu_mulai = $("#mulai").val();
         const waktu_selesai = $("#selesai").val();
-        // console.log({id_kelas, id_mata_pelajaran, hari, waktu_mulai, waktu_selesai});
         $.ajax({
             url: "/api/admin/jadwal-pelajaran",
             method: "POST",
@@ -100,7 +101,6 @@
             data: JSON.stringify({id_kelas, id_mata_pelajaran, hari, waktu_mulai, waktu_selesai}),
             success: (response) => {
                 alert(response.status.message);
-                console.log({id_kelas, id_mata_pelajaran, hari, waktu_mulai, waktu_selesai});
                 return window.location.href = `/admin/schadule`;
             },
             error: (response) => {

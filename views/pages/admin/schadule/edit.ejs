@@ -119,8 +119,6 @@
             let waktu_mulai = $('#mulai').val()
             let waktu_selesai = $('#brakhir').val()
             let isUse = $("input[name='status']:checked").val();
-            console.log({id_kelas, id_mata_pelajaran, hari, waktu_mulai, waktu_selesai, isUse})
-
             $.ajax({
                 url: "/api/admin/jadwal-pelajaran/" + id,
                 method: "PATCH",

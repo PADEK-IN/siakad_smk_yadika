@@ -18,12 +18,14 @@
             <!-- navar end -->
 
             <div class="container-fluid pt-4 px-4 pb-5">
+                <div class="pb-4">
+                    <a href="/admin/payment" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
+                    <h6 class="d-inline px-2">Kembali</h6>
+                </div>
                 <div class="bg-light rounded h-100 p-4">
-                    <div class="pb-4">
-                        <a href="/admin/payment" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
-                        <h6 class="d-inline px-2">Kembali</h6>
+                    <div class="alert text-center alert-primary" role="alert">
+                        <h6>Buat SPP</h6>  
                     </div>
-                    <h6>Buat SPP</h6>
                     <hr>
                     <form>
                         <!-- Tingkatan -->
@@ -48,41 +50,11 @@
                         </div>
 
                         <!-- Bulan -->
-                        <!-- <div class="form-floating mb-3">
-                            <select class="form-select" id="floatingSelect"
-                                aria-label="Floating label select example">
-                                <option selected undefined disabled>Bulan</option>
-                                <option value="januari">Januari</option>
-                                <option value="februari">Februari</option>
-                                <option value="maret">Maret</option>
-                                <option value="april">April</option>
-                                <option value="mei">Mei</option>
-                                <option value="juni">Juni</option>
-                                <option value="juli">Juli</option>
-                                <option value="agustus">Agustus</option>
-                                <option value="september">September</option>
-                                <option value="oktober">Oktober</option>
-                                <option value="november">November</option>
-                                <option value="desember">Desember</option>
-                            </select>
-                            <label for="floatingSelect">Bulan</label>
-                        </div> -->
                         <div class="mb-3">
                             <label for="inputBulan" class="form-label">Bulan</label>
                             <input type="month" class="form-control" id="bulan"
                                 aria-describedby="bulanHelp">
                         </div>
-
-                        <!-- Tahun -->
-                        <!-- <div class="mb-3">
-                            <select class="form-select" id="tahun"
-                            aria-label="Floating label select example">
-                                <option selected undefined disabled>Tahun</option>
-                                <% for (let i = 2020; i <= 2030; i++) { %>
-                                    <option value="<%= i %>" ><%= i %></option>
-                                <% }%>
-                            </select>
-                        </div> -->
 
                         <button type="button" id="add-spp" class="btn btn-primary">Buat</button>
                     </form>
@@ -98,8 +70,6 @@
         const tingkat = $("#tingkat").val();
         const tagihan = $("#tagihan").val();
         const periode = $("#bulan").val();
-        // const tahun = $("#tahun").val();
-        console.log({tingkat, tagihan, bulan});
         $.ajax({
             url: "/api/admin/spp",
             method: "POST",
@@ -107,7 +77,6 @@
             data: JSON.stringify({tingkat, tagihan, periode}),
             success: (response) => {
                 alert(response.status.message);
-                // console.log({nama, tingkat, periode});
                 return window.location.href = `/admin/payment`;
             },
             error: (response) => {

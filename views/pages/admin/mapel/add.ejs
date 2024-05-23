@@ -24,9 +24,9 @@
                 </div>
                 <div class="bg-light  rounded p-4">
                     <div class="alert text-center alert-primary" role="alert">
-                        Buat Data Pelajaran
+                        <h6>Buat Data Pelajaran</h6>    
                     </div>
-
+                    <hr>
                     <!-- form Student -->
                     <div class="bg-light rounded h-100 px-4">
                         <form>
@@ -46,27 +46,6 @@
                                 <label for="floatingSelect">Tingkat</label>
                             </div>
 
-                            <!-- Status -->
-                            <!-- <fieldset class="row mb-3">
-                                <legend class="col-form-label col-sm-2 pt-0">Status</legend>
-                                <div class="col-sm-10">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gridRadios"
-                                            id="gridActive" value="option1" checked>
-                                        <label class="form-check-label" for="gridActive">
-                                            Dipakai
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gridRadios"
-                                            id="gridUnActive" value="option2">
-                                        <label class="form-check-label" for="gridUnActive">
-                                            Tidak Terpakai
-                                        </label>
-                                    </div>
-                                </div>
-                            </fieldset> -->
-
                             <button id="add-mapel" type="button" class="btn btn-primary ">Simpan</button>
                         </form>
                     </div>
@@ -76,7 +55,6 @@
     </div>
     <%- include ('./../../../components/script.ejs')%>
 
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
     <script>
@@ -92,7 +70,6 @@
             data: JSON.stringify({nama, tingkat}),
             success: (response) => {
                 alert(response.status.message);
-                console.log({nama, tingkat});
                 return window.location.href = `/admin/mapel`;
             },
             error: (response) => {
