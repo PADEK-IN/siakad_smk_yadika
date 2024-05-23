@@ -9,11 +9,10 @@ export const getAll = async (req, res) => {
             include: [
                 {
                     model: Guru,
-                    attributes: [ "name"],
+                    attributes: [ "nama"],
                 },
             ]
         });
-        console.log(dataKelas)
 
         const data = dataKelas.map((Kelas) => {
             return {

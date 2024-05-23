@@ -1,6 +1,7 @@
 import * as responses from "../../../../helpers/response.js";
 import Users from "../../../../models/users.model.js";
 import Guru from "../../../../models/guru.model.js";
+import Murid from "../../../../models/murid.model.js";
 import { hash } from "../../../../helpers/hashing.js";
 import { checkValidId, hashids } from "../../../../helpers/isValidId.js";
 import { Op } from 'sequelize';
@@ -52,21 +53,54 @@ export const getOneById = async (req, res) => {
 export const getUserEmailByRole = async (req, res) => {
     try {
         const { role } = req.params;
-        let registerEmail = await Guru.findAll({
-            attributes: ["email"],
-            raw: true
-        });
-        registerEmail = registerEmail.map(guru=>guru.email);
-        const email = await Users.findAll({
-            attributes: ['email'],
-            where: {
-              role,
-              email: {
-                [Op.notIn]: registerEmail
-              }
-            },
-            raw: true
-          });
+
+        let registerEmailGuru;
+        let registerEmailMurid;
+        let email;
+
+        if(role == "guru"){
+            registerEmailGuru = await Guru.findAll({
+                attributes: ["email"],
+                raw: true
+            });
+            registerEmailGuru = registerEmailGuru.map(guru=>guru.email);
+
+            email = await Users.findAll({
+                attributes: ['email'],
+                where: {
+                  role,
+                  email: {
+                    [Op.notIn]: registerEmailGuru
+                  }
+                },
+                raw: true
+            });
+        } else if(role == "murid"){
+            registerEmailMurid = await Murid.findAll({
+                attributes: ["email"],
+                raw: true
+            });
+            registerEmailMurid = registerEmailMurid.map(murid=>murid.email);
+
+            email = await Users.findAll({
+                attributes: ['email'],
+                where: {
+                  role,
+                  email: {
+                    [Op.notIn]: registerEmailMurid
+                  }
+                },
+                raw: true
+            });
+        } else if(role == "admin"){
+            email = await Users.findAll({
+                where: {role},
+                attributes: ["email"],
+                raw: true
+            })
+        } else {
+            email = [];
+        }
 
         responses.res200("Berhasil mengambil data", email, res);
     } catch (error) {
