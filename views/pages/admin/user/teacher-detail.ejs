@@ -18,14 +18,18 @@
             <!-- navar end -->
 
             <div class="container-fluid pt-4 px-4 pb-5">
-                <div class="d-flex mb-4">
-                    <a href="/admin/user/teachers" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
-                    <h6 class="px-3">Kembali</h6>
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <a href="/admin/user/teachers" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"><h6 class="px-3">Kembali</h6></a>
+                    <a class="btn btn-sm btn-primary" href="/admin/user/teacher/<%= guru.id %>/edit">Edit Data Guru</a>
                 </div>
                 <div class="bg-light  rounded p-4">
-                    <div class="alert text-center alert-info" role="alert">
-                        Detail Data Guru
-                    </div>
+                    <% if(guru.status=="aktif") { %>
+                        <div class="alert text-center alert-info" role="alert">Detail Data Guru</div>
+                    <% } else if(guru.status=="cuti") { %>
+                        <div class="alert text-center alert-warning" role="alert">Detail Data Guru</div>
+                    <% } else { %>
+                        <div class="alert text-center alert-danger" role="alert">Detail Data Guru</div>
+                    <% } %>
 
                     <div class="bg-light rounded">
                         <div class="testimonial-item text-center">

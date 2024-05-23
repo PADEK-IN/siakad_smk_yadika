@@ -32,7 +32,7 @@
                                     <th>Nama</th>
                                     <th>Email</th>
                                     <th>JK</th>
-                                    <th>Matkul</th>
+                                    <th>Mata Pelajaran</th>
                                     <th>Aktif</th>
                                     <th>Action</th>
                                 </tr>
@@ -51,17 +51,19 @@
                                             <span class="badge bg-danger">PR</span>
                                         <% } %>
                                     </td>
-                                    <td><%= data.pendidikan %></td>
+                                    <td><%= data.Mata_Pelajaran %></td>
                                     <td>
-                                        <% if(data.jenis_kelamin == "laki-laki") { %>
-                                            <span class="badge bg-success">Active</span>
+                                        <% if(data.status=="aktif") { %>
+                                            <span class="badge bg-info">Aktif</span>
+                                        <% } else if(data.status=="cuti") { %>
+                                            <span class="badge bg-warning">Cuti</span>
                                         <% } else { %>
-                                            <span class="badge bg-danger ">Unactive</span>
+                                            <span class="badge bg-danger">Berhenti</span>
                                         <% } %>
                                     </td>
                                     <td>
                                         <a href="/admin/user/teacher/<%= data.id%>/edit" class="bi bi-pencil-square px-2"></a>
-                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
+                                        <a href="#" onclick="del('<%= data.id %>','<%= data.nama %>')" class="bi bi-archive px-2" style="color: red;"></a>
                                     </td>
                                 </tr>
                                 <% } %>
@@ -92,6 +94,23 @@
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
     <script>
         new DataTable('#example');
+        function del(id, nama) {
+            const isSure = confirm(`Kamu yakin ingin menghapus data ${nama}`);
+            if(isSure){
+                $.ajax({
+                    url: `/api/admin/guru/${id}`,
+                    method: "DELETE",
+                    success: (response) => {
+                        alert(response.status.message);
+                        window.location.reload();
+                    },
+                    error: (response) => {
+                        const message = response.responseJSON.status.message;
+                        alert(message);
+                    }
+                });
+            }
+        }
     </script>
 </body>
 

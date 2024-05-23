@@ -124,12 +124,17 @@ export const editStudentPage = async (req, res) => {
 // teacher
 export const getTeacherPage = async(req, res) => {
   try {
-    const dataGuru = await Guru.findAll();
+    const dataGuru = await Guru.findAll({
+      include: [{
+        model: Mata_Pelajaran
+      }]
+    });
 
     const guru = dataGuru.map((guru) => {
         return {
           ...guru.dataValues,
-          id: hashids.encode(guru.id)
+          id: hashids.encode(guru.id),
+          Mata_Pelajaran: guru.Mata_Pelajaran.nama
         };
       });
 
@@ -179,6 +184,22 @@ export const detailTeacherPage = async (req, res) => {
   }
 };
 
-export const editTeacherPage = (req, res) => {
-  res.render('pages/admin/user/teacher-edit.ejs');
+export const editTeacherPage = async (req, res) => {
+  try {
+    const {id} = req.params;
+    const validId = checkValidId(id);
+    if(!validId) return res.render("pages/errors/400", { message: "ID guru tidak valid" });
+    const dataGuru = await Guru.findOne({
+        where: { id: validId },
+    });
+    const guru = {
+        ...dataGuru.dataValues,
+        id: hashids.encode(dataGuru.id),
+        id_mata_pelajaran: hashids.encode(dataGuru.id_mata_pelajaran),
+    };
+    res.render('pages/admin/user/teacher-edit.ejs', {guru});
+  } catch (err) {
+    console.log(err.message);
+    res.render("pages/errors/500");
+  }
 };

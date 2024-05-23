@@ -45,7 +45,7 @@ export const getOneById = async (req, res) => {
 export const create = async (req, res) => {
     try {
         const { 
-            email, nip, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, pendidikan, id_mata_pelajaran 
+            email, nip, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, pendidikan, id_mata_pelajaran, status 
         } = JSON.parse(req.body.data);
 
         const foto = req.file?.filename;
@@ -53,7 +53,7 @@ export const create = async (req, res) => {
         if(!idMapel) return responses.res400("ID mata pelajaran tidak valid", res);
 
         await Guru.create({
-            email, nip, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, pendidikan, id_mata_pelajaran: idMapel, foto
+            email, nip, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, pendidikan, id_mata_pelajaran: idMapel, foto, status
         });
 
         await Users.update({isValid: true},{where: {email}});
@@ -70,15 +70,14 @@ export const update = async (req, res) => {
         const {id} = req.params;
         const validId = checkValidId(id);
         if(!validId) return responses.res400("ID Guru tidak valid", res);
-
+        
         const { 
             email, nip, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, pendidikan, id_mata_pelajaran, status 
-        } = req.body;
-        
+        } = JSON.parse(req.body.data);
         const idMapel = checkValidId(id_mata_pelajaran);
         if(!idMapel) return responses.res400("ID mata pelajaran tidak valid", res);
         
-        const foto = req.file.filename;
+        const foto = req.file?.filename;
 
         const respons = await Guru.update({
             email, nip, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, pendidikan, id_mata_pelajaran: idMapel, foto, status
