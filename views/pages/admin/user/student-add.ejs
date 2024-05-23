@@ -23,12 +23,12 @@
                         <a href="/admin/user" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
                         <h6 class="d-inline px-2">Kembali</h6>
                     </div>
-                    <h6>Tambah Guru</h6>
+                    <h6>Tambah Murid</h6>
                     <hr>
                     <form>
                         <div class="mb-3">
-                            <label for="nip" class="form-label">NIP</label>
-                            <input type="text" class="form-control" id="nip" placeholder="Nomor Induk Pegawai">
+                            <label for="nis" class="form-label">NIS</label>
+                            <input type="text" class="form-control" id="nis" placeholder="Nomor Induk Siswa">
                         </div>
                         <div class="mb-3">
                             <label for="email">Email</label>
@@ -38,7 +38,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="nama" class="form-label">Nama</label>
-                            <input type="text" class="form-control" id="nama" placeholder="Nama Lenkap">
+                            <input type="text" class="form-control" id="nama" placeholder="Nama Lengkap">
                         </div>
                         <div class="mb-3">
                             <label for="jenis_kelamin">Jenis Kelamin</label>
@@ -60,29 +60,56 @@
                             <label for="alamat" class="form-label">Alamat</label>
                             <input type="text" class="form-control" id="alamat" placeholder="Alamat Tempat Tinggal">
                         </div>
-                        <select class="form-select" id="agama"
-                            aria-label="Floating label select example">
-                            <option selected undefined disabled>Agama</option>
-                            <option value="Islam">Islam</option>
-                            <option value="Kristen">Kristen</option>
-                            <option value="Katolik">Katolik</option>
-                            <option value="Hindu">Hindu</option>
-                            <option value="Buddha">Budha</option>
-                            <option value="Kongihucu">Konghucu</option>
-                            <option value="Lainnya">Lainnya....</option>
-                        </select>
+                        <div class="mb-3">
+                            <label for="agama" class="form-label">Agama</label>
+                            <select class="form-select" id="agama"
+                                aria-label="Floating label select example">
+                                <option selected undefined disabled>Pilih Agama</option>
+                                <option value="Islam">Islam</option>
+                                <option value="Kristen">Kristen</option>
+                                <option value="Katolik">Katolik</option>
+                                <option value="Hindu">Hindu</option>
+                                <option value="Buddha">Budha</option>
+                                <option value="Kongihucu">Konghucu</option>
+                                <option value="Lainnya">Lainnya....</option>
+                            </select>
+                        </div>
                         <div class="mb-3">
                             <label for="no_hp" class="form-label">Nomor Telepon</label>
                             <input type="text" class="form-control" id="no_hp" placeholder="081234567890">
                         </div>
                         <div class="mb-3">
-                            <label for="pendidikan" class="form-label">Pendidikan</label>
-                            <input type="text" class="form-control" id="pendidikan" placeholder="S1 Informatika">
+                            <label for="hobi" class="form-label">Hobi</label>
+                            <input type="text" class="form-control" id="hobi" placeholder="Hobi Murid">
                         </div>
                         <div class="mb-3">
-                            <label for="mata_pelajaran">Mata Pelajaran</label>
-                            <select class="form-select" id="mata_pelajaran" aria-label="Floating label select example">
-                                <option selected undefined disabled>Pilih Mata Pelajaran</option>
+                            <label for="sekolah_asal" class="form-label">Sekolah Asal</label>
+                            <input type="text" class="form-control" id="sekolah_asal" placeholder="Sekolah Asal Murid">
+                        </div>
+                        <div class="mb-3">
+                            <label for="no_ijazah" class="form-label">No Ijazah</label>
+                            <input type="text" class="form-control" id="no_ijazah" placeholder="Nomor Ijazah Murid">
+                        </div>
+                        <div class="mb-3">
+                            <label for="tahun_masuk" class="form-label">Tahun Masuk</label>
+                            <select class="form-select" id="tahun_masuk"
+                                aria-label="Floating label select example">
+                                <option selected undefined disabled>Pilih Tahun</option>
+                                <% for (let i = 2020; i <= 2030; i++) { %>
+                                    <option value="<%= i %>" ><%= i %></option>
+                                <% }%>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_kelas">Kelas</label>
+                            <select class="form-select" id="id_kelas" aria-label="Floating label select example">
+                                <option selected undefined disabled>Pilih Kelas</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_jurusan">Jurusan</label>
+                            <select class="form-select" id="id_jurusan" aria-label="Floating label select example">
+                                <option selected undefined disabled>Pilih Jurusan</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -101,7 +128,7 @@
     <script>
         $("#create").on("click", (e) => {
             e.preventDefault();
-            const nip = $("#nip").val();
+            const nis = $("#nis").val();
             const email = $("#email").val();
             const nama = $("#nama").val();
             const jenis_kelamin = $("#jenis_kelamin").val();
@@ -110,27 +137,31 @@
             const alamat = $("#alamat").val();
             const agama = $("#agama").val();
             const no_hp = $("#no_hp").val();
-            const pendidikan = $("#pendidikan").val();
-            const id_mata_pelajaran = $("#mata_pelajaran").val();
+            const hobi = $("#hobi").val();
+            const sekolah_asal = $("#sekolah_asal").val();
+            const tahun_masuk= $("#tahun_masuk").val();
+            const id_kelas = $("#id_kelas").val();
+            const id_jurusan = $("#id_jurusan").val();
 
             const fileInput = document.getElementById('foto');
             const file = fileInput.files[0];
             const formData = new FormData();
+
             formData.append('foto', file);
-            formData.append('data', JSON.stringify({nip, email, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, pendidikan, id_mata_pelajaran}));
+            formData.append('data', JSON.stringify({nis, email, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, hobi, sekolah_asal, tahun_masuk, id_kelas, id_jurusan}));
             
             $.ajax({
-                url: "/api/admin/guru/",
+                url: "/api/admin/murid/",
                 method: "POST",
                 data: formData,
                 processData: false,
                 contentType: false,
                 success: (response) => {
                     alert(response.status.message);
-                    window.location.href = "/admin/user/teachers";
+                    window.location.href = "/admin/user/students";
                 },
                 error: (response) => {
-                    const message = response.responseJSON.status.message
+                    const message = response.responseJSON.status.message;
                     alert(message);
                 }
             });
@@ -139,25 +170,25 @@
         $(document).ready(()=>{
             // fetch data mata pelajaran
             $.ajax({
-                url: "/api/admin/mata-pelajaran/",
+                url: "/api/admin/kelas/",
                 method: "GET",
                 contentType: "application/json",
                 success: (response) => {
                     const data = response.data;
-                    for (const mapel of data) {
-                        $("#mata_pelajaran").append(`
-                            <option value="${mapel.id}">${mapel.nama}</option>
-                        `)    
+                    for (const kelas of data) {
+                        $("#id_kelas").append(`
+                            <option value="${kelas.id}">${kelas.tingkat} - ${kelas.kode}</option>
+                        `);
                     }
                 },
                 error: (response) => {
-                    const message = response.responseJSON.status.message
+                    const message = response.responseJSON.status.message;
                     alert(message);
                 }
             });
             // Email with role guru
             $.ajax({
-                url: "/api/admin/user/list/guru",
+                url: "/api/admin/user/list/murid",
                 method: "GET",
                 contentType: "application/json",
                 success: (response) => {
@@ -165,11 +196,29 @@
                     for (const user of data) {
                         $("#email").append(`
                             <option value="${user.email}">${user.email}</option>
-                        `)
+                        `);
                     }
                 },
                 error: (response) => {
-                    const message = response.responseJSON.status.message
+                    const message = response.responseJSON.status.message;
+                    alert(message);
+                }
+            });
+            // fetch data jurusan
+            $.ajax({
+                url: "/api/admin/jurusan",
+                method: "GET",
+                contentType: "application/json",
+                success: (response) => {
+                    const data = response.data;
+                    for (const jurusan of data) {
+                        $("#id_jurusan").append(`
+                            <option value="${jurusan.id}">${jurusan.nama}</option>
+                        `);
+                    }
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message;
                     alert(message);
                 }
             });

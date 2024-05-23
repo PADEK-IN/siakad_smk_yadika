@@ -1,5 +1,6 @@
 import * as responses from "../../../../helpers/response.js";
 import Murid from "../../../../models/murid.model.js";
+import Users from "../../../../models/users.model.js";
 import { checkValidId, hashids } from "../../../../helpers/isValidId.js";
 
 export const getAll = async (req, res) => {
@@ -50,14 +51,14 @@ export const create = async (req, res) => {
         const {
             nis, email, nama, tempat_lahir, tanggal_lahir, alamat, jenis_kelamin,
             agama, hobi, no_hp, sekolah_asal, no_ijazah, tahun_masuk, id_jurusan, id_kelas
-        } = req.body;
-
+        } = JSON.parse(req.body.data);
+        console.log(JSON.parse(req.body.data))
         const idJurusan = checkValidId(id_jurusan);
         if(!idJurusan) return responses.res400("ID jurusan tidak valid", res);
         const idKelas = checkValidId(id_kelas);
         if(!idKelas) return responses.res400("ID kelas tidak valid", res);
-
-        const foto = req.file.filename;
+        
+        const foto = req.file?.filename;
 
         const dataMurid = await Murid.findOne({
             where: {nis, email}
@@ -68,8 +69,11 @@ export const create = async (req, res) => {
             nis, email, nama, tempat_lahir, tanggal_lahir, alamat, jenis_kelamin,
             agama, hobi, no_hp, sekolah_asal, no_ijazah, tahun_masuk, 
             id_jurusan: idJurusan, id_kelas: idKelas, foto
-        })
-        responses.res201("User baru berhasil ditambahkan", null, res);
+        });
+
+        await Users.update({isValid: true},{where: {email}});
+
+        responses.res201("Murid baru berhasil ditambahkan", null, res);
     } catch (err) {
         console.log(err.message);
         responses.res500(res);

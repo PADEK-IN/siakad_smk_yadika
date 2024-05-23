@@ -61,7 +61,7 @@ export const detailStudentPage = (req, res) => {
 };
 
 export const createStudentPage = (req, res) => {
-  res.render('pages/admin/user/student-create.ejs');
+  res.render('pages/admin/user/student-add.ejs');
 };
 
 export const editStudentPage = (req, res) => {

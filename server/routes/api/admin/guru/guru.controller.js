@@ -1,6 +1,7 @@
 import * as responses from "../../../../helpers/response.js";
 import Guru from "../../../../models/guru.model.js";
 import { checkValidId, hashids } from "../../../../helpers/isValidId.js";
+import Users from "../../../../models/users.model.js";
 
 export const getAll = async (req, res) => {
     try {
@@ -54,6 +55,8 @@ export const create = async (req, res) => {
         await Guru.create({
             email, nip, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, pendidikan, id_mata_pelajaran: idMapel, foto
         });
+
+        await Users.update({isValid: true},{where: {email}});
 
         responses.res201("Guru baru berhasil ditambahkan", null, res);
     } catch (err) {
