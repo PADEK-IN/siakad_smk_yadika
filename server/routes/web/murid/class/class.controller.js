@@ -30,7 +30,7 @@ export const getClassPage = async(req, res) => {
             kelas,
             kelas_id
         }
-        console.log({ murid });
+        // console.log({ murid });
         
         const dataJadwals = await Jadwal_Pelajaran.findAll({
             where: { id_kelas: murid.id_kelas },
@@ -60,7 +60,7 @@ export const getClassPage = async(req, res) => {
 
         let jadwalPerHari = groupByDay(dataJadwal);
 
-        const hariList = ['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu', 'minggu'];
+        const hariList = ['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu'];
 
         hariList.forEach(day => {
             if (!jadwalPerHari[day]) {
@@ -73,7 +73,7 @@ export const getClassPage = async(req, res) => {
             return acc;
         }, {});
         
-        console.log(jadwalPerHari);
+        // console.log(jadwalPerHari);
         
         res.render("pages/murid/class/index", { murid, jadwalPerHari });
     } catch (err) {
