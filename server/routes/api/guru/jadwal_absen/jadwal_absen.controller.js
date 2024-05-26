@@ -55,7 +55,7 @@ export const create = async (req, res) => {
       tanggal,
       waktu_buka,
       waktu_tutup,
-      id_jadwal_pelajaran: validIdKelas,
+      id_jadwal_pelajaran: validIdJadwal,
     });
     responses.res201('Data jadwal absen baru berhasil ditambahkan', null, res);
   } catch (err) {
