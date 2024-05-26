@@ -2,6 +2,9 @@ import Guru from "../../../../models/guru.model.js";
 import Kelas from "../../../../models/kelas.model.js";
 import Jadwal from "../../../../models/jadwal_pelajaran.model.js";
 import Mata_Pelajaran from "../../../../models/mata_pelajaran.model.js";
+import Jadwal_Absen from "../../../../models/jadwal_absen.model.js";
+import Absen from "../../../../models/absen.model.js";
+import Murid from "../../../../models/murid.model.js";
 import { checkValidId, hashids } from '../../../../helpers/isValidId.js';
 
 export const getSchadulePage = async(req, res) => {
@@ -65,6 +68,77 @@ export const getSchadulePage = async(req, res) => {
 export const addSchadulePage = (req, res) => {
     res.render("pages/teacher/schadule/add.ejs");
 };
-export const detailSchadulePage = (req, res) => {
-    res.render("pages/teacher/schadule/detail.ejs");
+export const detailSchadulePage = async(req, res) => {
+    try {
+        const parts = req.url.split('/');
+        let schadulelId = parts[parts.length - 2];
+        // console.log({schadulelId});
+        const jadwal = hashids.decode(schadulelId);
+        console.log({jadwal});
+
+        const dataJadwal = await Jadwal.findOne({
+            where: { id: jadwal },
+            raw: true,
+            include: [
+                { 
+                    model: Kelas,
+                    attributes: [ "tingkat", "kode"],
+                },
+            ],
+        })
+
+        const kelas = dataJadwal['Kela.tingkat'] + "--" +  dataJadwal['Kela.kode'];
+
+        const pelajaran = {
+            ...dataJadwal,
+            id: hashids.encode(dataJadwal.id),
+            Kelas: kelas,
+        }
+
+        console.log({ pelajaran });
+
+        const dataJadwalAbsen = await Jadwal_Absen.findAll({
+            where: { id_jadwal_pelajaran: jadwal },
+            include: [
+                { 
+                    model: Absen,
+                    attributes: [ "id_murid", "id_jadwal_absen" ],
+                    include:  [
+                        {   
+                            model: Murid
+                        }
+                    ]
+                },
+            ]
+        })
+
+        const jadwalAbsen = dataJadwalAbsen.map((jadwalAbsen) => {
+            return {
+                ...jadwalAbsen.dataValues,
+                // id: hashids.encode(jadwalAbsen.id),
+            }
+        })
+        console.log({jadwalAbsen});
+
+
+
+        // const dataAbsen = await Absen.findAll({
+        //     where: { id_jadwal_absen: jadwalAbsen.id }
+        // })
+
+        // const absen = dataAbsen.map((absen) => {
+        //     return {
+        //         ...absen.dataValues,
+        //         id: hashids.encode(absen.id),
+        //     }
+        // })
+
+        // console.log({absen});
+
+        
+        res.render("pages/teacher/schadule/detail.ejs", { pelajaran, jadwalAbsen });
+    } catch (err) {
+        console.log(err.message);
+        res.render('pages/errors/500'); 
+    }
 };
