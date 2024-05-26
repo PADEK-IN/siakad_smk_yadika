@@ -30,14 +30,14 @@ export const getProfilePage = async(req, res) => {
         const dataMurid = await Murid.findOne({
             where: { email },
             raw: true
-        })  
+        })
         // console.log({dataMurid});
         const murid = {
             ...dataMurid,
             id: hashids.encode(dataMurid.id),
         }
         console.log({ murid });
-        
+
         res.render("pages/murid/profile/index");
     } catch (err) {
         console.log(err.message);
