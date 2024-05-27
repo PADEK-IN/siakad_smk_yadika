@@ -124,7 +124,7 @@ export const detailSchadulePage = async(req, res) => {
             include: [
                 { 
                     model: Absen,
-                    attributes: [ "id_murid", "id_jadwal_absen", "status" ],
+                    attributes: ["id", "id_murid", "id_jadwal_absen", "status" ],
                     include:  [
                         {   
                             model: Murid,
@@ -141,6 +141,7 @@ export const detailSchadulePage = async(req, res) => {
                 // Extract attendance data
                 absensi: jadwalAbsen.Absens.map(absen => ({
                     id: hashids.encode(absen.id),
+                    // id: absen.id,
                     nama: absen.Murid.nama,
                     id_murid: hashids.encode(absen.id_murid),
                     status: absen.status,
@@ -148,7 +149,7 @@ export const detailSchadulePage = async(req, res) => {
                 }))
             }
         })
-        // console.log({ jadwalAbsen });
+        console.log({ jadwalAbsen });
 
         
         res.render("pages/teacher/schadule/detail.ejs", { pelajaran, jadwalAbsen, guru });

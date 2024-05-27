@@ -67,14 +67,10 @@ export const update = async (req, res) => {
         const validId = checkValidId(id);
         if(!validId) return responses.res400("ID absen tidak valid", res);
 
-        const { status, id_murid, id_jadwal_absen } = req.body;
-        const validIdMurid = checkValidId(id_murid);
-        if(!validIdMurid) return responses.res400("ID murid tidak valid", res);
-        const validIdJadwalAbsen = checkValidId(id_jadwal_absen);
-        if(!validIdJadwalAbsen) return responses.res400("ID jadwal absen tidak valid", res);
+        const { status } = req.body;
         
         const respons = await Absen.update({
-            status, id_murid:validIdMurid, id_jadwal_absen:validIdJadwalAbsen
+            status
         },{
             where: {
                 id: validId

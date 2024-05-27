@@ -52,6 +52,7 @@
                                                         <th>NIS</th>
                                                         <th>Nama</th>
                                                         <th>Absensi</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -71,6 +72,41 @@
                                                                     <i class="bi bi-x-circle-fill" style="color:crimson;"></i>
                                                                 <% } %>
                                                             </td>
+                                                            <td>
+                                                                <a href="" class="bi bi-pencil-square px-2" data-bs-toggle="modal" data-bs-target="#editAbsensi"></a>
+                                                                <!-- Modal -->
+                                                                <div class="modal fade" id="editAbsensi" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editAbsensiLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                        <h5 class="modal-title" id="editAbsensiLabel">Edit Absensi</h5>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="mb-3">
+                                                                                <label for="inputCode" class="form-label">Status</label>
+                                                                                <div >
+                                                                                    <input class="form-check-input mx-2" type="radio" name="status" id="status" value="hadir">
+                                                                                    <input class="form-check-input mx-2" type="radio" name="status" id="status" value="izin">
+                                                                                    <input class="form-check-input mx-2" type="radio" name="status" id="status" value="sakit">
+                                                                                    <input class="form-check-input mx-2" type="radio" name="status" id="status" value="tidak hadir">
+                                                                                </div>
+                                                                                <div>
+                                                                                    <i class="bi bi-check-circle-fill  mx-2" style="color: rgb(113, 223, 3);"></i>
+                                                                                    <i class="bi bi-info-circle-fill  mx-2" style="color:rgb(22, 94, 236);"></i>
+                                                                                    <i class="bi bi-heart-fill  mx-2" style="color:rgb(227, 107, 243);"></i>
+                                                                                    <i class="bi bi-x-circle-fill  mx-2" style="color:crimson;"></i>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                                        <button type="button" onclick="editAbsen('<%= absensi.id %>')" class="btn btn-primary">Edit</button>
+                                                                        </div>
+                                                                    </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
                                                         </tr>
                                                     <% } %>
                                                     <% } else { %>
@@ -84,6 +120,7 @@
                                                         <th>NIS</th>
                                                         <th>Nama</th>
                                                         <th>Absensi</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </tfoot>
                                             </table>
@@ -106,6 +143,25 @@
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
     <script>
         new DataTable('#example');
+
+        function editAbsen(id) {
+        let status = $("input[name='status']:checked").val();
+        console.log({status, id});
+        $.ajax({
+            url: "/api/guru/absen/" + id,
+            method: "PATCH",
+            contentType: "application/json",
+            data: JSON.stringify({status}),
+            success: (response) => {
+                alert(response.status.message);
+                window.location.reload();
+            },
+            error: (response) => {
+                const message = response.responseJSON.status.message
+                alert(message);
+            }
+        });
+        }
     </script>
 </body>
 
