@@ -149,7 +149,7 @@ export const detailSchadulePage = async(req, res) => {
                 }))
             }
         })
-        console.log({ jadwalAbsen });
+        // console.log({ jadwalAbsen });
 
         
         res.render("pages/teacher/schadule/detail.ejs", { pelajaran, jadwalAbsen, guru });
