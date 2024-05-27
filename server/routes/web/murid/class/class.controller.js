@@ -121,7 +121,7 @@ export const getAbsensiPage = async(req, res) => {
             kelas,
             kelas_id
         }
-        console.log({ murid });
+        // console.log({ murid });
 
         const parts = req.url.split('/');
         let schadulelId = parts[parts.length - 2];
@@ -150,21 +150,31 @@ export const getAbsensiPage = async(req, res) => {
             ...dataJadwal,
             id: hashids.encode(dataJadwal.id),
             pelajaran
-
         }
-        // console.log({ jadwalPelajaran });
 
         const dataJadwalAbsen = await Jadwal_Absen.findAll({
             where: { id_jadwal_pelajaran: jadwalId },
-        })
+            raw: true
+        });
+        const jadwalAbsen = await Promise.all(dataJadwalAbsen.map(async (jadwalAbsen) => {
+            const attendance = await Absen.findOne({
+                where: {
+                    // id_jadwal_absen: hashids.decode(jadwalAbsen.id),
+                    id_jadwal_absen: jadwalAbsen.id,
+                    id_murid: hashids.decode(murid.id) 
+                    // id_murid: murid.id
+                },
+                raw: true
+            });
 
-        const jadwalAbsen = dataJadwalAbsen.map((jadwalAbsen) => {
             return {
-                ...jadwalAbsen.dataValues,
+                ...jadwalAbsen,
                 id: hashids.encode(jadwalAbsen.id),
-            }
-        })
-        console.log({jadwalAbsen});
+                attendance
+            };
+        }));
+
+        // console.log({ jadwalAbsen });
 
         res.render("pages/murid/class/absensi", { murid, jadwalPelajaran, jadwalAbsen });
     } catch (err) {

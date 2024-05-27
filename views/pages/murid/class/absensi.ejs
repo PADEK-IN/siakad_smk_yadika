@@ -51,6 +51,18 @@
                                         aria-labelledby="flush-headingFIRST" data-bs-parent="#accordionFlushExample">
                                         <div class="accordion-body">
                                             <%= data.waktu_buka %> - <%= data.waktu_tutup %>
+                                            <% if (data.attendance) { %>
+                                                <!-- Display attendance status -->
+                                                <% if (data.attendance.status === 'hadir') { %>
+                                                    <span class="badge bg-success">Hadir</span>
+                                                <% } else if (data.attendance.status === 'izin') { %>
+                                                    <span class="badge bg-primary">Izin</span>
+                                                <% } else if (data.attendance.status === 'sakit') { %>
+                                                    <span class="badge bg-warning">Sakit</span>
+                                                <% } else if (data.attendance.status === 'tidak hadir') { %>
+                                                    <span class="badge bg-danger">Tidak Hadir</span>
+                                                <% } %>
+                                            <% } else { %>
                                             <form action="">
                                                 <!-- Status -->
                                                 <fieldset class="row mb-3">
@@ -88,6 +100,7 @@
                                                 </fieldset>
                                                 <button type="button" onclick="absensi('<%= data.id %>', '<%= murid.id %>')" class="btn btn-primary">Simpan</button>
                                             </form>
+                                            <% } %>
                                         </div>
                                     </div>
                                 </div>
@@ -115,8 +128,7 @@
         let status = $("input[name='status']:checked").val();
         let id_murid = muridId;
         let id_jadwal_absen = absenId;
-
-        console.log({status, id_murid, id_jadwal_absen});
+        // console.log({status, id_murid, id_jadwal_absen});
             $.ajax({
                 url: "/api/murid/absen",
                 method: "POST",
