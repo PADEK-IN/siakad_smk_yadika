@@ -1,4 +1,5 @@
 import Murid from "../../../../models/murid.model.js";
+import Guru from "../../../../models/guru.model.js";
 import Kelas from "../../../../models/kelas.model.js";
 import Jadwal from "../../../../models/jadwal_pelajaran.model.js";
 import Jadwal_Pelajaran from "../../../../models/jadwal_pelajaran.model.js";
@@ -41,6 +42,13 @@ export const getClassPage = async(req, res) => {
                 model: Mata_Pelajaran,
                 attributes: [ "nama"],
             }],
+            include: [{ 
+                model: Mata_Pelajaran,
+                attributes: [ "id", "nama"],
+                include: [{ model: Guru,
+                    attributes: ["id", "nama"]
+                }],
+            }],
             order:[["waktu_mulai", "ASC"]]
         })
         
@@ -48,6 +56,7 @@ export const getClassPage = async(req, res) => {
             ...jadwal,
             id: hashids.encode(jadwal.id),
             pelajaran: jadwal['Mata_Pelajaran.nama'],
+            guru: jadwal['Mata_Pelajaran.Guru.nama'],
         }));
         // console.log({dataJadwal});
 
@@ -77,7 +86,7 @@ export const getClassPage = async(req, res) => {
             return acc;
         }, {});
         
-        // console.log(jadwalPerHari);
+        console.log(jadwalPerHari);
         
         res.render("pages/murid/class/index", { murid, jadwalPerHari });
     } catch (err) {
