@@ -70,6 +70,28 @@ export const addSchadulePage = (req, res) => {
 };
 export const detailSchadulePage = async(req, res) => {
     try {
+        // const  email  = req.session.user.email;
+        const  email  = "guru@gmail.com";
+        const dataGuru = await Guru.findOne({
+            where: { email },
+            raw: true,
+            include: [
+                {
+                    model: Mata_Pelajaran,
+                    attributes: ["id", "nama"],
+                },
+            ],
+        })
+
+        const mataPelajaranNama = dataGuru['Mata_Pelajaran.nama'];
+
+        const guru = {
+            ...dataGuru,
+            id: hashids.encode(dataGuru.id),
+            Mata_Pelajaran: mataPelajaranNama || "Tidak ada mata pelajaran",
+        }
+        // console.log({ guru });
+
         const parts = req.url.split('/');
         let schadulelId = parts[parts.length - 2];
         // console.log({schadulelId});
@@ -102,10 +124,11 @@ export const detailSchadulePage = async(req, res) => {
             include: [
                 { 
                     model: Absen,
-                    attributes: [ "id_murid", "id_jadwal_absen" ],
+                    attributes: [ "id_murid", "id_jadwal_absen", "status" ],
                     include:  [
                         {   
-                            model: Murid
+                            model: Murid,
+                            attributes: [ "id", "nama" ]
                         }
                     ]
                 },
@@ -115,28 +138,20 @@ export const detailSchadulePage = async(req, res) => {
         const jadwalAbsen = dataJadwalAbsen.map((jadwalAbsen) => {
             return {
                 ...jadwalAbsen.dataValues,
-                // id: hashids.encode(jadwalAbsen.id),
+                // Extract attendance data
+                absensi: jadwalAbsen.Absens.map(absen => ({
+                    id: hashids.encode(absen.id),
+                    nama: absen.Murid.nama,
+                    id_murid: hashids.encode(absen.id_murid),
+                    status: absen.status,
+                    // Add more attributes as needed
+                }))
             }
         })
-        // console.log({jadwalAbsen});
-
-
-
-        // const dataAbsen = await Absen.findAll({
-        //     where: { id_jadwal_absen: jadwalAbsen.id }
-        // })
-
-        // const absen = dataAbsen.map((absen) => {
-        //     return {
-        //         ...absen.dataValues,
-        //         id: hashids.encode(absen.id),
-        //     }
-        // })
-
-        // console.log({absen});
+        // console.log({ jadwalAbsen });
 
         
-        res.render("pages/teacher/schadule/detail.ejs", { pelajaran, jadwalAbsen });
+        res.render("pages/teacher/schadule/detail.ejs", { pelajaran, jadwalAbsen, guru });
     } catch (err) {
         console.log(err.message);
         res.render('pages/errors/500'); 
