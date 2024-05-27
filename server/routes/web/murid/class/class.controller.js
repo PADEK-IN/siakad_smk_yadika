@@ -1,6 +1,7 @@
 import Murid from "../../../../models/murid.model.js";
 import Guru from "../../../../models/guru.model.js";
 import Kelas from "../../../../models/kelas.model.js";
+import Absen from "../../../../models/absen.model.js";
 import Jadwal from "../../../../models/jadwal_pelajaran.model.js";
 import Jadwal_Pelajaran from "../../../../models/jadwal_pelajaran.model.js";
 import Jadwal_Absen from "../../../../models/jadwal_absen.model.js";
@@ -86,7 +87,7 @@ export const getClassPage = async(req, res) => {
             return acc;
         }, {});
         
-        console.log(jadwalPerHari);
+        // console.log(jadwalPerHari);
         
         res.render("pages/murid/class/index", { murid, jadwalPerHari });
     } catch (err) {
@@ -151,7 +152,7 @@ export const getAbsensiPage = async(req, res) => {
             pelajaran
 
         }
-        console.log({ jadwalPelajaran });
+        // console.log({ jadwalPelajaran });
 
         const dataJadwalAbsen = await Jadwal_Absen.findAll({
             where: { id_jadwal_pelajaran: jadwalId },
