@@ -37,22 +37,28 @@
                         <h6 class="mb-4">List Absensi</h6>
                         <div class="accordion accordion-flush" id="accordionFlushExample">
                             <!-- absensi content start -->
-                            <% for (const data of jadwalAbsen) { %>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="flush-headingFIRST">
-                                    <button class="accordion-button collapsed" type="button"
-                                        data-bs-toggle="collapse" data-bs-target="#collapse-<%= data.id %>"
-                                        aria-expanded="false" aria-controls="collapse-<%= data.id %>">
-                                        <%= jadwalPelajaran.hari %>  |  <%= data.tanggal %>
-                                    </button>
-                                </h2>
-                                <div id="collapse-<%= data.id %>" class="accordion-collapse collapse"
-                                    aria-labelledby="flush-headingFIRST" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">
-                                        <%= data.waktu_buka %> - <%= data.waktu_tutup %>
+                            <% if (jadwalAbsen.length > 0) { %>
+                                <% for (const data of jadwalAbsen) { %>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingFIRST">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapse-<%= data.id %>"
+                                            aria-expanded="false" aria-controls="collapse-<%= data.id %>">
+                                            <%= jadwalPelajaran.hari %>  |  <%= data.tanggal %>
+                                        </button>
+                                    </h2>
+                                    <div id="collapse-<%= data.id %>" class="accordion-collapse collapse"
+                                        aria-labelledby="flush-headingFIRST" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">
+                                            <%= data.waktu_buka %> - <%= data.waktu_tutup %>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                <% } %>
+                            <% } else { %>
+                                <div class="accordion-item"></div>
+                                    <p>Belum Ada Absen Pada Jadwal Ini</p>
+                                </div>
                             <% } %>
                             <!-- absensi content start -->
                         </div>
