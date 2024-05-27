@@ -74,7 +74,7 @@ export const detailSchadulePage = async(req, res) => {
         let schadulelId = parts[parts.length - 2];
         // console.log({schadulelId});
         const jadwal = hashids.decode(schadulelId);
-        console.log({jadwal});
+        // console.log({jadwal});
 
         const dataJadwal = await Jadwal.findOne({
             where: { id: jadwal },
@@ -95,7 +95,7 @@ export const detailSchadulePage = async(req, res) => {
             Kelas: kelas,
         }
 
-        console.log({ pelajaran });
+        // console.log({ pelajaran });
 
         const dataJadwalAbsen = await Jadwal_Absen.findAll({
             where: { id_jadwal_pelajaran: jadwal },
@@ -118,7 +118,7 @@ export const detailSchadulePage = async(req, res) => {
                 // id: hashids.encode(jadwalAbsen.id),
             }
         })
-        console.log({jadwalAbsen});
+        // console.log({jadwalAbsen});
 
 
 
