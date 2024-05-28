@@ -6,8 +6,8 @@ import {isAuth, isMurid } from "../../../../middlewares/isAuthenticated.js";
 const router = express.Router();
 
 // Routes
-router.route("/dashboard").get(index.getIndexPage);
-router.route("/profile").get(index.getProfilePage);
+router.route("/dashboard").get(isAuth, isMurid, index.getIndexPage);
+router.route("/profile").get(isAuth, isMurid, index.getProfilePage);
 
 
 export default router;
