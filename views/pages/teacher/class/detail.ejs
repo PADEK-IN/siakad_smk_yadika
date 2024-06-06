@@ -29,252 +29,74 @@
 
                     <div class="bg-light rounded">
                         <div class="testimonial-item text-center">
-                            <h6 class="">2022</h6>
-                            <h5 class="mb-1">XII TKJ</h5>
-                            <p>Indra Subakti, S.Pd</p>
+                            <h6 class=""><%= kelass.kelas %></h6>
+                            <h5 class="mb-1"><%= guru.Mata_Pelajaran %></h5>
+                            <p><%= kelass.Wali_Kelas %></p>
                         </div>
                     </div>
                     <hr>
                     <div class="bg-light rounded h-100">
                         <h6 class="mb-4">List Murid</h6>
-                        <nav>
-                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                <button class="nav-link active" id="nav-semua-tab" data-bs-toggle="tab"
-                                    data-bs-target="#nav-semua" type="button" role="tab" aria-controls="nav-semua"
-                                    aria-selected="true">Semua</button>
-                                <button class="nav-link" id="nav-tugas-tab" data-bs-toggle="tab"
-                                    data-bs-target="#nav-tugas" type="button" role="tab"
-                                    aria-controls="nav-tugas" aria-selected="false">Tugas</button>
-                                <button class="nav-link" id="nav-uts-tab" data-bs-toggle="tab"
-                                    data-bs-target="#nav-uts" type="button" role="tab"
-                                    aria-controls="nav-uts" aria-selected="false">UTS</button>
-                                <button class="nav-link" id="nav-uas-tab" data-bs-toggle="tab"
-                                    data-bs-target="#nav-uas" type="button" role="tab"
-                                    aria-controls="nav-uas" aria-selected="false">UAS</button>
-                            </div>
-                        </nav>
-                        <div class="tab-content pt-3" id="nav-tabContent">
-                            <!-- all start -->
-                            <div class="tab-pane fade show active" id="nav-semua" role="tabpanel" aria-labelledby="nav-semua-tab">
-                                <table id="example" class="table table-striped text-center" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>NIS</th>
-                                            <th>Nama</th>
-                                            <th>Tugas</th>
-                                            <th>UTS</th>
-                                            <th>UAS</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>43536536</td>
-                                            <td><a href="/teacher/class/01/detail">Joko Santoto</a></td>
-                                            <td><span class="badge bg-primary">80</span></td>
-                                            <td><span class="badge bg-secondary">-</span></td>
-                                            <td><span class="badge bg-secondary">-</span></td>
-                                            <td><span class="badge bg-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>43536536</td>
-                                            <td><a href="/teacher/class/01/detail">Joko Santoto</a></td>
-                                            <td><span class="badge bg-warning">60</span></td>
-                                            <td><span class="badge bg-secondary">-</span></td>
-                                            <td><span class="badge bg-secondary">-</span></td>
-                                            <td><span class="badge bg-success">Aktif</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>43536536</td>
-                                            <td><a href="/teacher/class/01/detail">Joko Santoto</a></td>
-                                            <td><span class="badge bg-danger">30</span></td>
-                                            <td><span class="badge bg-secondary">-</span></td>
-                                            <td><span class="badge bg-secondary">-</span></td>
-                                            <td><span class="badge bg-success">Aktif</span></td>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>NIS</th>
-                                            <th>Nama</th>
-                                            <th>Tugas</th>
-                                            <th>UTS</th>
-                                            <th>UAS</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                            <!-- all end -->
-                            <!-- tugas start -->
-                            <div class="tab-pane fade" id="nav-tugas" role="tabpanel" aria-labelledby="nav-tugas-tab">
-                                <!-- <h6 class="mb-4">Accented Table</h6>-->
-                                <form action="">
-                                    <table id="example" class="table table-striped text-center" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>NIS</th>
-                                                <th>Nama</th>
-                                                <th>Tugas</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>43536536</td>
-                                                <td>JOKO SANTOSO</td>
-                                                <td><input type="email" class="form-control" id="inputEmail"
-                                                    aria-describedby="emailHelp" value="80"></td>
-                                                <td><span class="badge bg-success">Aktif</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>43536536</td>
-                                                <td>JOKO SANTOSO</td>
-                                                <td><input type="email" class="form-control" id="inputEmail"
-                                                    aria-describedby="emailHelp" value="80"></td>
-                                                <td><span class="badge bg-success">Aktif</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>43536536</td>
-                                                <td>JOKO SANTOSO</td>
-                                                <td><input type="email" class="form-control" id="inputEmail"
-                                                    aria-describedby="emailHelp" value="80"></td>
-                                                <td><span class="badge bg-success">Aktif</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>43536536</td>
-                                                <td>JOKO SANTOSO</td>
-                                                <td><input type="email" class="form-control" id="inputEmail"
-                                                    aria-describedby="emailHelp" value="80"></td>
-                                                <td><span class="badge bg-success">Aktif</span></td>
-                                            </tr>
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>NIS</th>
-                                                <th>Nama</th>
-                                                <th>Tugas</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                    <button type="submit" class="btn btn-primary">Simpan</button>
-                                </form>
-                            </div>
-                            <!-- tugas end -->
-                            <!-- uts start -->
-                            <div class="tab-pane fade" id="nav-uts" role="tabpanel" aria-labelledby="nav-uts-tab">
-                                <!-- <h6 class="mb-4">Accented Table</h6>-->
-                                <form action="">
-                                    <table id="example" class="table table-striped text-center" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>NIS</th>
-                                                <th>Nama</th>
-                                                <th>UTS</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>43536536</td>
-                                                <td>JOKO SANTOSO</td>
-                                                <td><input type="email" class="form-control" id="inputEmail"
-                                                    aria-describedby="emailHelp"></td>
-                                                <td><span class="badge bg-success">Aktif</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>43536536</td>
-                                                <td>JOKO SANTOSO</td>
-                                                <td><input type="email" class="form-control" id="inputEmail"
-                                                    aria-describedby="emailHelp"></td>
-                                                <td><span class="badge bg-success">Aktif</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>43536536</td>
-                                                <td>JOKO SANTOSO</td>
-                                                <td><input type="email" class="form-control" id="inputEmail"
-                                                    aria-describedby="emailHelp"></td>
-                                                <td><span class="badge bg-success">Aktif</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>43536536</td>
-                                                <td>JOKO SANTOSO</td>
-                                                <td><input type="email" class="form-control" id="inputEmail"
-                                                    aria-describedby="emailHelp"></td>
-                                                <td><span class="badge bg-success">Aktif</span></td>
-                                            </tr>
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>NIS</th>
-                                                <th>Nama</th>
-                                                <th>UTS</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                    <button type="submit" class="btn btn-primary">Simpan</button>
-                                </form>
-                            </div>
-                            <!-- uts end -->
-                            <!-- uas start -->
-                            <div class="tab-pane fade" id="nav-uas" role="tabpanel" aria-labelledby="nav-uas-tab">
-                                <!-- <h6 class="mb-4">Accented Table</h6>-->
-                                <form action="">
-                                    <table id="example" class="table table-striped text-center" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>NIS</th>
-                                                <th>Nama</th>
-                                                <th>UAS</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>43536536</td>
-                                                <td>JOKO SANTOSO</td>
-                                                <td><input type="email" class="form-control" id="inputEmail"
-                                                    aria-describedby="emailHelp"></td>
-                                                <td><span class="badge bg-success">Aktif</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>43536536</td>
-                                                <td>JOKO SANTOSO</td>
-                                                <td><input type="email" class="form-control" id="inputEmail"
-                                                    aria-describedby="emailHelp"></td>
-                                                <td><span class="badge bg-success">Aktif</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>43536536</td>
-                                                <td>JOKO SANTOSO</td>
-                                                <td><input type="email" class="form-control" id="inputEmail"
-                                                    aria-describedby="emailHelp"></td>
-                                                <td><span class="badge bg-success">Aktif</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>43536536</td>
-                                                <td>JOKO SANTOSO</td>
-                                                <td><input type="email" class="form-control" id="inputEmail"
-                                                    aria-describedby="emailHelp"></td>
-                                                <td><span class="badge bg-success">Aktif</span></td>
-                                            </tr>
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>NIS</th>
-                                                <th>Nama</th>
-                                                <th>UAS</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                    <button type="submit" class="btn btn-primary">Simpan</button>
-                                </form>
-                            </div>
-                            <!-- uas end -->
+                        <!-- all start -->
+                        <div class="tab-pane fade show active" id="nav-semua" role="tabpanel" aria-labelledby="nav-semua-tab">
+                            <table id="example" class="table table-striped text-center" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>NIS</th>
+                                        <th>Nama</th>
+                                        <th>Tugas</th>
+                                        <th>UTS</th>
+                                        <th>UAS</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for (const data of muridDenganNilai) { %>
+                                    <tr>
+                                        <td><%= data.nis %></td>
+                                        <td><a href="/teacher/class/01/detail"><%= data.nama %></a></td>
+                                        <td colspan="<%= data.nilai.length === 0 ? 3 : 1 %>">
+                                            <% if (data.nilai.length === 0) { %>
+                                                <span class="badge bg-primary">Nilai Belum di Input</span>
+                                            <% } else { %>
+                                                <span class="badge bg-primary"><%= data.nilai[0] %></span>
+                                            <% } %>
+                                        </td>
+                                        <% if (data.nilai.length !== 0) { %>
+                                            <td><span class="badge bg-warning"><%= data.nilai[1] ? data.nilai[1] : '-' %></span></td>
+                                            <td><span class="badge bg-secondary"><%= data.nilai[2] ? data.nilai[2] : '-' %></span></td>
+                                        <% } %>
+                                        
+                                        <td>
+                                            <% if (data.status == 'aktif') {%>
+                                                <span class="badge bg-success">Aktif</span>
+                                            <% } else if (data.status == 'lulus') { %>
+                                                <span class="badge bg-primary">Lulus</span>
+                                            <% } else if (data.status == 'cuti') { %>
+                                                <span class="badge bg-secondary">Cuti</span>
+                                            <% } else if (data.status == 'berhenti') { %>
+                                                <span class="badge bg-danger">Berhenti</span>
+                                            <% } %>
+                                        </td>
+                                        <td><a href="/teacher/class/01/detail" class="bi bi-journal-plus px-2"></a></td>
+                                    </tr>
+                                    <% } %>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>NIS</th>
+                                        <th>Nama</th>
+                                        <th>Tugas</th>
+                                        <th>UTS</th>
+                                        <th>UAS</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
+                        <!-- all end -->
                     </div>
                 </div>       
             </div>
