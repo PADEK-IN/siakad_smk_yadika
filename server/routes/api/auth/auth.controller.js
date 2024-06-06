@@ -1,6 +1,8 @@
 import * as responses from "../../../helpers/response.js";
 import { compare, hash } from "../../../helpers/hashing.js";
 import Users from "../../../models/users.model.js";
+import Murid from "../../../models/murid.model.js";
+import { checkValidId, hashids } from "../../../helpers/isValidId.js";
 
 export const register = async (req, res) => {
     try {
@@ -29,6 +31,39 @@ export const register = async (req, res) => {
     }
 };
 
+export const createMurid = async (req, res) => {
+    try {
+        const {
+            nis, email, nama, tempat_lahir, tanggal_lahir, alamat, jenis_kelamin,
+            agama, hobi, no_hp, sekolah_asal, no_ijazah, id_jurusan
+        } = JSON.parse(req.body.data);
+
+        const idJurusan = checkValidId(id_jurusan);
+        if(!idJurusan) return responses.res400("ID jurusan tidak valid", res);
+
+        const foto = req.file?.filename;
+
+        const dataMurid = await Murid.findOne({
+            where: {nis, email}
+        })
+        if(dataMurid) return responses.res400("Maaf, data murid sudah ada", res);
+
+        const date = new Date();
+        const tahun_masuk = date.getFullYear();
+        console.log(tahun_masuk)
+        await Murid.create({
+            nis, email, nama, tempat_lahir, tanggal_lahir, alamat, jenis_kelamin,
+            agama, hobi, no_hp, sekolah_asal, no_ijazah, tahun_masuk, 
+            id_jurusan: idJurusan, foto
+        });
+
+        responses.res201("Berhasil mendaftar", null, res);
+    } catch (err) {
+        console.log(err.message);
+        responses.res500(res);
+    }
+};
+
 export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -39,7 +74,7 @@ export const login = async (req, res) => {
         let user = await Users.findOne({where: {email}});
 
         if(!user) return responses.res400("Maaf, email belum terdaftar", res);
-        if(user.status == "invalid") return responses.res400("Maaf, email belum tervalidasi", res);
+        if(!user.isValid) return responses.res400("Maaf, email belum tervalidasi", res);
         
         const correctPassword = await compare(user.password, password);
 
@@ -48,7 +83,8 @@ export const login = async (req, res) => {
         req.session.user = {
            id: user.id,
            email: user.email,
-           role: user.role
+           role: user.role,
+           isValid: user.isValid
         };
 
         responses.res200("Berhasil login", user.role, res);

@@ -11,3 +11,9 @@ export const getIndexPage = (req, res) => {
   };
   
   
+  export const registerMuridPage = (req, res) => {
+    const {email} = req.query;
+    res.render("pages/auth/form-murid", {email});
+  };
+  
+  

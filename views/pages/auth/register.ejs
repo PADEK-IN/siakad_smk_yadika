@@ -55,7 +55,7 @@
                 data: JSON.stringify({email, password, confirmPassword}),
                 success: (response) => {
                     alert(response.status.message);
-                    window.location.href = "/login";
+                    window.location.href = `/register/murid?email=${email}`;
                 },
                 error: (response) => {
                     const message = response.responseJSON.status.message

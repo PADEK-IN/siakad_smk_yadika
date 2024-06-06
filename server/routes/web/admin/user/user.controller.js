@@ -41,11 +41,12 @@ export const getStudentPage = async (req, res) => {
   try {
     const dataMurid = await Murid.findAll({
       include: [{
-        model: Kelas
-      }]
+        model: Kelas,
+      }],
     });
 
     const murids = dataMurid.map((murid) => {
+      if(murid.Kela){
         return {
           ...murid.dataValues,
           id: hashids.encode(murid.id),
@@ -53,6 +54,15 @@ export const getStudentPage = async (req, res) => {
           id_kelas: hashids.encode(murid.id_kelas),
           Kela: murid.Kela.tingkat + " - " + murid.Kela.kode
         };
+      } else {
+        return {
+          ...murid.dataValues,
+          id: hashids.encode(murid.id),
+          id_jurusan: hashids.encode(murid.id_jurusan),
+          id_kelas: hashids.encode(murid.id_kelas),
+          Kela: "-"
+        };
+      }
     });
 
     res.render('pages/admin/user/students.ejs', {murids});
@@ -61,6 +71,29 @@ export const getStudentPage = async (req, res) => {
     res.render("pages/errors/500");
   }
 };
+
+export const pendingStudentPage = async (req, res) => {
+  try {
+    const dataMurid = await Murid.findAll({
+      include: [{
+        model: Users,
+        attributes: ["isValid"],
+        where: {isValid: false}
+      }],
+      raw: true
+    });
+    const murids = dataMurid.map((murid) => {
+      return {
+        ...murid,
+        id: hashids.encode(murid.id)
+      };
+    });
+    res.render("pages/admin/user/student-pending.ejs", {murids})
+  } catch (error) {
+    console.log(error.message)
+    res.render("pages/errors/500.ejs")
+  }
+}
 
 export const detailStudentPage = async (req, res) => {
   try {

@@ -12,6 +12,7 @@ router.route("/:id/edit").get(isAuth, isAdmin, index.editUserPage);
 
 router.route("/students").get(isAuth, isAdmin, index.getStudentPage);
 router.route("/student/add").get(isAuth, isAdmin, index.createStudentPage);
+router.route("/student/pending").get(isAuth, isAdmin, index.pendingStudentPage);
 router.route("/student/:id").get(isAuth, isAdmin, index.detailStudentPage);
 router.route("/student/:id/edit").get(isAuth, isAdmin, index.editStudentPage);
 

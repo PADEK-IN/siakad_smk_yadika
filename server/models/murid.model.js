@@ -90,7 +90,7 @@ const Murid = sequelize.define(
     },
     id_kelas: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: Kelas,
         key: "id"
@@ -110,8 +110,8 @@ const Murid = sequelize.define(
 );
 
 // Relations
-Users.hasOne(Murid, {foreignKey: "email"});
-Murid.belongsTo(Users, {foreignKey: "email"});
+Users.hasOne(Murid, {foreignKey: "email", sourceKey: 'email' });
+Murid.belongsTo(Users, {foreignKey: "email", targetKey: 'email' });
 // Wali_Murid.hasOne(Murid, {foreignKey: "id_wali"});
 // Murid.belongsTo(Wali_Murid, {foreignKey: "id_wali"});
 Jurusan.hasMany(Murid, {foreignKey: "id_jurusan"});

@@ -9,6 +9,7 @@ const router = express.Router();
 router.route("/").get(index.getIndexPage);
 router.route("/login").get(isAuthLogin, index.loginPage);
 router.route("/register").get(isAuthLogin, index.registerPage);
+router.route("/register/murid").get(isAuthLogin, index.registerMuridPage);
 
 
 export default router;
