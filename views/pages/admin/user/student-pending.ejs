@@ -19,11 +19,7 @@
 
             <div class="container-fluid pt-4 px-4 pb-5">
                 <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0">List Semua Murid</h6>
-                    <div>
-                        <a class="btn btn-sm btn-primary" href="/admin/user/student/pending">Pending Murid</a>
-                        <a class="btn btn-sm btn-primary" href="/admin/user/student/add">Tambah Murid</a>
-                    </div>
+                    <h6 class="mb-0">List Murid Pending</h6>
                 </div>
                 <div class="bg-light text-center rounded p-4">
                     <div class="table-responsive">
@@ -36,7 +32,8 @@
                                     <th>Nama</th>
                                     <th>Email</th>
                                     <th>JK</th>
-                                    <th>Kelas</th>
+                                    <th>Sekolah Asal</th>
+                                    <th>Nomor Ijazah</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -46,7 +43,7 @@
                                 <tr>
                                     <td><%= index + 1 %></td>
                                     <td><%= murid.nis %></td>
-                                    <td><a href="/admin/user/student/<%= murid.id %>"><%= murid.nama %></a></td>
+                                    <td><%= murid.nama %></td>
                                     <td><%= murid.email %></td>
                                     <td>
                                         <% if(murid.jenis_kelamin == "laki-laki") { %>
@@ -55,20 +52,11 @@
                                             <span class="badge bg-danger">PR</span>
                                         <% } %>
                                     </td>
-                                    <td><%= murid.Kela %></td>
+                                    <td><%= murid.sekolah_asal %></td>
+                                    <td><%= murid.no_ijazah%></td>
+                                    <td><span class="badge bg-danger">Tidak Valid</span></td>
                                     <td>
-                                        <% if(murid.status=="aktif") { %>
-                                            <span class="badge bg-info">Aktif</span>
-                                        <% } else if(murid.status=="cuti") { %>
-                                            <span class="badge bg-warning">Cuti</span>
-                                        <% } else if(murid.status=="lulus") { %>
-                                            <span class="badge bg-success">Lulus</span>
-                                        <% } else { %>
-                                            <span class="badge bg-danger">Berhenti</span>
-                                        <% } %>
-                                    </td>
-                                    <td>
-                                        <a href="/admin/user/student/<%= murid.id %>/edit" class="bi bi-pencil-square px-2"></a>
+                                        <a href="#" class="bi bi-pencil-square px-2" onclick="updateValidasi('<%= murid.email %>')"></a>
                                         <a href="#" onclick="del('<%= murid.id %>', '<%= murid.nama %>')" class="bi bi-archive px-2" style="color: red;"></a>
                                     </td>
                                 </tr>
@@ -117,6 +105,27 @@
                 });
             }
         }
+
+        function updateValidasi(email){
+            const isUpdate = confirm(`Yakin ingin memvalidasi data murid dengan email ${email}?`);
+            if(!isUpdate) return
+            console.log(email)
+            $.ajax({
+                url: `/api/admin/user/valid`,
+                method: "PATCH",
+                contentType: "application/json",
+                data: JSON.stringify({email, isValid:true}),
+                success: (response) => {
+                    alert(response.status.message);
+                    window.location.reload();
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message;
+                    alert(message);
+                }
+            });
+        }
+
     </script>
 </body>
 

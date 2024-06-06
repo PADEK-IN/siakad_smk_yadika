@@ -158,6 +158,26 @@ export const update = async (req, res) => {
     }
 }
 
+export const updateValidUser = async (req, res) => {
+    try {
+        console.log(req.body)
+        const { email, isValid } = req.body;
+        const respons = await Users.update({
+         isValid,
+        },{
+            where: {
+                email
+            }
+        });
+        console.log(respons)
+        // if(!respons[0]) return responses.res400("Maaf, user tidak ditemukan", res);
+        responses.res200("User berhasil diperbarui", null, res);
+    } catch (err) {
+        console.log(err.message);
+        responses.res500(res);
+    }
+}
+
 export const del = async (req, res) => {
     try {
         const {id} = req.params;
