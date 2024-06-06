@@ -23,7 +23,7 @@
                 </div>
                 <div class="bg-light text-center rounded p-4">
                     <div class="table-responsive">
-                        <h4>Jaringan Kommputer</h4>
+                        <h4><%= guru.Mata_Pelajaran %></h4>
                         <table id="example" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
@@ -36,34 +36,26 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <% for (const data of kelas) {%>
                                 <tr>
-                                    <td><a href="/teacher/class/01/detail">XII TKJ</a></td>
-                                    <td>Indra Subakti, S.Pd</td>
+                                    <td><a href="/teacher/class/<%= data.id %>/detail"><%= data.kelas %></a></td>
+                                    <td><%= data.Wali_Kelas %></td>
                                     <td><span class="badge bg-primary">Tuntas</span></td>
                                     <td><span class="badge bg-danger">Belum</span></td>
                                     <td><span class="badge bg-danger">Belum</span></td>
-                                    <td><span class="badge bg-success">Aktif</span></td>
+                                    <td>
+                                        <% if (data.isActive == 1) {%>
+                                            <span class="badge bg-success">Aktif</span>
+                                        <% } else { %>
+                                            <span class="badge bg-danger">Tidak Aktif</span>
+                                        <% } %>
+                                    </td>
                                     <!-- <td>
                                         <a href="/teacher/class/01/detail" class="bi bi-journal-plus px-2"></a>
                                         <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
                                     </td> -->
                                 </tr>
-                                <tr>
-                                    <td><a href="/teacher/class/01/detail">XII TKJ</a></td>
-                                    <td>Indra Subakti, S.Pd</td>
-                                    <td><span class="badge bg-primary">Tuntas</span></td>
-                                    <td><span class="badge bg-primary">Tuntas</span></td>
-                                    <td><span class="badge bg-danger">Belum</span></td>
-                                    <td><span class="badge bg-success">Aktif</span></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="/teacher/class/01/detail">XII TKJ</a></td>
-                                    <td>Indra Subakti, S.Pd</td>
-                                    <td><span class="badge bg-primary">Tuntas</span></td>
-                                    <td><span class="badge bg-primary">Tuntas</span></td>
-                                    <td><span class="badge bg-primary">Tuntas</span></td>
-                                    <td><span class="badge bg-success">Aktif</span></td>
-                                </tr>
+                                <%}%>
                             </tbody>
                             <tfoot>
                                 <tr>

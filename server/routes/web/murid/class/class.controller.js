@@ -24,7 +24,7 @@ export const getClassPage = async(req, res) => {
         if (!dataMurid) {
             throw new Error('Murid tidak ditemukan');
         }
-        // console.log({dataMurid});
+        console.log({dataMurid});
         const kelas = dataMurid['Kela.tingkat'] + "--" +  dataMurid['Kela.kode'];
         const kelas_id = dataMurid['Kela.id'];
 
@@ -34,7 +34,7 @@ export const getClassPage = async(req, res) => {
             kelas,
             kelas_id
         }
-        // console.log({ murid });
+        console.log({ murid });
         
         const dataJadwals = await Jadwal_Pelajaran.findAll({
             where: { id_kelas: murid.id_kelas },
@@ -59,7 +59,7 @@ export const getClassPage = async(req, res) => {
             pelajaran: jadwal['Mata_Pelajaran.nama'],
             guru: jadwal['Mata_Pelajaran.Guru.nama'],
         }));
-        // console.log({dataJadwal});
+        console.log({dataJadwal});
 
         const groupByDay = (jadwals) => {
             return jadwals.reduce((acc, jadwal) => {
