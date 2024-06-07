@@ -42,6 +42,10 @@ export const getStudentPage = async (req, res) => {
     const dataMurid = await Murid.findAll({
       include: [{
         model: Kelas,
+      },{
+        model: Users,
+        where: {isValid: true},
+        attributes: ["isValid"]
       }],
     });
 

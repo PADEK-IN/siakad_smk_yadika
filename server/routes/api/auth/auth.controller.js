@@ -34,7 +34,7 @@ export const register = async (req, res) => {
 export const createMurid = async (req, res) => {
     try {
         const {
-            nis, email, nama, tempat_lahir, tanggal_lahir, alamat, jenis_kelamin,
+            email, nama, tempat_lahir, tanggal_lahir, alamat, jenis_kelamin,
             agama, hobi, no_hp, sekolah_asal, no_ijazah, id_jurusan
         } = JSON.parse(req.body.data);
 
@@ -44,13 +44,15 @@ export const createMurid = async (req, res) => {
         const foto = req.file?.filename;
 
         const dataMurid = await Murid.findOne({
-            where: {nis, email}
+            where: {email}
         })
         if(dataMurid) return responses.res400("Maaf, data murid sudah ada", res);
 
         const date = new Date();
         const tahun_masuk = date.getFullYear();
-        console.log(tahun_masuk)
+        const maxValue = Math.pow(10, 7) - 1;
+        const randomNum = Math.floor(Math.random() * (maxValue + 1));
+        const nis = `${randomNum}-murid_baru`;
         await Murid.create({
             nis, email, nama, tempat_lahir, tanggal_lahir, alamat, jenis_kelamin,
             agama, hobi, no_hp, sekolah_asal, no_ijazah, tahun_masuk, 

@@ -177,15 +177,15 @@
                                     <tbody>
                                         <tr>
                                             <td class="fw-bold">Tingkat</td>
-                                            <td><%= murid.Kela.tingkat %></td>
+                                            <td><%= murid.Kela?.tingkat || "-" %></td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">Kode</td>
-                                            <td><%= murid.Kela.kode %></td>
+                                            <td><%= murid.Kela?.kode || "-" %></td>
                                         </tr>
                                         <tr>
                                             <td class="fw-bold">Wali Kelas</td>
-                                            <td><%= murid.Kela.Guru.nama %></td>
+                                            <td><%= murid.Kela?.Guru.nama || "-" %></td>
                                         </tr>
                                     </tbody>
                                 </table>    

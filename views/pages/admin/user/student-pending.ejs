@@ -18,12 +18,16 @@
             <!-- navar end -->
 
             <div class="container-fluid pt-4 px-4 pb-5">
+                
                 <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0">List Murid Pending</h6>
+                    <a href="/admin/user/students/" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"><h6 class="px-3">Kembali</h6></a>
+                    <button class="btn btn-sm btn-primary" onclick="updateValidasiCheck()">Validasi Murid</button>
                 </div>
                 <div class="bg-light text-center rounded p-4">
                     <div class="table-responsive">
-                    
+                        <div class="d-flex justify-content-end">
+                            <input type="checkbox" id="check-all"><span class="px-2">Check all</span>
+                        </div>
                         <table id="example" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
@@ -43,7 +47,7 @@
                                 <tr>
                                     <td><%= index + 1 %></td>
                                     <td><%= murid.nis %></td>
-                                    <td><%= murid.nama %></td>
+                                    <td><a href="/admin/user/student/<%= murid.id %>"><%= murid.nama %></a></td>
                                     <td><%= murid.email %></td>
                                     <td>
                                         <% if(murid.jenis_kelamin == "laki-laki") { %>
@@ -56,7 +60,10 @@
                                     <td><%= murid.no_ijazah%></td>
                                     <td><span class="badge bg-danger">Tidak Valid</span></td>
                                     <td>
-                                        <a href="#" class="bi bi-pencil-square px-2" onclick="updateValidasi('<%= murid.email %>')"></a>
+                                        <span  class="px-2">
+                                            <input type="checkbox" class="checkbox-item" id="check-<%= murid.email %>">
+                                        </span>
+                                        <a href="#" class="bi bi-arrow-up" onclick="updateValidasi('<%= murid.email %>')"></a>
                                         <a href="#" onclick="del('<%= murid.id %>', '<%= murid.nama %>')" class="bi bi-archive px-2" style="color: red;"></a>
                                     </td>
                                 </tr>
@@ -106,15 +113,64 @@
             }
         }
 
-        function updateValidasi(email){
+        function updateValidasi(data){
             const isUpdate = confirm(`Yakin ingin memvalidasi data murid dengan email ${email}?`);
             if(!isUpdate) return
-            console.log(email)
+            const email = [];
+            email.push(data);
             $.ajax({
                 url: `/api/admin/user/valid`,
                 method: "PATCH",
                 contentType: "application/json",
-                data: JSON.stringify({email, isValid:true}),
+                data: JSON.stringify({email}),
+                success: (response) => {
+                    alert(response.status.message);
+                    window.location.reload();
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message;
+                    alert(message);
+                }
+            });
+        }
+        
+        // Event handler untuk checkbox "check all"
+        $('#check-all').on('change', function() {
+            $('.checkbox-item').prop('checked', $(this).prop('checked'));
+            updateCheckedIds();
+        });
+
+        // Event handler untuk setiap checkbox item
+        $('.checkbox-item').on('change', function() {
+            if ($('.checkbox-item:checked').length === $('.checkbox-item').length) {
+                $('#check-all').prop('checked', true);
+            } else {
+                $('#check-all').prop('checked', false);
+            }
+            updateCheckedIds();
+        });
+        
+        // Fungsi untuk mengupdate array id checkbox yang dicentang
+        function updateCheckedIds() {
+            const checkedIds = [];
+            $('.checkbox-item:checked').each(function() {
+                const checkid = $(this).attr('id').split("-")
+                checkedIds.push(checkid[1]);
+            });
+            return checkedIds // Tampilkan array ID di console
+        }
+
+        function updateValidasiCheck(){
+            const email = updateCheckedIds();
+            if(email.length == 0) return alert("Maaf, tidak ada murid yang dipilih");
+            const listEmail = email.join(", ")
+            const isUpdate = confirm(`Yakin ingin memvalidasi data murid dengan email ${listEmail}?`);
+            if(!isUpdate) return
+            $.ajax({
+                url: `/api/admin/user/valid`,
+                method: "PATCH",
+                contentType: "application/json",
+                data: JSON.stringify({email}),
                 success: (response) => {
                     alert(response.status.message);
                     window.location.reload();

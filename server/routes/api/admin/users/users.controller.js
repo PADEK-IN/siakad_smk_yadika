@@ -161,17 +161,18 @@ export const update = async (req, res) => {
 export const updateValidUser = async (req, res) => {
     try {
         console.log(req.body)
-        const { email, isValid } = req.body;
-        const respons = await Users.update({
-         isValid,
-        },{
-            where: {
-                email
-            }
-        });
-        console.log(respons)
+        const { email } = req.body;
+        if(email.length == 0) return responses.res400("Maaf, belum ada email murid yang dipilih", res);
+        const isValid = true;
+        for(let data of email){
+            await Users.update({ isValid },{
+                where: {
+                    email: data
+                }
+            });
+        }
         // if(!respons[0]) return responses.res400("Maaf, user tidak ditemukan", res);
-        responses.res200("User berhasil diperbarui", null, res);
+        responses.res200("Berhasil memvalidasi data murid", null, res);
     } catch (err) {
         console.log(err.message);
         responses.res500(res);

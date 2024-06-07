@@ -23,10 +23,6 @@
                                 <input type="text" class="form-control" id="email" value="<%= email %>" disabled>
                             </div>
                             <div class="mb-3">
-                                <label for="nis" class="form-label">NIS</label>
-                                <input type="text" class="form-control" id="nis" placeholder="Nomor Induk Siswa" required>
-                            </div>
-                            <div class="mb-3">
                                 <label for="nama" class="form-label">Nama</label>
                                 <input type="text" class="form-control" id="nama" placeholder="Nama Lengkap" required>
                             </div>
@@ -104,7 +100,6 @@
     <script>
          $("#tambah").on("click", (e) => {
             e.preventDefault();
-            const nis = $("#nis").val();
             const email = $("#email").val();
             const nama = $("#nama").val();
             const jenis_kelamin = $("#jenis_kelamin").val();
@@ -123,9 +118,8 @@
             const formData = new FormData();
 
             formData.append('foto', file);
-            formData.append('data', JSON.stringify({nis, email, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, no_ijazah, hobi, sekolah_asal, id_jurusan}));
-            console.log(JSON.stringify({nis, email, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, no_ijazah, hobi, sekolah_asal, id_jurusan}))
-            console.log(formData)
+            formData.append('data', JSON.stringify({ email, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, no_ijazah, hobi, sekolah_asal, id_jurusan}));
+           
             $.ajax({
                 url: "/api/auth/register/murid",
                 method: "POST",
