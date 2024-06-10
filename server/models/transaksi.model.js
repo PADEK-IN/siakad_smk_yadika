@@ -37,7 +37,7 @@ const Transaksi = sequelize.define(
       allowNull: false,
       defaultValue: "blank.jpg"
     },
-    isPaid: {
+    isValid: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: 0,
@@ -45,8 +45,8 @@ const Transaksi = sequelize.define(
   },
 );
 
-Murid.hasMany(Spp, {foreignKey: "id_murid"});
-Spp.belongsTo(Murid, {foreignKey: "id_murid"});
+Murid.hasMany(Transaksi, {foreignKey: "id_murid"});
+Transaksi.belongsTo(Murid, {foreignKey: "id_murid"});
 Spp.hasMany(Transaksi, {foreignKey: "id_spp"});
 Transaksi.belongsTo(Spp, {foreignKey: "id_spp"});
 
