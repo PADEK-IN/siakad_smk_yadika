@@ -23,9 +23,11 @@
                     <h6 class="px-3">Detail Payment</h6>
                 </div>
                 <div class="bg-light  rounded p-4">
-                    <div class="alert alert-warning text-center" role="alert">
-                        Status Pembayaran Masih Belum Di Konfirmasi
-                    </div>
+                    <% if(data.isValid){ %>
+                    <div class="alert alert-success text-center" role="alert">Status Pembayaran Sudah Di Konfirmasi</div>
+                    <% } else { %>
+                    <div class="alert alert-warning text-center" role="alert">Status Pembayaran Masih Belum Di Konfirmasi</div>
+                    <% } %>
                     <h5 class="">Detail Pembayaran</h5>
                     <div class="bg-light rounded h-100 ">
                         <div class="testimonial-item p-2">
@@ -33,27 +35,27 @@
                                 <tbody>
                                     <tr>
                                         <td class="fw-bold">Id Transaksi</td>
-                                        <td>4672389</td>
+                                        <td><%= data.id %></td>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Tingkatan</td>
-                                        <td>XI</td>
+                                        <td><%= data.Spp.tingkat %></td>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Tagihan Untuk Bulan</td>
-                                        <td>Januari</td>
+                                        <td><%= data.Spp.bulan %></td>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Nama Siswa</td>
-                                        <td>Junaidi Sulaiman</td>
+                                        <td><%= data.Murid.nama %></td>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Tanggal Di Bayar</td>
-                                        <td>01 Januari 2022</td>
+                                        <td><%= data.tanggal_bayar %></td>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Bukti Pembayaran</td>
-                                        <td class="text-center"><img class="img-fluid mx-auto mb-4" src="/images/berkas.jpg" alt="" style="width: 500px; height: 500px;"></td>
+                                        <td class="text-center"><img class="img-fluid mx-auto mb-4" src="/images/<%= data.bukti_bayar %>" alt="" style="width: 500px; height: 500px;"></td>
                                     </tr>
                                 </tbody>
                             </table> 

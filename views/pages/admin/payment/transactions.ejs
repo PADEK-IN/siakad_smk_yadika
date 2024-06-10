@@ -31,43 +31,46 @@
                             <thead>
                                 <tr>
                                     <th>Kelas</th>
-                                    <th>Tagihan Bulan</th>
+                                    <th>Periode</th>
+                                    <th>Nominal</th>
                                     <th>Nama Siswa</th>
-                                    <th>Tanggal Pembayaran</th>
+                                    <th>Tanggal Bayar</th>
+                                    <th>Bukti Bayar</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <% for(const transaksi of data) { %>
                                 <tr>
-                                    <td>XII</td>
-                                    <td>Januari</td>
-                                    <td>Amianhudin</td>
-                                    <td>2021-12-06</td>
-                                    <td><span class="badge bg-success">Falid</span></td>
+                                    <td><%= transaksi.Spp.tingkat %></td>
+                                    <td><%= transaksi.Spp.periode %></td>
+                                    <td><%= transaksi.Spp.nominal %></td>
+                                    <td><%= transaksi.Murid.nama %></td>
+                                    <td><%= transaksi.tanggal_bayar %></td>
+                                    <td><img src="/images/<%= transaksi.bukti_bayar %>" alt="foto" width="25px"></td>
+                                    <td>
+                                        <% if(transaksi.isValid) { %>
+                                            <span class="badge bg-success">Valid</span>
+                                        <% } else { %>
+                                            <span class="badge bg-danger">Tidak Valid</span>
+                                        <% } %>
+                                    </td>
                                     <td>
                                         <a href="/admin/payment/transaction/32789/accept" class="bi bi-pencil-square px-2"></a>
-                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
+                                        <a href="#" onclick="del('<%= transaksi.id %>', '<%= transaksi.murid.nama %>')" class="bi bi-archive px-2" style="color: red;"></a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>XII</td>
-                                    <td>Januari</td>
-                                    <td>Amianhudin</td>
-                                    <td>2021-12-06</td>
-                                    <td><span class="badge bg-danger">Tidak Falid</span></td>
-                                    <td>
-                                        <a href="/admin/payment/transaction/32789/accept" class="bi bi-pencil-square px-2"></a>
-                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
-                                    </td>
-                                </tr>
+                                <% } %>
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <th>Kelas</th>
-                                    <th>Tagihan Bulan</th>
+                                    <th>Periode</th>
+                                    <th>Nominal</th>
                                     <th>Nama Siswa</th>
-                                    <th>Tanggal Pembayaran</th>
+                                    <th>Tanggal Bayar</th>
+                                    <th>Bukti Bayar</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -86,6 +89,23 @@
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
     <script>
         new DataTable('#example');
+        function del(id, nama) {
+            const isSure = confirm(`Kamu yakin ingin menghapus data transaksi ${nama}`);
+            if(isSure){
+                $.ajax({
+                    url: `/api/admin/transaksi/${id}`,
+                    method: "DELETE",
+                    success: (response) => {
+                        alert(response.status.message);
+                        window.location.reload();
+                    },
+                    error: (response) => {
+                        const message = response.responseJSON.status.message;
+                        alert(message);
+                    }
+                });
+            }
+        }
     </script>
 </body>
 
