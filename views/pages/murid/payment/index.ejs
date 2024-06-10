@@ -21,35 +21,43 @@
                 <div class="d-flex align-items-center justify-content-between mb-4">
                     <h6 class="mb-0">List SPP</h6>
                     <div>
-                        <a class="btn btn-sm btn-primary" href="/murid/payment/add">Bayar</a>
+                        <a class="btn btn-sm btn-primary" href="/murid/payment/history">History Pembayaran</a>
                     </div>
                 </div>
                 <div class="bg-light  rounded p-4">
                     <div class="alert text-center alert-primary" role="alert">
-                        Detail Transaksi SPP
+                        Tagihan Pembayaran SPP
                     </div>
 
                     <div class="bg-light rounded">
-                        <div class="testimonial-item text-center">
-                            <h6 class="">XII TKJ</h6>
-                            <h5 class="mb-1">Joko Widodo</h5>
+                        <div class="testimonial-it  em text-center">
+                            <h6 class=""><%= murid.Kela.tingkat %> <%= murid.Kela.kode %></h6>
+                            <h5 class="mb-1"><%= murid.nama.toUpperCase() %></h5>
                         </div>
                     </div>
                     <hr>
                     <div class="bg-light rounded h-100">
                         <h6 class="mb-4">List SPP</h6>
                         <div class="accordion accordion-flush" id="accordionFlushExample">
+                            <% for(const spp of data) { %>
                             <!-- payment content start -->
                             <div class="accordion-item">
-                                <h2 class="accordion-header" id="flush-headingFIRST">
+                                <h2 class="accordion-header" id="acc-head-<%= spp.id %>">
                                     <button class="accordion-button collapsed" type="button"
-                                        data-bs-toggle="collapse" data-bs-target="#flush-collapseFIRST"
-                                        aria-expanded="false" aria-controls="flush-collapseFIRST">
-                                        Januari 2027
+                                        data-bs-toggle="collapse" data-bs-target="#acc-coll-<%= spp.id %>"
+                                        aria-expanded="false" aria-controls="acc-coll-<%= spp.id %>">
+                                        <span><%= spp.periode.toUpperCase() %></span>
+                                        <% if(!spp.transaksi) {%>
+                                            <span class="badge bg-danger mx-2">Belum Bayar</span>
+                                        <% } else if(!spp.transaksi.isValid) {%>
+                                            <span class="badge bg-warning mx-2">Pending</span>
+                                        <% } else { %>
+                                            <span class="badge bg-success mx-2">Lunas</span>
+                                        <% } %>
                                     </button>
                                 </h2>
-                                <div id="flush-collapseFIRST" class="accordion-collapse collapse"
-                                    aria-labelledby="flush-headingFIRST" data-bs-parent="#accordionFlushExample">
+                                <div id="acc-coll-<%= spp.id %>" class="accordion-collapse collapse"
+                                    aria-labelledby="acc-head-<%= spp.id %>" data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body">
                                         <table class="table table-striped">
                                             <tbody>
@@ -58,67 +66,66 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="fw-bold">Tagihan</td>
-                                                    <td>Rp. 150.000</td>
+                                                    <td><%= spp.tagihan %></td>
                                                 </tr>
+                                                <% if(spp.transaksi) {%>
                                                 <tr>
-                                                    <td class="fw-bold">Bayar</td>
-                                                    <td>Rp. 150.000</td>
+                                                    <td class="fw-bold">Tanggal Bayar</td>
+                                                    <td><%= spp.transaksi.tanggal_bayar %></td>
                                                 </tr>
+                                                <% } %>
                                                 <tr>
                                                     <td class="fw-bold">Status</td>
-                                                    <td><span class="badge bg-success">Lunas</span></td>
+                                                    <td>
+                                                        <% if(!spp.transaksi) {%>
+                                                            <span class="badge bg-danger">Belum Bayar</span>
+                                                        <% } else if(!spp.transaksi.isValid) {%>
+                                                            <span class="badge bg-warning">Pending</span>
+                                                        <% } else { %>
+                                                            <span class="badge bg-success">Lunas</span>
+                                                        <% } %>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="fw-bold">Bukti</td>
                                                     <td class="text-center">
-                                                        <img class="img-fluid mx-auto mb-4" src="/images/berkas.jpg" alt="" style="width: 300px; height: 300px;">
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>  
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- payment content end -->
-                            <!-- payment content start -->
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="flush-headingSECOND">
-                                    <button class="accordion-button collapsed" type="button"
-                                        data-bs-toggle="collapse" data-bs-target="#flush-collapseSECOND"
-                                        aria-expanded="false" aria-controls="flush-collapseSECOND">
-                                        Februari 2027
-                                    </button>
-                                </h2>
-                                <div id="flush-collapseSECOND" class="accordion-collapse collapse"
-                                    aria-labelledby="flush-headingSECOND" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">
-                                        <table class="table table-striped">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="fw-bold text-bg-secondary text-center" colspan="2">Detail Transaksi</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="fw-bold">Tagihan</td>
-                                                    <td>Rp. 150.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="fw-bold">Bayar</td>
-                                                    <td>Rp. -</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="fw-bold">Status</td>
-                                                    <td><span class="badge bg-danger">Belum Dibayar</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="fw-bold">Bukti</td>
-                                                    <td class="text-center">
-                                                        <!-- <img class="img-fluid mx-auto mb-4" src="/images/berkas.jpg" alt="" style="width: 300px; height: 300px;"> -->
+                                                        <% if(!spp.transaksi) {%>
+                                                                <span>-</span>  
+                                                        <% } else { %>
+                                                                <img class="img-fluid mx-auto mb-4" src="/uploads/<%= spp.transaksi.bukti_bayar %>" alt="bukti_bayar" style="width: 100px;">
+                                                        <% } %>
+                                                        
                                                     </td>
                                                 </tr>
                                                 <tr>
+                                                    <% if(!spp.transaksi) {%>
                                                     <td class="fw-bold text-center" colspan="2">
-                                                        <a class="btn btn-sm btn-primary" href="/murid/payment/add">Bayar</a>
+                                                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#bayar-<%= spp.id %>">Bayar</button>  
                                                     </td>
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="bayar-<%= spp.id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="bayarLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="bayarLabel">Pembayaran SPP Bulan <%= spp.periode %></h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p class="m-0"><i>Kirim pembayaran ke Bank BSI rek: 1234567890  a/n Fulan</i></p>
+                                                                <p class="m-0"><i>Lalu upload bukti pembayaran berupa foto dengan max size 2mb</i></p>
+                                                                <div class="my-3">
+                                                                    <label for="inputCode" class="form-label">Upload Bukti Pembayaran</label>
+                                                                    <input type="file" class="form-control" id="bukti_bayar">
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                                <button type="button" onclick="kirimBukti('<%= spp.id %>')" class="btn btn-primary">Kirim</button>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    <% } %>
                                                 </tr>
                                             </tbody>
                                         </table>  
@@ -126,7 +133,8 @@
                                 </div>
                             </div>
                             <!-- payment content end -->
-
+                            <% } %>
+                            
                         </div>
                     </div>
                 </div>       
@@ -140,6 +148,29 @@
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
     <script>
         new DataTable('#example');
+        function kirimBukti(idSpp){
+            const fileInput = document.getElementById('bukti_bayar');
+            const file = fileInput.files[0];
+            if(!file) return alert("Maaf, harap upload bukti pembayaran");
+            const formData = new FormData();
+            formData.append('foto', file);
+            
+            $.ajax({
+                url: "/api/murid/payment/spp/"+idSpp,
+                method: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: (response) => {
+                    alert(response.status.message);
+                    location.reload();
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message;
+                    alert(message);
+                }
+            });
+        }
     </script>
 </body>
 
