@@ -34,8 +34,7 @@ const Transaksi = sequelize.define(
     },
     bukti_bayar: {
       type: DataTypes.STRING(200),
-      allowNull: false,
-      defaultValue: "blank.jpg"
+      allowNull: true,
     },
     isValid: {
       type: DataTypes.BOOLEAN,
