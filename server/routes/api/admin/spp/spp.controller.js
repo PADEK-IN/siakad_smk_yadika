@@ -44,6 +44,9 @@ export const getOneById = async (req, res) => {
 export const create = async (req, res) => {
     try {
         const { tingkat, tagihan, periode } = req.body;
+        if(!tingkat) return responses.res400("Maaf, harap memilih tingkat kelas", res);
+        if(!tagihan) return responses.res400("Maaf, harap mengisi jumlah spp", res);
+        if(!periode) return responses.res400("Maaf, harap memilih periode spp", res);
         const tagihanInt = parseFloat(tagihan);
         const tahun = periode.split("-")[0];
         const bulan = periode.split("-")[1];
