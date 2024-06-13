@@ -67,7 +67,7 @@ export const createNilai = async(req, res) => {
   }
 }
 
-export const editNilai = async(req, res) => {
+export const updateNilai = async(req, res) => {
   try {
     const {id} = req.params;
     const {id_murid, id_mata_pelajaran, tugas, uts, uas, semester} = req.body;
