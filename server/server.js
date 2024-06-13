@@ -98,8 +98,6 @@ app.use('/murid', indexMuridRouter);
 app.use('/murid/class', classMuridRouter);
 app.use('/murid/payment', paymentMuridRouter);
 
-
-
 // // ROUTES API
 // Auth
 app.use('/api/auth', authRouter);

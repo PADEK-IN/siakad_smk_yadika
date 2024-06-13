@@ -7,5 +7,6 @@ const router = express.Router();
 // Routes
 router.route("/").get(kelas.getAll);
 router.route("/:id").get(kelas.getOneById);
+router.route("/").post(kelas.createNilai);
 
 export default router;
