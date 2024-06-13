@@ -1,42 +1,19 @@
 import * as responses from "../../../../helpers/response.js";
-import Kelas from "../../../../models/kelas.model.js";
 import Penilaian from "../../../../models/penilaian.model.js";
+import { checkValidId, hashids } from "../../../../helpers/isValidId.js";
 
-export const getAll = async (req, res) => {
+export const getNilai = async (req, res) => {
   try {
-      const dataKelas = await Kelas.findAll();
+      const dataNilai = await Penilaian.findAll();
 
-      const data = dataKelas.map((Kelas) => {
+      const data = dataNilai.map((nilai) => {
           return {
-            ...Kelas.dataValues,
-            id: hashids.encode(Kelas.id),
-            id_wali_kelas: hashids.encode(Kelas.id_wali_kelas),
+            ...nilai.dataValues,
+            id: hashids.encode(nilai.id)
           };
         });
 
-      responses.res200("Berhasil mengambil data kelas", data, res);
-  } catch (err) {
-      console.log(err.message);
-      responses.res500(res);
-  }
-}
-
-export const getOneById = async (req, res) => {
-  try {
-      const {id} = req.params;
-      const validId = checkValidId(id);
-      if(!validId) return responses.res400("ID kelas tidak valid", res);
-      const dataKelas = await Kelas.findOne({
-          where: { id: validId },
-      });
-
-      const data = {
-        ...dataKelas.dataValues,
-        id: hashids.encode(dataKelas.id),
-        id_wali_kelas: hashids.encode(dataKelas.id_wali_kelas),
-      };
-      
-      responses.res200("Berhasil mengambil data Kelas", data, res);
+      responses.res200("Berhasil mengambil data mata pelajaran", data, res);
   } catch (err) {
       console.log(err.message);
       responses.res500(res);

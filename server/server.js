@@ -49,7 +49,7 @@ import muridAbsenRouter from './routes/api/murid/absen/absen.router.js';
 import muridPaymentRouter from './routes/api/murid/payment/payment.router.js';
 // Guru
 import guruProfileRouter from './routes/api/guru/profile/profile.router.js';
-import guruKelasRouter from './routes/api/guru/kelas/kelas.router.js';
+import guruNilaiRouter from './routes/api/guru/nilai/nilai.router.js';
 import guruJadwalPelajaranRouter from './routes/api/guru/jadwal_pelajaran/jadwal_pelajaran.router.js';
 import guruJadwalAbsenRouter from './routes/api/guru/jadwal_absen/jadwal_absen.router.js';
 import guruAbsenRouter from './routes/api/guru/absen/absen.router.js';
@@ -123,7 +123,7 @@ app.use('/api/murid/absen', muridAbsenRouter);
 app.use('/api/murid/payment', muridPaymentRouter);
 // Guru
 app.use('/api/guru/profile', guruProfileRouter);
-app.use('/api/guru/kelas', guruKelasRouter);
+app.use('/api/guru/nilai', guruNilaiRouter);
 app.use('/api/guru/jadwal-pelajaran', guruJadwalPelajaranRouter);
 app.use('/api/guru/jadwal-absen', guruJadwalAbsenRouter);
 app.use('/api/guru/absen', guruAbsenRouter);
