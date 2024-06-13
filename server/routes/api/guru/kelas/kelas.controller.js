@@ -80,7 +80,7 @@ export const editNilai = async(req, res) => {
     const validIdMaPel = checkValidId(id_mata_pelajaran);
     if(!validIdMaPel) return responses.res400("ID mata pelajaran tidak valid", res);
 
-    await Penilaian.update({
+    const respons = await Penilaian.update({
       id_murid: validIdMurid,
       id_mata_pelajaran: validIdMaPel,
       tugas,
@@ -98,5 +98,23 @@ export const editNilai = async(req, res) => {
   } catch (err) {
     console.log(err.message);
     responses.res500(res);
+  }
+}
+
+export const delNilai = async (req, res) => {
+  try {
+      const {id} = req.params;
+      const validId = checkValidId(id);
+      if(!validId) return responses.res400("ID nilai tidak valid", res);
+      
+      const respons = await Penilaian.destroy({
+          where: {id: validId}
+      });
+      
+      if(!respons) return responses.res400("Maaf, nilai tidak ditemukan", res);
+      responses.res200("Data nilai berhasil hapus", null, res);
+  } catch (err) {
+      console.log(err.message);
+      responses.res500(res);
   }
 }
