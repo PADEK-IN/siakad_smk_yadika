@@ -55,17 +55,17 @@
                                     <% for (const data of muridDenganNilai) { %>
                                     <tr>
                                         <td><%= data.nis %></td>
-                                        <td><a href="/teacher/class/01/detail"><%= data.nama %></a></td>
-                                        <td colspan="<%= data.nilai.length === 0 ? 3 : 1 %>">
-                                            <% if (data.nilai.length === 0) { %>
+                                        <td class="fw-bold"><%= data.nama %></td>
+                                        <% if (data.nilai.length === 0) { %>
+                                            <td colspan="3">
                                                 <span class="badge bg-primary">Nilai Belum di Input</span>
-                                            <% } else { %>
-                                                <span class="badge bg-primary"><%= data.nilai[0] %></span>
-                                            <% } %>
-                                        </td>
-                                        <% if (data.nilai.length !== 0) { %>
-                                            <td><span class="badge bg-warning"><%= data.nilai[1] ? data.nilai[1] : '-' %></span></td>
-                                            <td><span class="badge bg-secondary"><%= data.nilai[2] ? data.nilai[2] : '-' %></span></td>
+                                            </td>
+                                            <!-- <td></td> Empty cell to align the columns -->
+                                            <!-- <td></td> -->
+                                        <% } else { %>
+                                            <td><span class="badge bg-warning"><%= data.nilai[0].akhir ? data.nilai[0].akhir : '-' %></span></td>
+                                            <td><span class="badge bg-warning"><%= data.nilai[0].uts ? data.nilai[0].uts : '-' %></span></td>
+                                            <td><span class="badge bg-warning"><%= data.nilai[0].uas ? data.nilai[0].uas : '-' %></span></td>
                                         <% } %>
                                         
                                         <td>
