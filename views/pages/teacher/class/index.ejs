@@ -1,0 +1,87 @@
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar-teacher.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar-teacher.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0">List Kelas</h6>
+                </div>
+                <div class="bg-light text-center rounded p-4">
+                    <div class="table-responsive">
+                        <h4><%= guru.Mata_Pelajaran %></h4>
+                        <table id="example" class="table table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Kelas</th>
+                                    <th>Wali Kelas</th>
+                                    <th>Tugas</th>
+                                    <th>UTS</th>
+                                    <th>UAS</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for (const data of kelas) {%>
+                                <tr>
+                                    <td><a href="/teacher/class/<%= data.id %>/detail"><%= data.kelas %></a></td>
+                                    <td><%= data.Wali_Kelas %></td>
+                                    <td><span class="badge bg-primary">Tuntas</span></td>
+                                    <td><span class="badge bg-danger">Belum</span></td>
+                                    <td><span class="badge bg-danger">Belum</span></td>
+                                    <td>
+                                        <% if (data.isActive == 1) {%>
+                                            <span class="badge bg-success">Aktif</span>
+                                        <% } else { %>
+                                            <span class="badge bg-danger">Tidak Aktif</span>
+                                        <% } %>
+                                    </td>
+                                    <!-- <td>
+                                        <a href="/teacher/class/01/detail" class="bi bi-journal-plus px-2"></a>
+                                        <a href="#" class="bi bi-archive px-2" style="color: red;"></a>
+                                    </td> -->
+                                </tr>
+                                <%}%>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Kelas</th>
+                                    <th>Wali Kelas</th>
+                                    <th>Tugas</th>
+                                    <th>UTS</th>
+                                    <th>UAS</th>
+                                    <th>Status</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <%- include ('./../../../components/script.ejs')%>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+    <script>
+        new DataTable('#example');
+    </script>
+</body>
+
+</html>

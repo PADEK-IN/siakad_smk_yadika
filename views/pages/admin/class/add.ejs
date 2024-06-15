@@ -1,0 +1,110 @@
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar-admin.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar-admin.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5">
+                <div class="d-flex mb-4">
+                    <a href="/admin/class" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
+                    <h6 class="px-3">Kembali</h6>
+                </div>
+                <div class="bg-light  rounded p-4">
+                    <div class="alert text-center alert-primary" role="alert">
+                        <h6>Buat Data Kelas</h6>
+                    </div>
+                    <hr>
+                    <!-- form Student -->
+                    <div class="bg-light rounded h-100 px-4">
+                        <form>
+                            <!-- Tingkat -->
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="tingkat"
+                                    aria-label="Floating label select example">
+                                    <option selected undefined disabled>Tingkat</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                                <label for="floatingSelect">Tingkat</label>
+                            </div>
+                            <div class="mb-3">
+                                <label for="inputCode" class="form-label">Kelas</label>
+                                <input type="text" class="form-control" id="kode" maxlength="5" placeholder="TKJ-1">
+                                <div id="kode" class="form-text text-danger ">
+                                    <em style="font-size: 10px;">Inputan Maximal 5 Karakter</em>
+                                </div>
+                            </div>
+
+                            <!-- Wali Kelas -->
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="id_wali_kelas"
+                                    aria-label="Floating label select example">
+                                    <option selected undefined disabled>Wali Kelas</option>
+                                    <% for (const data of guru) { %>
+                                        <option value="<%= data.id %>"><%= data.nama %></option>
+                                    <% } %>
+                                </select>
+                                <label for="floatingSelect">Wali Kelas</label>
+                            </div>
+                            <div class="mb-3">
+                                <select class="form-select" id="tahun"
+                                aria-label="Floating label select example">
+                                    <option selected undefined disabled>Tahun</option>
+                                    <% for (let i = 2020; i <= 2030; i++) { %>
+                                        <option value="<%= i %>" ><%= i %></option>
+                                    <% }%>
+                                </select>
+                            </div>
+
+                            <button type="submit" id="add-class" class="btn btn-primary">Simpan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include ('./../../../components/script.ejs')%>
+
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+    <script>
+        new DataTable('#example');
+
+        $("#add-class").on("click", () => {
+            const tingkat = $("#tingkat").val();
+            const kode = $("#kode").val();
+            const id_wali_kelas = $("#id_wali_kelas").val();
+            const tahun = $("#tahun").val();
+            $.ajax({
+                url: "/api/admin/kelas",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({tingkat, kode, id_wali_kelas, tahun}),
+                success: (response) => {
+                    alert(response.status.message);
+                    return window.location.href = `/admin/class`;
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    alert(message);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

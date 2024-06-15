@@ -1,0 +1,269 @@
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar-teacher.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar-teacher.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5">
+                <div class="d-flex mb-4">
+                    <a href="/teacher/class" class="d-inline-flex text-decoration-none bi bi-arrow-left pr-4"></a>
+                    <h6 class="px-3">Kembali</h6>
+                </div>
+                <div class="bg-light  rounded p-4">
+                    <div class="alert text-center alert-primary" role="alert">
+                        Detail Data Kelas
+                    </div>
+
+                    <div class="bg-light rounded">
+                        <div class="testimonial-item text-center">
+                            <h6 class=""><%= kelass.kelas %></h6>
+                            <h5 class="mb-1"><%= guru.Mata_Pelajaran %></h5>
+                            <p><%= kelass.Wali_Kelas %></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="bg-light rounded h-100">
+                        <h6 class="mb-4">List Murid</h6>
+                        <!-- all start -->
+                        <div class="tab-pane fade show active" id="nav-semua" role="tabpanel" aria-labelledby="nav-semua-tab">
+                            <table id="example" class="table table-striped text-center" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>NIS</th>
+                                        <th>Nama</th>
+                                        <th>Tugas</th>
+                                        <th>UTS</th>
+                                        <th>UAS</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if (muridDenganNilai.length != 0) { %>
+                                        <% muridDenganNilai.forEach((data, index) => { %>
+                                        <tr>
+                                            <td><%= data.nis %></td>
+                                            <td class="fw-bold"><%= data.nama %></td>
+                                            <% if (data.nilai.length === 0) { %>
+                                                <td colspan="3">
+                                                    <span class="badge bg-danger">Nilai Belum di Input</span>
+                                                </td>
+                                                <td class="d-none"></td> 
+                                                <td class="d-none"></td>
+                                            <% } else { %>
+                                                <td><span class="badge bg-primary"><%= data.nilai[0] && data.nilai[0].tugas ? data.nilai[0].tugas : '-' %></span></td>
+                                                <td><span class="badge bg-primary"><%= data.nilai[0] && data.nilai[0].uts ? data.nilai[0].uts : '-' %></span></td>
+                                                <td><span class="badge bg-primary"><%= data.nilai[0] && data.nilai[0].uas ? data.nilai[0].uas : '-' %></span></td>
+                                            <% } %>
+                                            <td>
+                                                <% if (data.status == 'aktif') { %>
+                                                    <span class="badge bg-success">Aktif</span>
+                                                <% } else if (data.status == 'lulus') { %>
+                                                    <span class="badge bg-primary">Lulus</span>
+                                                <% } else if (data.status == 'cuti') { %>
+                                                    <span class="badge bg-secondary">Cuti</span>
+                                                <% } else if (data.status == 'berhenti') { %>
+                                                    <span class="badge bg-danger">Berhenti</span>
+                                                <% } %>
+                                            </td>
+                                            <td>
+                                                <% if (data.nilai.length === 0) { %>
+                                                    <a href="#" class="bi bi-journal-plus px-2" data-bs-toggle="modal" data-bs-target="#createNilai-<%= index %>"></a>
+                                                    <!-- Modal Create -->
+                                                    <div class="modal fade" id="createNilai-<%= index %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="createNilaiLabel-<%= index %>" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="createNilaiLabel-<%= index %>">Create Nilai</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="mb-3 row d-flex justify-content-between">
+                                                                        <div class="fw-bold"><%= data.nama %></div> 
+                                                                        <div class="fw-bold"><%= guru.Mata_Pelajaran %></div> 
+                                                                    </div>
+                                                                    <div class="mb-3 row">
+                                                                        <label for="tugasCreate-<%= index %>" class="col-sm-4 col-form-label">Nilai Tugas</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="number" class="form-control" id="tugasCreate-<%= index %>" value="<%= data.nilai[0] && data.nilai[0].tugas ? data.nilai[0].tugas : '' %>">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-3 row">
+                                                                        <label for="utsCreate-<%= index %>" class="col-sm-4 col-form-label">Nilai UTS</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="number" class="form-control" id="utsCreate-<%= index %>" value="<%= data.nilai[0] && data.nilai[0].uts ? data.nilai[0].uts : '' %>">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-3 row">
+                                                                        <label for="uasCreate-<%= index %>" class="col-sm-4 col-form-label">Nilai UAS</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="number" class="form-control" id="uasCreate-<%= index %>" value="<%= data.nilai[0] && data.nilai[0].uas ? data.nilai[0].uas : '' %>">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                                    <button type="button" onclick="create(`<%= data.id %>`,`<%= guru.id_mata_pelajaran %>`, `<%= index %>`)" class="btn btn-primary">Create</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <% } else { %>
+                                                    <a href="#" class="bi bi-pencil-square px-2" data-bs-toggle="modal" data-bs-target="#editNilai-<%= index %>"></a>
+                                                    <!-- Modal Edit-->
+                                                    <div class="modal fade" id="editNilai-<%= index %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editNilaiLabel-<%= index %>" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="editNilaiLabel-<%= index %>">Edit Nilai</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="mb-3 row">
+                                                                        <label for="tugasEdit-<%= index %>" class="col-sm-4 col-form-label">Nilai Tugas</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="number" class="form-control" id="tugasEdit-<%= index %>" value="<%= data.nilai[0] && data.nilai[0].tugas ? data.nilai[0].tugas : '' %>">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-3 row">
+                                                                        <label for="utsEdit-<%= index %>" class="col-sm-4 col-form-label">Nilai UTS</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="number" class="form-control" id="utsEdit-<%= index %>" value="<%= data.nilai[0] && data.nilai[0].uts ? data.nilai[0].uts : '' %>">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-3 row">
+                                                                        <label for="uasEdit-<%= index %>" class="col-sm-4 col-form-label">Nilai UAS</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="number" class="form-control" id="uasEdit-<%= index %>" value="<%= data.nilai[0] && data.nilai[0].uas ? data.nilai[0].uas : '' %>">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                                    <button type="button" onclick="edit(`<%= data.nilai[0] ? data.nilai[0].id : '' %>`, `<%= index %>`)" class="btn btn-primary">Edit</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <a href="#" onclick="remove(`<%= data.nilai[0] ? data.nilai[0].id : '' %>`)" class="bi bi-archive px-2" style="color: red;"></a>
+                                                <% } %>
+                                            </td>
+                                        </tr>
+                                        <% }); %>
+                                    <% } else { %>
+                                        <tr>
+                                            <td class="d-none"></td>
+                                            <td class="d-none"></td>
+                                            <td class="d-none"></td>
+                                            <td class="d-none"></td>
+                                            <td class="d-none"></td>
+                                            <td class="d-none"></td>
+                                            <td colspan="7" class="text-center">Kelas Kosong Tidak Ada Murid</td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                                
+                                
+                                <tfoot>
+                                    <tr>
+                                        <th>NIS</th>
+                                        <th>Nama</th>
+                                        <th>Tugas</th>
+                                        <th>UTS</th>
+                                        <th>UAS</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- all end -->
+                    </div>
+                </div>       
+            </div>
+        </div>
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <%- include ('./../../../components/script.ejs')%>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+    <script>
+        new DataTable('#example');
+
+        function edit(id, index) {
+            const tugas = $("#tugasEdit-" + index).val() || null;
+            const uts = $("#utsEdit-" + index).val() || null;
+            const uas = $("#uasEdit-" + index).val() || null;
+            // console.log({id, tugas, uts, uas});
+            $.ajax({
+                url: "/api/guru/nilai/" + id,
+                method: "PATCH",
+                contentType: "application/json",
+                data: JSON.stringify({tugas, uts, uas}),
+                success: (response) => {
+                    alert(response.status.message);
+                    window.location.reload();
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    alert(message);
+                }
+            });
+        }
+
+        function create(id_murid, id_mata_pelajaran, index) {
+            const tugas = $("#tugasCreate-" + index).val() || null;
+            const uts = $("#utsCreate-" + index).val() || null;
+            const uas = $("#uasCreate-" + index).val() || null;
+            const semester = "ganjil";
+            // console.log({id_murid, id_mata_pelajaran, tugas, uts, uas, semester});
+            $.ajax({
+                url: "/api/guru/nilai",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({id_murid, id_mata_pelajaran, tugas, uts, uas, semester}),
+                success: (response) => {
+                    alert(response.status.message);
+                    window.location.reload();
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    alert(message);
+                    }
+                });
+        }
+
+        function remove(id) {
+            // console.log({id});
+            $.ajax({
+                url: '/api/guru/nilai/' + id,    
+                method: 'DELETE',
+                contentType: "application/json",
+                success: function(response) {
+                    alert(response.status.message);
+                    window.location.reload();
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    alert(message);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

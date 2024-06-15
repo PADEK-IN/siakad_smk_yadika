@@ -1,19 +1,42 @@
-// // Simple example of code using authentication/authorization with sessions
-// export const auth = (req,res,next)=>{
-//     if(!req.session.user){
-//       // let err = new Error("Anda belum login !");
-//       console.log("Unauthorized")
-//       res.redirect("/login")
-//       return
-//     }
-//     next()
-//   }
-  
-// export const authLogin = (req,res,next)=>{
-//     if(req.session.user){
-//       console.log("Unauthorized")
-//       res.redirect("/")
-//       return
-//     }
-//     next()
-//   }
+export const isAuth = (req,res,next)=>{
+  if(!req.session.user){
+    console.log("Unauthorized user");
+    res.redirect("/login");
+    return
+  }
+  next();
+}
+
+export const isAuthLogin = (req,res,next)=>{
+  if(req.session.user){
+    console.log("Unauthorized user");
+    if(req.session.user.role == "admin") return res.redirect("/admin/dashboard");
+    if(req.session.user.role == "guru") return res.redirect("/teacher/dashboard");
+    if(req.session.user.role == "murid") return res.redirect("/murid/dashboard");
+  }
+  next();
+}
+
+export const isAdmin = (req,res,next)=>{
+  if(req.session.user.role != "admin"){
+    if(req.session.user.role == "guru") return res.redirect("/teacher/dashboard");
+    if(req.session.user.role == "murid") return res.redirect("/murid/dashboard");
+  }
+  next();
+}
+
+export const isMurid = (req,res,next)=>{
+  if(req.session.user.role != "murid"){
+    if(req.session.user.role == "guru") return res.redirect("/teacher/dashboard");
+    if(req.session.user.role == "admin") return res.redirect("/admin/dashboard");
+  }
+  next();
+}
+
+export const isGuru = (req,res,next)=>{
+  if(req.session.user.role != "guru"){
+    if(req.session.user.role == "admin") return res.redirect("/admin/dashboard");
+    if(req.session.user.role == "murid") return res.redirect("/murid/dashboard");
+  }
+  next();
+}

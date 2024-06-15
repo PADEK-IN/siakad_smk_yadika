@@ -1,0 +1,103 @@
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar-teacher.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar-teacher.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5">
+                <div class="d-flex mb-4">
+                    <a href="/teacher/dashboard" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
+                    <h6 class="px-3">Kembali</h6>
+                </div>
+                <div class="bg-light  rounded p-4">
+                    <div class="text-center">
+                        <div class="alert alert-primary " role="alert">
+                            <h5 class="">Detail Profile Guru</h5>
+                        </div>
+                        <img class="img-fluid rounded-circle mx-auto mb-4" src="/uploads/<%= guru.foto %>" style="width: 100px; height: 100px;">
+                        <div>
+                            <% if(guru.status=="aktif") { %>
+                                <div class="badge bg-info">Aktif</div>
+                            <% } else if(guru.status=="cuti") { %>
+                                <div class="badge bg-warning">Cuti</div>
+                            <% } else { %>
+                                <div class="badge bg-danger">Berhenti</div>
+                            <% } %>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="bg-light rounded h-100 ">
+                        <div class="testimonial-item p-2">
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td class="fw-bold">NIP</td>
+                                        <td><%= guru.nip %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Nama</td>
+                                        <td><%= guru.nama %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Email</td>
+                                        <td><%= guru.email %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Tempat Lahir</td>
+                                        <td><%= guru.tempat_lahir %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Tanggal Lahir</td>
+                                        <td><%= guru.tanggal_lahir %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Alamat</td>
+                                        <td><%= guru.alamat %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Jenis Kelamin</td>
+                                        <td><%= guru.jenis_kelamin %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Agama</td>
+                                        <td><%= guru.agama %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">No Handphone</td>
+                                        <td><%= guru.no_hp %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Pendidikan</td>
+                                        <td><%= guru.pendidikan %></td>
+                                    </tr>
+                                </tbody>
+                            </table> 
+                            
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <%- include ('./../../../components/script.ejs')%>
+</body>
+
+</html>

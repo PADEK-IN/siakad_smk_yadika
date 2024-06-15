@@ -1,0 +1,242 @@
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar-admin.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar-admin.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5">
+                <div class="d-flex mb-4">
+                    <a href="/admin/user" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
+                    <h6 class="px-3">User</h6>
+                </div>
+                <div class="bg-light text-center rounded p-4">
+                    <div class="alert alert-warning" role="alert">
+                        Edit Data Murid
+                    </div>
+
+                    <div class="bg-light rounded h-100 p-4">
+                        <div class="testimonial-item text-center">
+                            <h5 class="mb-1">67983423908</h5>
+                            <p>aditya@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                                aria-expanded="false" aria-controls="collapseTwo">
+                                Role
+                            </button>
+                        </h2>                   
+                        <div id="collapseTwo" class="accordion-collapse collapse"
+                            aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                    <fieldset class="row mb-3">
+                                        <div class="bg-light rounded h-100 p-4">
+                                            <nav>
+                                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                                    <button class="nav-link active" id="nav-admin-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#nav-admin" type="button" role="tab" aria-controls="nav-admin"
+                                                        aria-selected="true">Admin</button>
+                                                    <button class="nav-link" id="nav-student-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#nav-student" type="button" role="tab"
+                                                        aria-controls="nav-student" aria-selected="false">Murid</button>
+                                                    <button class="nav-link" id="nav-teacher-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#nav-teacher" type="button" role="tab"
+                                                        aria-controls="nav-teacher" aria-selected="false">Guru</button>
+                                                </div>
+                                            </nav>
+                                            <div class="tab-content pt-3" id="nav-tabContent">
+                                                <!-- form set admin -->
+                                                <div class="tab-pane fade show active" id="nav-admin" role="tabpanel" aria-labelledby="nav-admin-tab">
+                                                    <div class="bg-light rounded h-100 p-4">
+                                                        <div class="pb-4">
+                                                            <h6 class="d-inline px-2">Form Admin</h6>
+                                                        </div>
+                                                        <form>
+                                                            <button type="submit" class="btn btn-primary">Buat</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <!-- form set Student -->
+                                                <div class="tab-pane fade" id="nav-student" role="tabpanel" aria-labelledby="nav-student-tab">
+                                                    <div class="bg-light rounded h-100 p-4">
+                                                        <div class="pb-4">
+                                                            <h6 class="d-inline px-2">Form Murid</h6>
+                                                        </div>
+                                                        <hr>
+                                                        <form>
+                                                            <div class="mb-3">
+                                                                <label for="inputName" class="form-label">Name</label>
+                                                                <input type="text" class="form-control" id="inputName">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="inputTempatLahir" class="form-label">Tempat Lahir</label>
+                                                                <input type="text" class="form-control" id="inputTempatLahir">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="inputTTL" class="form-label">Tanggal Lahir</label>
+                                                                <input type="date" class="form-control" id="inputTTL">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="inputAlamat" class="form-label">Alamat</label>
+                                                                <textarea name="" class="form-control" id="inputAlamat"></textarea>
+                                                            </div>
+                                                            <!-- JK -->
+                                                            <fieldset class="row mb-3">
+                                                                <legend class="col-form-label col-sm-2 pt-0">Jenis Kelamin</legend>
+                                                                <div class="col-sm-10">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="radio" name="gridRadios"
+                                                                            id="gridLaki" value="option1" checked>
+                                                                        <label class="form-check-label" for="gridLaki">
+                                                                            Laki-Laki
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="radio" name="gridRadios"
+                                                                            id="gridPerempuan" value="option2">
+                                                                        <label class="form-check-label" for="gridPerempuan">
+                                                                            Perempuan
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </fieldset>
+                                                            <!-- Agama -->
+                                                            <fieldset class="row mb-3">
+                                                                <legend class="col-form-label col-sm-2 pt-0">Agama</legend>
+                                                                <div class="col-sm-10">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="radio" name="gridRadios"
+                                                                            id="gridIslam" value="option1" checked>
+                                                                        <label class="form-check-label" for="gridIslam">
+                                                                            Islam
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="radio" name="gridRadios"
+                                                                            id="gridKristen" value="option2">
+                                                                        <label class="form-check-label" for="gridKristen">
+                                                                            Kristen
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="radio" name="gridRadios"
+                                                                            id="gridBudha" value="option2">
+                                                                        <label class="form-check-label" for="gridBudha">
+                                                                            Budha
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </fieldset>
+
+                                                            <div class="mb-3">
+                                                                <label for="inputHp" class="form-label">Nomer Handphone</label>
+                                                                <input type="number" class="form-control" id="inputHp">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="inputJurusan" class="form-label">Jurusan</label>
+                                                                <input type="text" class="form-control" id="inputJurusan">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="inputKelas" class="form-label">Kelas</label>
+                                                                <input type="text" class="form-control" id="inputKelas">
+                                                            </div>
+                                
+                                                            <button type="submit" class="btn btn-primary">Buat</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <!-- form set Teacher -->
+                                                <div class="tab-pane fade" id="nav-teacher" role="tabpanel" aria-labelledby="nav-teacher-tab">
+                                                    <div class="bg-light rounded h-100 p-4">
+                                                        <h6 class="d-inline px-2">Form Guru</h6>
+                                                        <hr>
+                                                        <div class="mb-3">
+                                                            <label for="inputName" class="form-label">Name</label>
+                                                            <input type="text" class="form-control" id="inputName">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="inputTTL" class="form-label">Tanggal Lahir</label>
+                                                            <input type="date" class="form-control" id="inputTTL">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="inputAlamat" class="form-label">Alamat</label>
+                                                            <textarea name="" class="form-control" id="inputAlamat"></textarea>
+                                                        </div>
+                                                        <!-- pendidikan -->
+                                                        <div class="form-floating mb-3">
+                                                            <select class="form-select" id="floatingSelect"
+                                                                aria-label="Floating label select example">
+                                                                <option selected undefined disabled>Pendidikan Terakhir</option>
+                                                                <option value="1">S1</option>
+                                                                <option value="2">SMA</option>
+                                                            </select>
+                                                            <label for="floatingSelect">Pendidikan Terakhir</label>
+                                                        </div>
+                                                        <!-- JK -->
+                                                        <fieldset class="row mb-3">
+                                                            <legend class="col-form-label col-sm-2 pt-0">Jenis Kelamin</legend>
+                                                            <div class="col-sm-10">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="gridRadios"
+                                                                        id="gridLaki" value="option1" checked>
+                                                                    <label class="form-check-label" for="gridLaki">
+                                                                        Laki-Laki
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="gridRadios"
+                                                                        id="gridPerempuan" value="option2">
+                                                                    <label class="form-check-label" for="gridPerempuan">
+                                                                        Perempuan
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+        
+                                                        <div class="mb-3">
+                                                            <label for="inputHp" class="form-label">Nomer Handphone</label>
+                                                            <input type="number" class="form-control" id="inputHp">
+                                                        </div>
+                            
+                                                        <button type="submit" class="btn btn-primary">Buat</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <%- include ('./../../../components/script.ejs')%>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+    <script>
+        new DataTable('#example');
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,188 @@
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar-admin.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar-admin.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5">
+                
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <a href="/admin/user/students/" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"><h6 class="px-3">Kembali</h6></a>
+                    <button class="btn btn-sm btn-primary" onclick="updateValidasiCheck()">Validasi Murid</button>
+                </div>
+                <div class="bg-light text-center rounded p-4">
+                    <div class="table-responsive">
+                        <div class="d-flex justify-content-end">
+                            <input type="checkbox" id="check-all"><span class="px-2">Check all</span>
+                        </div>
+                        <table id="example" class="table table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>NIS</th>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>JK</th>
+                                    <th>Sekolah Asal</th>
+                                    <th>Nomor Ijazah</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for (const [index, murid] of murids.entries()) { %>  
+                                <tr>
+                                    <td><%= index + 1 %></td>
+                                    <td><%= murid.nis %></td>
+                                    <td><a href="/admin/user/student/<%= murid.id %>"><%= murid.nama %></a></td>
+                                    <td><%= murid.email %></td>
+                                    <td>
+                                        <% if(murid.jenis_kelamin == "laki-laki") { %>
+                                            <span class="badge bg-success">LK</span>
+                                        <% } else { %>
+                                            <span class="badge bg-danger">PR</span>
+                                        <% } %>
+                                    </td>
+                                    <td><%= murid.sekolah_asal %></td>
+                                    <td><%= murid.no_ijazah%></td>
+                                    <td><span class="badge bg-danger">Tidak Valid</span></td>
+                                    <td>
+                                        <span  class="px-2">
+                                            <input type="checkbox" class="checkbox-item" id="check-<%= murid.email %>">
+                                        </span>
+                                        <a href="#" class="bi bi-arrow-up" onclick="updateValidasi('<%= murid.email %>')"></a>
+                                        <a href="#" onclick="del('<%= murid.id %>', '<%= murid.nama %>')" class="bi bi-archive px-2" style="color: red;"></a>
+                                    </td>
+                                </tr>
+                                <% } %>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>No</th>
+                                    <th>NIS</th>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>JK</th>
+                                    <th>Kelas</th>
+                                    <th>Aktif</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <%- include ('./../../../components/script.ejs')%>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+    <script>
+        new DataTable('#example');
+        function del(id, nama) {
+            const isSure = confirm(`Kamu yakin ingin menghapus data ${nama}`);
+            if(isSure){
+                $.ajax({
+                    url: `/api/admin/murid/${id}`,
+                    method: "DELETE",
+                    success: (response) => {
+                        alert(response.status.message);
+                        window.location.reload();
+                    },
+                    error: (response) => {
+                        const message = response.responseJSON.status.message;
+                        alert(message);
+                    }
+                });
+            }
+        }
+
+        function updateValidasi(data){
+            const isUpdate = confirm(`Yakin ingin memvalidasi data murid dengan email ${email}?`);
+            if(!isUpdate) return
+            const email = [];
+            email.push(data);
+            $.ajax({
+                url: `/api/admin/user/valid`,
+                method: "PATCH",
+                contentType: "application/json",
+                data: JSON.stringify({email}),
+                success: (response) => {
+                    alert(response.status.message);
+                    window.location.reload();
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message;
+                    alert(message);
+                }
+            });
+        }
+        
+        // Event handler untuk checkbox "check all"
+        $('#check-all').on('change', function() {
+            $('.checkbox-item').prop('checked', $(this).prop('checked'));
+            updateCheckedIds();
+        });
+
+        // Event handler untuk setiap checkbox item
+        $('.checkbox-item').on('change', function() {
+            if ($('.checkbox-item:checked').length === $('.checkbox-item').length) {
+                $('#check-all').prop('checked', true);
+            } else {
+                $('#check-all').prop('checked', false);
+            }
+            updateCheckedIds();
+        });
+        
+        // Fungsi untuk mengupdate array id checkbox yang dicentang
+        function updateCheckedIds() {
+            const checkedIds = [];
+            $('.checkbox-item:checked').each(function() {
+                const checkid = $(this).attr('id').split("-")
+                checkedIds.push(checkid[1]);
+            });
+            return checkedIds // Tampilkan array ID di console
+        }
+
+        function updateValidasiCheck(){
+            const email = updateCheckedIds();
+            if(email.length == 0) return alert("Maaf, tidak ada murid yang dipilih");
+            const listEmail = email.join(", ")
+            const isUpdate = confirm(`Yakin ingin memvalidasi data murid dengan email ${listEmail}?`);
+            if(!isUpdate) return
+            $.ajax({
+                url: `/api/admin/user/valid`,
+                method: "PATCH",
+                contentType: "application/json",
+                data: JSON.stringify({email}),
+                success: (response) => {
+                    alert(response.status.message);
+                    window.location.reload();
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message;
+                    alert(message);
+                }
+            });
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,241 @@
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar-admin.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar-admin.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5">
+                <div class="bg-light rounded h-100 p-4">
+                    <div class="pb-4">
+                        <a href="/admin/user" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
+                        <h6 class="d-inline px-2">Kembali</h6>
+                    </div>
+                    <h6>Tambah Murid</h6>
+                    <hr>
+                    <form>
+                        <div class="mb-3">
+                            <label for="nis" class="form-label">NIS</label>
+                            <input type="text" class="form-control" id="nis" placeholder="Nomor Induk Siswa">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email">Email</label>
+                            <select class="form-select" id="email" aria-label="Floating label select example">
+                                <option selected undefined disabled>Pilih Email</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nama" class="form-label">Nama</label>
+                            <input type="text" class="form-control" id="nama" placeholder="Nama Lengkap">
+                        </div>
+                        <div class="mb-3">
+                            <label for="jenis_kelamin">Jenis Kelamin</label>
+                            <select class="form-select" id="jenis_kelamin" aria-label="Floating label select example">
+                                <option selected undefined disabled>Pilih Jenis Kelamin</option>
+                                <option value="laki-laki">Laki-Laki</option>
+                                <option value="perempuan">Perempuan</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
+                            <input type="text" class="form-control" id="tempat_lahir" placeholder="Tempat Lahir">
+                        </div>
+                        <div class="mb-3">
+                            <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
+                            <input type="date" class="form-control" id="tanggal_lahir" placeholder="YYYY-MM-DD">
+                        </div>
+                        <div class="mb-3">
+                            <label for="alamat" class="form-label">Alamat</label>
+                            <input type="text" class="form-control" id="alamat" placeholder="Alamat Tempat Tinggal">
+                        </div>
+                        <div class="mb-3">
+                            <label for="agama" class="form-label">Agama</label>
+                            <select class="form-select" id="agama"
+                                aria-label="Floating label select example">
+                                <option selected undefined disabled>Pilih Agama</option>
+                                <option value="Islam">Islam</option>
+                                <option value="Kristen">Kristen</option>
+                                <option value="Katolik">Katolik</option>
+                                <option value="Hindu">Hindu</option>
+                                <option value="Buddha">Budha</option>
+                                <option value="Konghucu">Konghucu</option>
+                                <option value="Lainnya">Lainnya....</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="no_hp" class="form-label">Nomor Telepon</label>
+                            <input type="text" class="form-control" id="no_hp" placeholder="081234567890">
+                        </div>
+                        <div class="mb-3">
+                            <label for="hobi" class="form-label">Hobi</label>
+                            <input type="text" class="form-control" id="hobi" placeholder="Hobi Murid">
+                        </div>
+                        <div class="mb-3">
+                            <label for="sekolah_asal" class="form-label">Sekolah Asal</label>
+                            <input type="text" class="form-control" id="sekolah_asal" placeholder="Sekolah Asal Murid">
+                        </div>
+                        <div class="mb-3">
+                            <label for="no_ijazah" class="form-label">No Ijazah</label>
+                            <input type="text" class="form-control" id="no_ijazah" placeholder="Nomor Ijazah Murid">
+                        </div>
+                        <div class="mb-3">
+                            <label for="tahun_masuk" class="form-label">Tahun Masuk</label>
+                            <select class="form-select" id="tahun_masuk"
+                                aria-label="Floating label select example">
+                                <option selected undefined disabled>Pilih Tahun</option>
+                                <% for (let i = 2020; i <= 2030; i++) { %>
+                                    <option value="<%= i %>" ><%= i %></option>
+                                <% }%>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_kelas">Kelas</label>
+                            <select class="form-select" id="id_kelas" aria-label="Floating label select example">
+                                <option selected undefined disabled>Pilih Kelas</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_jurusan">Jurusan</label>
+                            <select class="form-select" id="id_jurusan" aria-label="Floating label select example">
+                                <option selected undefined disabled>Pilih Jurusan</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="foto" class="form-label">Foto</label>
+                            <input type="file" class="form-control" id="foto">
+                        </div>
+                        <div class="mb-3">
+                            <label for="status">Status</label>
+                            <select class="form-select" id="status" aria-label="Floating label select example">
+                                <option selected undefined disabled>Pilih Status</option>
+                                <option value="aktif">Aktif</option>
+                                <option value="cuti">Cuti</option>
+                                <option value="lulus">Lulus</option>
+                                <option value="berhenti">Berhenti</option>
+                            </select>
+                        </div>
+                        <button id="create" class="btn btn-primary">Create</button>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <%- include ('./../../../components/script.ejs')%>
+    <script>
+        $("#create").on("click", (e) => {
+            e.preventDefault();
+            const nis = $("#nis").val();
+            const email = $("#email").val();
+            const nama = $("#nama").val();
+            const jenis_kelamin = $("#jenis_kelamin").val();
+            const tempat_lahir = $("#tempat_lahir").val();
+            const tanggal_lahir = $("#tanggal_lahir").val();
+            const alamat = $("#alamat").val();
+            const agama = $("#agama").val();
+            const no_hp = $("#no_hp").val();
+            const hobi = $("#hobi").val();
+            const no_ijazah = $("#no_ijazah").val();
+            const sekolah_asal = $("#sekolah_asal").val();
+            const tahun_masuk= $("#tahun_masuk").val();
+            const id_kelas = $("#id_kelas").val();
+            const id_jurusan = $("#id_jurusan").val();
+            const status = $("#status").val();
+
+            const fileInput = document.getElementById('foto');
+            const file = fileInput.files[0];
+            const formData = new FormData();
+
+            formData.append('foto', file);
+            formData.append('data', JSON.stringify({nis, email, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, no_ijazah, hobi, sekolah_asal, tahun_masuk, id_kelas, id_jurusan, status}));
+            
+            $.ajax({
+                url: "/api/admin/murid/",
+                method: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: (response) => {
+                    alert(response.status.message);
+                    window.location.href = "/admin/user/students";
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message;
+                    alert(message);
+                }
+            });
+        });
+        
+        $(document).ready(()=>{
+            // fetch data mata pelajaran
+            $.ajax({
+                url: "/api/admin/kelas/",
+                method: "GET",
+                contentType: "application/json",
+                success: (response) => {
+                    const data = response.data;
+                    for (const kelas of data) {
+                        $("#id_kelas").append(`
+                            <option value="${kelas.id}">${kelas.tingkat} - ${kelas.kode}</option>
+                        `);
+                    }
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message;
+                    alert(message);
+                }
+            });
+            // Email with role guru
+            $.ajax({
+                url: "/api/admin/user/list/murid",
+                method: "GET",
+                contentType: "application/json",
+                success: (response) => {
+                    const data = response.data;
+                    for (const user of data) {
+                        $("#email").append(`
+                            <option value="${user.email}">${user.email}</option>
+                        `);
+                    }
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message;
+                    alert(message);
+                }
+            });
+            // fetch data jurusan
+            $.ajax({
+                url: "/api/admin/jurusan",
+                method: "GET",
+                contentType: "application/json",
+                success: (response) => {
+                    const data = response.data;
+                    for (const jurusan of data) {
+                        $("#id_jurusan").append(`
+                            <option value="${jurusan.id}">${jurusan.nama}</option>
+                        `);
+                    }
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message;
+                    alert(message);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

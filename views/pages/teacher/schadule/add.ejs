@@ -1,0 +1,97 @@
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar-teacher.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar-teacher.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5">
+                <div class="d-flex mb-4">
+                    <a href="/teacher/schadule" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
+                    <h6 class="px-3">Kembali</h6>
+                </div>
+                <div class="bg-light  rounded p-4">
+                    <div class="alert text-center alert-primary" role="alert">
+                        <h6 class="mb-1">Buat Absensi</h6>
+                    </div>
+
+                    <div class="bg-light rounded">
+                        <div class="testimonial-item text-center">
+                            <!-- <h3 class="">Kelas gdwyui</h3> -->
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="bg-light rounded h-100 px-4">
+                        <form>
+                            <div class="mb-3">
+                                <label for="tanggal" class="form-label">Tanggal</label>
+                                <input type="date" class="form-control" id="tanggal">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="inputMulai" class="form-label">Jam Dibuka</label>
+                                <input type="time" class="form-control" id="mulai"
+                                    aria-describedby="mulaiHelp">
+                            </div>
+                            <div class="mb-3">
+                                <label for="inputBerakhir" class="form-label">Jam Ditutup</label>
+                                <input type="time" class="form-control" id="selesai"
+                                    aria-describedby="berakhirHelp">
+                            </div>
+
+                            <button id="add-jadwal-absen" type="button" class="btn btn-primary ">Buat</button>
+                        </form>
+                    </div>
+                </div>       
+            </div>
+        </div>
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <%- include ('./../../../components/script.ejs')%>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+    <script>
+        let url = new URL(window.location.href);
+        let parts = url.pathname.split('/');
+        let jadwalId = parts[parts.length - 2];
+        // console.log({jadwalId});
+
+        $("#add-jadwal-absen").on("click", () => {
+        const id_jadwal_pelajaran = jadwalId;
+        const tanggal = $("#tanggal").val();
+        const waktu_buka = $("#mulai").val();
+        const waktu_tutup = $("#selesai").val();
+        // console.log({jadwalId});
+        // console.log({id_jadwal_pelajaran, tanggal, waktu_buka, waktu_tutup});
+            $.ajax({
+                url: "/api/guru/jadwal-absen",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({tanggal, waktu_buka, waktu_tutup, id_jadwal_pelajaran}),
+                success: (response) => {
+                    alert(response.status.message);
+                    return window.location.href = `/teacher/schadule`;
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    alert(message);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

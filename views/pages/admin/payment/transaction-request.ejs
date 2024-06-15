@@ -1,0 +1,128 @@
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar-admin.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar-admin.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5">
+                <div class="d-flex mb-4">
+                    <a href="/admin/payment/transactions" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
+                    <h6 class="px-3">Detail Payment</h6>
+                </div>
+                <div class="bg-light  rounded p-4">
+                    <% if(data.isValid){ %>
+                    <div class="alert alert-success text-center" role="alert">Status Pembayaran Sudah Di Konfirmasi</div>
+                    <% } else { %>
+                    <div class="alert alert-warning text-center" role="alert">Status Pembayaran Masih Belum Di Konfirmasi</div>
+                    <% } %>
+                    <h5 class="">Detail Pembayaran</h5>
+                    <div class="bg-light rounded h-100 ">
+                        <div class="testimonial-item p-2">
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td class="fw-bold">Id Transaksi</td>
+                                        <td><%= data.id %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Tingkatan</td>
+                                        <td><%= data.Spp.tingkat %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Tagihan Untuk Bulan</td>
+                                        <td><%= data.Spp.bulan %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Nama Siswa</td>
+                                        <td><%= data.Murid.nama %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Tanggal Di Bayar</td>
+                                        <td><%= data.tanggal_bayar %></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Bukti Pembayaran</td>
+                                        <td class="text-center"><img class="img-fluid mx-auto mb-4" src="/images/<%= data.bukti_bayar %>" alt="" style="width: 500px; height: 500px;"></td>
+                                    </tr>
+                                </tbody>
+                            </table> 
+                            
+                        </div>
+                    </div>
+
+                    <div class="accordion px-2" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                                    aria-expanded="false" aria-controls="collapseTwo">
+                                    Seting Status Pembayaran
+                                </button>
+                            </h2>
+                            
+                            <div id="collapseTwo" class="accordion-collapse collapse"
+                                aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <form>
+                                        <fieldset class="row mb-3">
+                                            <legend class="col-form-label col-sm-2 pt-0">Status</legend>
+                                            <div class="col-sm-10">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="gridRadios"
+                                                        id="gridRadios1" value="option1" checked>
+                                                    <label class="badge bg-success" for="gridRadios1">
+                                                        Diterima
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="gridRadios"
+                                                        id="gridRadios2" value="option2">
+                                                    <label class="badge bg-warning" for="gridRadios2">
+                                                        Diproses
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="gridRadios"
+                                                        id="gridRadios2" value="option2">
+                                                    <label class="badge bg-danger" for="gridRadios2">
+                                                        Ditolak
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <%- include ('./../../../components/script.ejs')%>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+    <script>
+        new DataTable('#example');
+    </script>
+</body>
+
+</html>

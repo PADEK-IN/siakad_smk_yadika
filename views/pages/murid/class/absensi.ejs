@@ -1,0 +1,150 @@
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar-murid.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar-murid.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5">
+                <div class="d-flex mb-4">
+                    <a href="/murid/class" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
+                    <h6 class="px-3">Kembali</h6>
+                </div>
+                <div class="bg-light  rounded p-4">
+                    <div class="alert text-center alert-primary" role="alert">
+                        <h5><%= jadwalPelajaran.pelajaran %></h5>
+                    </div>
+
+                    <div class="bg-light rounded">
+                        <div class="testimonial-item text-center">
+                            <h5 class="mb-1"><%= murid.kelas %></h5>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="bg-light rounded h-100">
+                        <h6 class="mb-4">List Absensi</h6>
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            <!-- absensi content start -->
+                            <% if (jadwalAbsen.length > 0) { %>
+                                <% for (const data of jadwalAbsen) { %>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingFIRST">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapse-<%= data.id %>"
+                                            aria-expanded="false" aria-controls="collapse-<%= data.id %>">
+                                            <%= jadwalPelajaran.hari %>  |  <%= data.tanggal %>
+                                        </button>
+                                    </h2>
+                                    <div id="collapse-<%= data.id %>" class="accordion-collapse collapse"
+                                        aria-labelledby="flush-headingFIRST" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">
+                                            <%= data.waktu_buka %> - <%= data.waktu_tutup %>
+                                            <% if (data.attendance) { %>
+                                                <!-- Display attendance status -->
+                                                <% if (data.attendance.status === 'hadir') { %>
+                                                    <span class="badge bg-success">Hadir</span>
+                                                <% } else if (data.attendance.status === 'izin') { %>
+                                                    <span class="badge bg-primary">Izin</span>
+                                                <% } else if (data.attendance.status === 'sakit') { %>
+                                                    <span class="badge bg-warning">Sakit</span>
+                                                <% } else if (data.attendance.status === 'tidak hadir') { %>
+                                                    <span class="badge bg-danger">Tidak Hadir</span>
+                                                <% } %>
+                                            <% } else { %>
+                                            <form action="">
+                                                <!-- Status -->
+                                                <fieldset class="row mb-3">
+                                                    <legend class="col-form-label col-sm-2 pt-0">Status</legend>
+                                                    <div class="col-sm-10">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="status"
+                                                                id="status" value="hadir">
+                                                            <label class="form-check-label badge bg-success" for="status">
+                                                                Hadir
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="status"
+                                                                id="status" value="izin">
+                                                            <label class="form-check-label badge bg-primary" for="status">
+                                                                Izin
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="status"
+                                                                id="status" value="sakit">
+                                                            <label class="form-check-label badge bg-warning" for="status">
+                                                                Sakit
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="status"
+                                                                id="status" value="tidak hadir">
+                                                            <label class="form-check-label badge bg-danger" for="status">
+                                                                Tidak Hadir
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                                <button type="button" onclick="absensi('<%= data.id %>', '<%= murid.id %>')" class="btn btn-primary">Simpan</button>
+                                            </form>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } %>
+                            <% } else { %>
+                                <div class="accordion-item"></div>
+                                    <p>Belum Ada Absen Pada Jadwal Ini</p>
+                                </div>
+                            <% } %>
+                            <!-- absensi content start -->
+                        </div>
+                    </div>
+                </div>       
+            </div>
+        </div>
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <%- include ('./../../../components/script.ejs')%>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+    <script>
+        // new DataTable('#example');
+        function absensi (absenId, muridId) {
+        let status = $("input[name='status']:checked").val();
+        let id_murid = muridId;
+        let id_jadwal_absen = absenId;
+        // console.log({status, id_murid, id_jadwal_absen});
+            $.ajax({
+                url: "/api/murid/absen",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({status, id_murid, id_jadwal_absen}),
+                success: (response) => {
+                    alert(response.status.message);
+                    return window.location.href = `/murid/class`;
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    alert(message);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

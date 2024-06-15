@@ -1,0 +1,115 @@
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar-admin.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar-admin.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5">
+                <div class="bg-light rounded h-100 p-4">
+                    <div class="pb-4">
+                        <a href="/admin/schadule" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
+                        <h6 class="d-inline px-2">Kembali</h6>
+                    </div>
+                    <div class="alert text-center alert-primary" role="alert">
+                        <h6>Buat Jadwal</h6>
+                    </div>
+                    <hr>
+                    <form>
+                        <!-- Kelas -->
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="kelas"
+                                aria-label="Floating label select example">
+                                <option selected undefined disabled>Kelas</option>
+                                <% for (const data of kelas) {%>
+                                <option value="<%= data.id %>"><%= data.kode %></option>
+                                <% } %>
+                            </select>
+                            <label for="floatingSelect">Kelas</label>
+                        </div>
+
+                        <!-- pelajaran -->
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="mataPelajaran"
+                                aria-label="Floating label select example">
+                                <option selected undefined disabled>Pelajaran</option>
+                                <% for (const data of mataPelajaran) {%>
+                                <option value="<%= data.id %>"><%= data.nama %></option>
+                                <% } %>
+                            </select>
+                            <label for="floatingSelect">Pelajaran</label>
+                        </div>
+
+                        <!-- Hari -->
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="hari"
+                                aria-label="Floating label select example">
+                                <option selected undefined disabled>Hari</option>
+                                <option value="senin">Senin</option>
+                                <option value="selasa">Selasa</option>
+                                <option value="rabu">Rabu</option>
+                                <option value="kamis">Kamis</option> 
+                                <option value="jumat">Jum'at</option>
+                                <option value="sabtu">Sabtu</option>
+                            </select>
+                            <label for="floatingSelect">Hari</label>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="inputMulai" class="form-label">Jam Mulai</label>
+                            <input type="time" class="form-control" id="mulai"
+                                aria-describedby="mulaiHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputBerakhir" class="form-label">Jam Berakhir</label>
+                            <input type="time" class="form-control" id="selesai"
+                                aria-describedby="berakhirHelp">
+                        </div>
+
+                        <button type="button" id="add-schadule" class="btn btn-primary">Buat</button>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <%- include ('./../../../components/script.ejs')%>
+    <script>
+        $("#add-schadule").on("click", () => {
+        const id_kelas = $("#kelas").val();
+        const id_mata_pelajaran = $("#mataPelajaran").val();
+        const hari = $("#hari").val();
+        const waktu_mulai = $("#mulai").val();
+        const waktu_selesai = $("#selesai").val();
+        $.ajax({
+            url: "/api/admin/jadwal-pelajaran",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({id_kelas, id_mata_pelajaran, hari, waktu_mulai, waktu_selesai}),
+            success: (response) => {
+                alert(response.status.message);
+                return window.location.href = `/admin/schadule`;
+            },
+            error: (response) => {
+                const message = response.responseJSON.status.message
+                alert(message);
+            }
+        });
+    });
+    </script>
+</body>
+
+</html>

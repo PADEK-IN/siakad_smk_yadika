@@ -1,0 +1,123 @@
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar-admin.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar-admin.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0">List Semua Murid</h6>
+                    <div>
+                        <a class="btn btn-sm btn-primary" href="/admin/user/student/pending">Pending Murid</a>
+                        <a class="btn btn-sm btn-primary" href="/admin/user/student/add">Tambah Murid</a>
+                    </div>
+                </div>
+                <div class="bg-light text-center rounded p-4">
+                    <div class="table-responsive">
+                    
+                        <table id="example" class="table table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>NIS</th>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>JK</th>
+                                    <th>Kelas</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for (const [index, murid] of murids.entries()) { %>  
+                                <tr>
+                                    <td><%= index + 1 %></td>
+                                    <td><%= murid.nis %></td>
+                                    <td><a href="/admin/user/student/<%= murid.id %>"><%= murid.nama %></a></td>
+                                    <td><%= murid.email %></td>
+                                    <td>
+                                        <% if(murid.jenis_kelamin == "laki-laki") { %>
+                                            <span class="badge bg-success">LK</span>
+                                        <% } else { %>
+                                            <span class="badge bg-danger">PR</span>
+                                        <% } %>
+                                    </td>
+                                    <td><%= murid.Kela %></td>
+                                    <td>
+                                        <% if(murid.status=="aktif") { %>
+                                            <span class="badge bg-info">Aktif</span>
+                                        <% } else if(murid.status=="cuti") { %>
+                                            <span class="badge bg-warning">Cuti</span>
+                                        <% } else if(murid.status=="lulus") { %>
+                                            <span class="badge bg-success">Lulus</span>
+                                        <% } else { %>
+                                            <span class="badge bg-danger">Berhenti</span>
+                                        <% } %>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/user/student/<%= murid.id %>/edit" class="bi bi-pencil-square px-2"></a>
+                                        <a href="#" onclick="del('<%= murid.id %>', '<%= murid.nama %>')" class="bi bi-archive px-2" style="color: red;"></a>
+                                    </td>
+                                </tr>
+                                <% } %>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>No</th>
+                                    <th>NIS</th>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>JK</th>
+                                    <th>Kelas</th>
+                                    <th>Aktif</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <%- include ('./../../../components/script.ejs')%>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+    <script>
+        new DataTable('#example');
+        function del(id, nama) {
+            const isSure = confirm(`Kamu yakin ingin menghapus data ${nama}`);
+            if(isSure){
+                $.ajax({
+                    url: `/api/admin/murid/${id}`,
+                    method: "DELETE",
+                    success: (response) => {
+                        alert(response.status.message);
+                        window.location.reload();
+                    },
+                    error: (response) => {
+                        const message = response.responseJSON.status.message;
+                        alert(message);
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

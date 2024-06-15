@@ -1,0 +1,140 @@
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar-admin.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar-admin.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5">
+                <div class="pb-4">
+                    <a href="/admin/schadule" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
+                    <h6 class="d-inline px-2">Kembali</h6>
+                </div>
+                <div class="bg-light rounded h-100 p-4">
+                    <% if (jadwal.isUse == 1) {%>
+                        <div class="alert text-center alert-primary" role="alert">
+                    <% } else { %>
+                        <div class="alert text-center alert-danger" role="alert">
+                    <% } %>
+                    <h6>Edit Jadwal</h6>
+                    </div>
+                    <hr>
+                    <form>
+                        <!-- Kelas -->
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="kelas"
+                                aria-label="Floating label select example">
+                                <option selected undefined disabled>Kelas</option>
+                                <% for (const data of kelas) {%>
+                                    <option value="<%= data.id %>" <%= data.id === jadwal.idKelas ? 'selected' : '' %>><%= data.kode %></option>
+                                <% } %>
+                            </select>
+                            <label for="floatingSelect">Kelas</label>
+                        </div>
+
+                        <!-- pelajaran -->
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="pelajaran"
+                                aria-label="Floating label select example">
+                                <option selected undefined disabled>Pelajaran</option>
+                                <% for (const data of mataPelajaran) {%>
+                                    <option value="<%= data.id %>"<%= data.id === jadwal.idPelajaran ? 'selected' : '' %>><%= data.nama %></option>
+                                    <% } %>
+                            </select>
+                            <label for="pelajaran">Pelajaran</label>
+                        </div>
+
+                        <!-- Hari -->
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="hari"
+                                aria-label="Floating label select example">
+                                <option selected undefined disabled>Hari</option>
+                                <option value="senin"<%= "senin" === jadwal.hari ? 'selected' : '' %>>Senin</option>
+                                <option value="selasa"<%= "selasa" === jadwal.hari ? 'selected' : '' %>>Selasa</option>
+                                <option value="rabu"<%= "rabu" === jadwal.hari ? 'selected' : '' %>>Rabu</option>
+                                <option value="kamis"<%= "kamis" === jadwal.hari ? 'selected' : '' %>>Kamis</option> 
+                                <option value="jumat"<%= "jumat" === jadwal.hari ? 'selected' : '' %>>Jum'at</option>
+                                <option value="sabtu"<%= "sabtu" === jadwal.hari ? 'selected' : '' %>>Sabtu</option>
+                            </select>
+                            <label for="hari">Hari</label>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="mulai" class="form-label">Jam Mulai</label>
+                            <input type="time" class="form-control" id="mulai"
+                                aria-describedby="mulaiHelp" value="<%= jadwal.waktu_mulai %>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputBerakhir" class="form-label">Jam Berakhir</label>
+                            <input type="time" class="form-control" id="brakhir"
+                                aria-describedby="berakhirHelp" value="<%= jadwal.waktu_selesai %>">
+                        </div>
+
+                        
+                        <!-- Status -->
+                        <fieldset class="row mb-3">
+                            <legend class="col-form-label col-sm-2 pt-0">Status</legend>
+                            <div class="col-sm-10">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="status" id="isUse" value="true">
+                                    <label class="form-check-label badge bg-success" for="isUse">
+                                        Aktif
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="status" id="isNotUse" value="false">
+                                    <label class="form-check-label badge bg-danger" for="isNotUse">
+                                        Tidak Aktif
+                                    </label>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <button type="button" onclick="edit('<%= jadwal.id %>')" class="btn btn-primary">Edit</button>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <%- include ('./../../../components/script.ejs')%>
+    <script>
+        function edit(id) {
+            let id_kelas = $('#kelas').val()
+            let id_mata_pelajaran = $('#pelajaran').val()
+            let hari = $('#hari').val()
+            let waktu_mulai = $('#mulai').val()
+            let waktu_selesai = $('#brakhir').val()
+            let isUse = $("input[name='status']:checked").val();
+            $.ajax({
+                url: "/api/admin/jadwal-pelajaran/" + id,
+                method: "PATCH",
+                contentType: "application/json",
+                data: JSON.stringify({id_kelas, id_mata_pelajaran, hari, waktu_mulai, waktu_selesai, isUse}),
+                success: (response) => {
+                    alert(response.status.message);
+                    return window.location.href = `/admin/schadule/${id}/edit`;
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    alert(message);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

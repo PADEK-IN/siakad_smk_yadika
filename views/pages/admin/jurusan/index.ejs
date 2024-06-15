@@ -1,0 +1,173 @@
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar-admin.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar-admin.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0">List Jurusan</h6>
+                    <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addJurusan">
+                            Buat Jurusan
+                        </button>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="addJurusan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addJurusanLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="addJurusanLabel">Buat Jurusan</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label for="inputCode" class="form-label">Nama Jurusan</label>
+                                        <input type="text" class="form-control" id="jurusan"  placeholder="Nama Jurusan">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                <button type="button" id="add-jurusan" class="btn btn-primary">Buat</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="bg-light text-center rounded p-4">
+                    <div class="table-responsive">
+                    
+                        <table id="example" class="table table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>ID</th>
+                                    <th>Nama</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for (const [index, data] of jurusan.entries()) { %>
+                                    <tr>
+                                        <td><%= index+1 %></td>
+                                        <td><%= data.id %></td>
+                                        <td><%= data.nama %></td>
+                                        <td>
+                                            <a href="" class="bi bi-pencil-square px-2" data-bs-toggle="modal" data-bs-target="#editJurusan"></a>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="editJurusan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editJurusanLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                    <h5 class="modal-title" id="editJurusanLabel">Edit Jurusan</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="mb-3">
+                                                            <label for="inputCode" class="form-label">Nama Jurusan</label>
+                                                            <input type="text" class="form-control" id="nama"  value="<%= data.nama %>">
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                    <button type="button" onclick="edit('<%= data.id %>')" class="btn btn-primary">Edit</button>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <a href="#" onclick="remove('<%= data.id %>')" class="bi bi-archive px-2" style="color: red;"></a>
+                                        </td>
+                                    </tr>
+                                <% } %> 
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>No</th>
+                                    <th>ID</th>
+                                    <th>Nama</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <%- include ('./../../../components/script.ejs')%>
+
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+    <script>
+        new DataTable('#example');
+
+        $("#add-jurusan").on("click", () => {
+            const nama = $("#jurusan").val();
+            $.ajax({
+                url: "/api/admin/jurusan",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({nama}),
+                success: (response) => {
+                    alert(response.status.message);
+                    window.location.reload();
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    alert(message);
+                }
+            });
+        });
+
+        function edit(id) {
+        const nama = $("#nama").val();
+        $.ajax({
+            url: "/api/admin/jurusan/" + id,
+            method: "PATCH",
+            contentType: "application/json",
+            data: JSON.stringify({nama}),
+            success: (response) => {
+                alert(response.status.message);
+                window.location.reload();
+            },
+            error: (response) => {
+                const message = response.responseJSON.status.message
+                alert(message);
+            }
+        });
+        }
+
+        function remove(id) {
+            console.log(id);
+            $.ajax({
+                url: '/api/admin/jurusan/' + id,
+                method: 'DELETE',
+                contentType: "application/json",
+                success: function(response) {
+                    alert(response.status.message);
+                    window.location.reload();
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    alert(message);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

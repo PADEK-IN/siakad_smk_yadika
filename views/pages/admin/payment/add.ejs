@@ -1,0 +1,91 @@
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar-admin.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar-admin.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5">
+                <div class="pb-4">
+                    <a href="/admin/payment" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
+                    <h6 class="d-inline px-2">Kembali</h6>
+                </div>
+                <div class="bg-light rounded h-100 p-4">
+                    <div class="alert text-center alert-primary" role="alert">
+                        <h6>Buat SPP</h6>  
+                    </div>
+                    <hr>
+                    <form>
+                        <!-- Tingkatan -->
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="tingkat"
+                                aria-label="Floating label select example">
+                                <option selected undefined disabled>Tingkatan</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
+                            <label for="floatingSelect">Tingkatan</label>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="inputTagihan" class="form-label">Jumlah Tagihan</label>
+                            <input type="number" class="form-control" id="tagihan"
+                                aria-describedby="tagihanHelp" placeholder="Rp. 150000">
+                            <div id="kode" class="form-text text-danger ">
+                                <em style="font-size: 10px;">Masukan Jumlah Tagihan Dalam Bentuk Rupiah...</em>
+                            </div>
+                        </div>
+
+                        <!-- Bulan -->
+                        <div class="mb-3">
+                            <label for="inputBulan" class="form-label">Bulan</label>
+                            <input type="month" class="form-control" id="bulan"
+                                aria-describedby="bulanHelp">
+                        </div>
+
+                        <button type="button" id="add-spp" class="btn btn-primary">Buat</button>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <%- include ('./../../../components/script.ejs')%>
+    <script>
+        $("#add-spp").on("click", () => {
+        const tingkat = $("#tingkat").val();
+        const tagihan = $("#tagihan").val();
+        const periode = $("#bulan").val();
+        $.ajax({
+            url: "/api/admin/spp",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({tingkat, tagihan, periode}),
+            success: (response) => {
+                alert(response.status.message);
+                return window.location.href = `/admin/payment`;
+            },
+            error: (response) => {
+                const message = response.responseJSON.status.message
+                alert(message);
+            }
+        });
+    });
+    </script>
+</body>
+
+</html>

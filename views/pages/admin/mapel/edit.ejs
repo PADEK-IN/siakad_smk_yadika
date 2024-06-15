@@ -1,0 +1,127 @@
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar-admin.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar-admin.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5">
+                <div class="d-flex mb-4">
+                    <a href="/admin/mapel" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
+                    <h6 class="px-3">Kembali</h6>
+                </div>
+                <div class="bg-light  rounded p-4">
+                    <% if (mapel.isUse == 1) {%>
+                        <div class="alert text-center alert-primary" role="alert">
+                    <% } else { %>
+                        <div class="alert text-center alert-danger" role="alert">
+                    <% } %>
+                        <h6>Edit Data Mata Pelajaran</h6>
+                    </div>
+
+                    <div class="bg-light rounded ">
+                        <div class="testimonial-item text-center">
+                            <p><%= mapel.id %></p>
+                            <h5 class="mb-1"><%= mapel.nama %></h5>
+                            <p><%= mapel.tingkat %></p>
+                            <% if (mapel.isUse == 1) {%>
+                                <span class="badge bg-success">Dipakai</span>
+                            <% } else { %>
+                                <span class="badge bg-danger">Tidak Terpakai</span>
+                            <% } %>
+                        </div>
+                    </div>
+                    <hr>
+                    <!-- form Student -->
+                    <div class="bg-light rounded h-100 px-4">
+                        <form>
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Nama Pelajaran</label>
+                                <input type="text" class="form-control" id="nama" value="<%= mapel.nama %>">
+                            </div>
+                            <!-- Tingkat -->
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="tingkat"
+                                    aria-label="Floating label select example">
+                                    <option value="10" <%= mapel.tingkat === '10' ? 'selected' : '' %>>10</option>
+                                    <option value="11" <%= mapel.tingkat === '11' ? 'selected' : '' %>>11</option>
+                                    <option value="12" <%= mapel.tingkat === '12' ? 'selected' : '' %>>12</option>
+                                </select>
+                                <label for="tingkat">Tingkat</label>
+                            </div>
+
+                            <!-- Status -->
+                            <fieldset class="row mb-3">
+                                <legend class="col-form-label col-sm-2 pt-0">Status</legend>
+                                <div class="col-sm-10">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status"
+                                            id="isUse" value="true">
+                                        <label class="form-check-label badge bg-success" for="isUse">
+                                            Dipakai
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status"
+                                            id="isUse" value="false">
+                                        <label class="form-check-label badge bg-danger" for="gridUnActive">
+                                            Tidak Terpakai
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <button type="button" onclick="edit('<%= mapel.id %>')" class="btn btn-primary">Edit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include ('./../../../components/script.ejs')%>
+
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+    <script>
+        let url = new URL(window.location.href);
+        let parts = url.pathname.split('/');
+        let mapelId = parts[parts.length - 2];
+
+        let decodedMapelId = hashids.decode(mapelId);
+
+        function edit(id) {
+        const nama = $("#nama").val();
+        const tingkat = $("#tingkat").val();
+        const isUse = $("input[name='status']:checked").val();
+            $.ajax({
+                url: "/api/admin/mata-pelajaran/" + id,
+                method: "PATCH",
+                contentType: "application/json",
+                data: JSON.stringify({nama, tingkat, isUse}),
+                success: (response) => {
+                    alert(response.status.message);
+                    return window.location.href = `/admin/mapel`;
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    alert(message);
+                }
+            });
+        }
+
+    </script>
+</body>
+
+</html>

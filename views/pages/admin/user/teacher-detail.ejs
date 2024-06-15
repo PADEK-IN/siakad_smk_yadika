@@ -1,0 +1,135 @@
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar-admin.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar-admin.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <a href="/admin/user/teachers" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"><h6 class="px-3">Kembali</h6></a>
+                    <a class="btn btn-sm btn-primary" href="/admin/user/teacher/<%= guru.id %>/edit">Edit Data Guru</a>
+                </div>
+                <div class="bg-light  rounded p-4">
+                    <% if(guru.status=="aktif") { %>
+                        <div class="alert text-center alert-info" role="alert">Detail Data Guru</div>
+                    <% } else if(guru.status=="cuti") { %>
+                        <div class="alert text-center alert-warning" role="alert">Detail Data Guru</div>
+                    <% } else { %>
+                        <div class="alert text-center alert-danger" role="alert">Detail Data Guru</div>
+                    <% } %>
+
+                    <div class="bg-light rounded">
+                        <div class="testimonial-item text-center">
+                            <h6 class="mb-4"><%= guru.nip %></h6>
+                            <img class="img-fluid rounded-circle mx-auto mb-4" src="/uploads/<%= guru.foto %>" style="width: 100px; height: 100px;">
+                            <h5 class="mb-1"><%= guru.nama %></h5>
+                            <p><%= guru.email %></p>
+                        </div>
+                    </div>
+                    <hr>
+                    
+                    <div class="bg-light rounded h-100 px-4">
+                        <h6 class="mb-4">Detail Data</h6>
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <button class="nav-link active" id="nav-biodata-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-biodata" type="button" role="tab" aria-controls="nav-biodata"
+                                    aria-selected="true">Biodata</button>
+                                <button class="nav-link" id="nav-kelas-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-kelas" type="button" role="tab"
+                                    aria-controls="nav-kelas" aria-selected="false">Jadwal</button>
+                            </div>
+                        </nav>
+                        <div class="tab-content pt-3" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-biodata" role="tabpanel" aria-labelledby="nav-biodata-tab">
+                                <table class="table table-striped">
+                                    <tbody>
+                                        <tr>
+                                            <td class="fw-bold">NIP</td>
+                                            <td><%= guru.nip %></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Tempat Lahir</td>
+                                            <td><%= guru.tempat_lahir %></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Tanggal Lahir</td>
+                                            <td><%= guru.tanggal_lahir %></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Alamat</td>
+                                            <td><%= guru.alamat %></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Jenis Kelamin</td>
+                                            <td><%= guru.jenis_kelamin == 'laki-laki'?'LK':'PR' %></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Agama</td>
+                                            <td><%= guru.agama %></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Nomer Handphone</td>
+                                            <td><%= guru.no_hp %></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Pendidikan</td>
+                                            <td><%= guru.pendidikan %></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="nav-kelas" role="tabpanel" aria-labelledby="nav-kelas-tab">
+                                <!-- <h6 class="mb-4">Accented Table</h6> -->
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <td class="fw-bold">No</td>
+                                            <td class="fw-bold">Tingkat</td>
+                                            <td class="fw-bold">Kelas</td>
+                                            <td class="fw-bold">Hari</td>
+                                            <td class="fw-bold">Jam</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>XI</td>
+                                            <td>A</td>
+                                            <td>Senin</td>
+                                            <td>08.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>    
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div> 
+        </div>
+    </div>
+    <%- include ('./../../../components/script.ejs')%>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+    <script>
+        new DataTable('#example');
+    </script>
+</body>
+
+</html>

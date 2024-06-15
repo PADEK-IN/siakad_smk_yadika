@@ -1,0 +1,198 @@
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar-admin.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar-admin.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5">
+                <div class="bg-light rounded h-100 p-4">
+                    <div class="pb-4">
+                        <a href="/admin/user/teachers/<%= guru.id %>" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"><h6 class="d-inline px-2">Kembali</h6></a>
+                    </div>
+                    <h6>Edit Guru</h6>
+                    <hr>
+                    <form>
+                        <div class="mb-3">
+                            <label for="nip" class="form-label">NIP</label>
+                            <input type="text" class="form-control" id="nip" placeholder="Nomor Induk Pegawai" value="<%= guru.nip %>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email">Email</label>
+                            <div id="currentEmail" class="d-none"><%= guru.email %></div>
+                            <select class="form-select" id="email" aria-label="Floating label select example">
+                                <option selected undefined disabled>Pilih Email</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nama" class="form-label">Nama</label>
+                            <input type="text" class="form-control" id="nama" placeholder="Nama Lenkap" value="<%= guru.nama %>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="jenis_kelamin">Jenis Kelamin</label>
+                            <select class="form-select" id="jenis_kelamin" aria-label="Floating label select example">
+                                <option selected undefined disabled>Pilih Jenis Kelamin</option>
+                                <option <%= guru.jenis_kelamin == "laki-laki"?"Selected":"" %> value="laki-laki">Laki-Laki</option>
+                                <option <%= guru.jenis_kelamin == "perempuan"?"Selected":"" %> value="perempuan">Perempuan</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
+                            <input type="text" class="form-control" id="tempat_lahir" placeholder="Tempat Lahir" value="<%= guru.tempat_lahir %>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
+                            <input type="date" class="form-control" id="tanggal_lahir" placeholder="YYYY-MM-DD" value="<%= guru.tanggal_lahir %>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="alamat" class="form-label">Alamat</label>
+                            <input type="text" class="form-control" id="alamat" placeholder="Alamat Tempat Tinggal" value="<%= guru.alamat %>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="agama" class="form-label">Agama</label>
+                            <select class="form-select" id="agama"
+                            aria-label="Floating label select example">
+                            <option selected undefined disabled>Pilih Agama</option>
+                                <option <%= guru.agama == "Islam"?"Selected":"" %> value="Islam">Islam</option>
+                                <option <%= guru.agama == "Kristen"?"Selected":"" %> value="Kristen">Kristen</option>
+                                <option <%= guru.agama == "Katolik"?"Selected":"" %> value="Katolik">Katolik</option>
+                                <option <%= guru.agama == "Hindu"?"Selected":"" %> value="Hindu">Hindu</option>
+                                <option <%= guru.agama == "Buddha"?"Selected":"" %> value="Buddha">Budha</option>
+                                <option <%= guru.agama == "Konghucu"?"Selected":"" %> value="Konghucu">Konghucu</option>
+                                <option <%= guru.agama == "Lainnya"?"Selected":"" %> value="Lainnya">Lainnya....</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="no_hp" class="form-label">Nomor Telepon</label>
+                            <input type="text" class="form-control" id="no_hp" placeholder="081234567890" value="<%= guru.no_hp %>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="pendidikan" class="form-label">Pendidikan</label>
+                            <input type="text" class="form-control" id="pendidikan" placeholder="S1 Informatika" value="<%= guru.pendidikan %>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="mata_pelajaran">Mata Pelajaran</label>
+                            <div id="currentMapel" class="d-none"><%= guru.id_mata_pelajaran %></div>
+                            <select class="form-select" id="mata_pelajaran" aria-label="Floating label select example">
+                                <option selected undefined disabled>Pilih Mata Pelajaran</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="foto" class="form-label">Foto</label>
+                            <img src="/uploads/<%= guru.foto %>" alt="foto-profile" width="150px">
+                            <input type="file" class="form-control" id="foto">
+                        </div>
+                        <div class="mb-3">
+                            <label for="status">Status</label>
+                            <select class="form-select" id="status" aria-label="Floating label select example">
+                                <option selected undefined disabled>Pilih Status</option>
+                                <option <%= guru.status=="aktif"?"Selected":"" %> value="aktif">Aktif</option>
+                                <option <%= guru.status=="cuti"?"Selected":"" %> value="cuti">Cuti</option>
+                                <option <%= guru.status=="berhenti"?"Selected":"" %> value="berhenti">Berhenti</option>
+                            </select>
+                        </div>
+                        <button type="button" onclick="update('<%= guru.id %>')" class="btn btn-primary">Update</button>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <%- include ('./../../../components/script.ejs')%>
+    <script>
+        const update=(id) => {
+            const nip = $("#nip").val();
+            const email = $("#email").val();
+            const nama = $("#nama").val();
+            const jenis_kelamin = $("#jenis_kelamin").val();
+            const tempat_lahir = $("#tempat_lahir").val();
+            const tanggal_lahir = $("#tanggal_lahir").val();
+            const alamat = $("#alamat").val();
+            const agama = $("#agama").val();
+            const no_hp = $("#no_hp").val();
+            const pendidikan = $("#pendidikan").val();
+            const id_mata_pelajaran = $("#mata_pelajaran").val();
+            const status = $("#status").val();
+            const fileInput = document.getElementById('foto');
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('foto', file);
+            formData.append('data', JSON.stringify({nip, email, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, pendidikan, id_mata_pelajaran, status}));
+            
+            $.ajax({
+                url: "/api/admin/guru/"+id,
+                method: "PATCH",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: (response) => {
+                    alert(response.status.message);
+                    window.location.href = "/admin/user/teacher/"+id;
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    alert(message);
+                }
+            });
+        };
+        
+        $(document).ready(()=>{
+            const currentEmail = $("#currentEmail").text();
+            const currentMapel = $("#currentMapel").text();
+            // fetch data mata pelajaran
+            $.ajax({
+                url: "/api/admin/mata-pelajaran/",
+                method: "GET",
+                contentType: "application/json",
+                success: (response) => {
+                    const data = response.data;
+                    for (const mapel of data) {
+                        $("#mata_pelajaran").append(`
+                            <option ${currentMapel==mapel.id?"Selected":""} value="${mapel.id}">${mapel.nama}</option>
+                        `)    
+                    }
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    alert(message);
+                }
+            });
+            // Email with role guru
+            $.ajax({
+                url: "/api/admin/user/list/guru",
+                method: "GET",
+                contentType: "application/json",
+                success: (response) => {
+                    const data = response.data;
+                    $("#email").append(`
+                            <option Selected value="${currentEmail}">${currentEmail}</option>
+                    `);
+                    for (const user of data) {
+                        $("#email").append(`
+                            <option value="${user.email}">${user.email}</option>
+                        `);
+                    }
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    alert(message);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
