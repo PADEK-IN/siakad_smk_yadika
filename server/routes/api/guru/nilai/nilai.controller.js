@@ -47,23 +47,15 @@ export const createNilai = async(req, res) => {
 export const updateNilai = async(req, res) => {
   try {
     const {id} = req.params;
-    const {id_murid, id_mata_pelajaran, tugas, uts, uas, semester} = req.body;
+    const {tugas, uts, uas} = req.body;
     const validId = checkValidId(id);
     if(!validId) return responses.res400("ID nilai tidak valid", res);
 
-    const validIdMurid = checkValidId(id_murid);
-    if(!validIdMurid) return responses.res400("ID murid tidak valid", res);
-    
-    const validIdMaPel = checkValidId(id_mata_pelajaran);
-    if(!validIdMaPel) return responses.res400("ID mata pelajaran tidak valid", res);
 
     const respons = await Penilaian.update({
-      id_murid: validIdMurid,
-      id_mata_pelajaran: validIdMaPel,
       tugas,
       uts,
-      uas,
-      semester
+      uas
     },{
       where: {
         id: validId

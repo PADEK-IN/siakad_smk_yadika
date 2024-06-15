@@ -110,13 +110,14 @@ export const detailClassPage = async (req, res) => {
     const guru = {
       ...dataGuru,
       id: hashids.encode(dataGuru.id),
+      id_mata_pelajaran: hashids.encode(mataPelajaranId),
       Mata_Pelajaran: mataPelajaranNama || 'Tidak ada mata pelajaran',
     };
     console.log({ guru });
 
     const parts = req.url.split('/');
     let kelasId = parts[parts.length - 2];
-    console.log({kelasId});
+    // console.log({kelasId});
 
     // Dekode kelasId menggunakan hashids
     const decodedKelas = hashids.decode(kelasId);
@@ -125,7 +126,6 @@ export const detailClassPage = async (req, res) => {
       return res.render('pages/errors/404');
     }
     const kelas = decodedKelas[0];
-    console.log({ kelas });
 
     // Fetch Kelas data including Guru
     const dataKelas = await Kelas.findOne({
@@ -178,16 +178,23 @@ export const detailClassPage = async (req, res) => {
     const nilai = dataNilai.map((nilai) => {
       return {
         ...nilai,
-    } 
+        id: hashids.encode(nilai.id),
+        id_murid: hashids.encode(nilai.id_murid),
+        id_mata_pelajaran: hashids.encode(nilai.id_mata_pelajaran),
+      };
     });
     console.log({ nilai });
 
     // Menggabungkan nilai dengan murid
     const muridDenganNilai = murid.map((m) => {
       const decodedMuridId = hashids.decode(m.id)[0];
-      const nilaiMurid = dataNilai.filter(
-        (n) => n.id_murid === decodedMuridId
-      );
+      const nilaiMurid = dataNilai
+        .filter((n) => n.id_murid === decodedMuridId)
+        .map((n) => ({
+          ...n,
+          id: hashids.encode(n.id),
+        }));
+
       return {
         ...m,
         nilai: nilaiMurid,

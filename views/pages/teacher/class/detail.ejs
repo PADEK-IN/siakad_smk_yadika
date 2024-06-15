@@ -19,7 +19,7 @@
 
             <div class="container-fluid pt-4 px-4 pb-5">
                 <div class="d-flex mb-4">
-                    <a href="/teacher/class" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
+                    <a href="/teacher/class" class="d-inline-flex text-decoration-none bi bi-arrow-left pr-4"></a>
                     <h6 class="px-3">Kembali</h6>
                 </div>
                 <div class="bg-light  rounded p-4">
@@ -80,42 +80,86 @@
                                                 <% } %>
                                             </td>
                                             <td>
-                                                <a href="#" class="bi bi-journal-plus px-2" data-bs-toggle="modal" data-bs-target="#editNilai"></a>
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="editNilai" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editNilaiLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="editNilaiLabel">Edit Nilai</h5>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <div class="mb-3 row">
-                                                                    <label for="tugas" class="col-sm-2 col-form-label">Nilai Tugas</label>
-                                                                    <div class="col-sm-10">
-                                                                        <input type="number" class="form-control" id="tugas" value="<%= data.nilai[0] && data.nilai[0].tugas ? data.nilai[0].tugas : '' %>">
+                                                <% if (data.nilai.length === 0) { %>
+                                                    <a href="#" class="bi bi-journal-plus px-2" data-bs-toggle="modal" data-bs-target="#createNilai-<%= index %>"></a>
+                                                    <!-- Modal Create -->
+                                                    <div class="modal fade" id="createNilai-<%= index %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="createNilaiLabel-<%= index %>" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="createNilaiLabel-<%= index %>">Create Nilai</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="mb-3 row d-flex justify-content-between">
+                                                                        <div class="fw-bold"><%= data.nama %></div> 
+                                                                        <div class="fw-bold"><%= guru.Mata_Pelajaran %></div> 
+                                                                    </div>
+                                                                    <div class="mb-3 row">
+                                                                        <label for="tugasCreate-<%= index %>" class="col-sm-4 col-form-label">Nilai Tugas</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="number" class="form-control" id="tugasCreate-<%= index %>" value="<%= data.nilai[0] && data.nilai[0].tugas ? data.nilai[0].tugas : '' %>">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-3 row">
+                                                                        <label for="utsCreate-<%= index %>" class="col-sm-4 col-form-label">Nilai UTS</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="number" class="form-control" id="utsCreate-<%= index %>" value="<%= data.nilai[0] && data.nilai[0].uts ? data.nilai[0].uts : '' %>">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-3 row">
+                                                                        <label for="uasCreate-<%= index %>" class="col-sm-4 col-form-label">Nilai UAS</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="number" class="form-control" id="uasCreate-<%= index %>" value="<%= data.nilai[0] && data.nilai[0].uas ? data.nilai[0].uas : '' %>">
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="mb-3 row">
-                                                                    <label for="uts" class="col-sm-2 col-form-label">Nilai UTS</label>
-                                                                    <div class="col-sm-10">
-                                                                        <input type="number" class="form-control" id="uts" value="<%= data.nilai[0] && data.nilai[0].uts ? data.nilai[0].uts : '' %>">
-                                                                    </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                                    <button type="button" onclick="create(`<%= data.id %>`,`<%= guru.id_mata_pelajaran %>`, `<%= index %>`)" class="btn btn-primary">Create</button>
                                                                 </div>
-                                                                <div class="mb-3 row">
-                                                                    <label for="uas" class="col-sm-2 col-form-label">Nilai UAS</label>
-                                                                    <div class="col-sm-10">
-                                                                        <input type="number" class="form-control" id="uas" value="<%= data.nilai[0] && data.nilai[0].uas ? data.nilai[0].uas : '' %>">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                                                <button type="button" onclick="edit(`<%= data.nilai[0] ? data.nilai[0].id : '' %>`)" class="btn btn-primary">Edit</button>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                <% } else { %>
+                                                    <a href="#" class="bi bi-pencil-square px-2" data-bs-toggle="modal" data-bs-target="#editNilai-<%= index %>"></a>
+                                                    <!-- Modal Edit-->
+                                                    <div class="modal fade" id="editNilai-<%= index %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editNilaiLabel-<%= index %>" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="editNilaiLabel-<%= index %>">Edit Nilai</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="mb-3 row">
+                                                                        <label for="tugasEdit-<%= index %>" class="col-sm-4 col-form-label">Nilai Tugas</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="number" class="form-control" id="tugasEdit-<%= index %>" value="<%= data.nilai[0] && data.nilai[0].tugas ? data.nilai[0].tugas : '' %>">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-3 row">
+                                                                        <label for="utsEdit-<%= index %>" class="col-sm-4 col-form-label">Nilai UTS</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="number" class="form-control" id="utsEdit-<%= index %>" value="<%= data.nilai[0] && data.nilai[0].uts ? data.nilai[0].uts : '' %>">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-3 row">
+                                                                        <label for="uasEdit-<%= index %>" class="col-sm-4 col-form-label">Nilai UAS</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="number" class="form-control" id="uasEdit-<%= index %>" value="<%= data.nilai[0] && data.nilai[0].uas ? data.nilai[0].uas : '' %>">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                                    <button type="button" onclick="edit(`<%= data.nilai[0] ? data.nilai[0].id : '' %>`, `<%= index %>`)" class="btn btn-primary">Edit</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <a href="#" onclick="remove(`<%= data.nilai[0] ? data.nilai[0].id : '' %>`)" class="bi bi-archive px-2" style="color: red;"></a>
+                                                <% } %>
                                             </td>
                                         </tr>
                                         <% }); %>
@@ -131,6 +175,7 @@
                                         </tr>
                                     <% } %>
                                 </tbody>
+                                
                                 
                                 <tfoot>
                                     <tr>
@@ -159,25 +204,64 @@
     <script>
         new DataTable('#example');
 
-        function edit(id) {
-        const tugas = $("#tugas").val();
-        const uts = $("#uts").val();
-        const uas = $("#uas").val();
-        console.log({id, tugas, uts, uas});
-        $.ajax({
-            url: "api/guru/kelas" + id,
-            method: "PATCH",
-            contentType: "application/json",
-            data: JSON.stringify({nama}),
-            success: (response) => {
-                alert(response.status.message);
-                window.location.reload();
-            },
-            error: (response) => {
-                const message = response.responseJSON.status.message
-                alert(message);
-            }
-        });
+        function edit(id, index) {
+            const tugas = $("#tugasEdit-" + index).val() || null;
+            const uts = $("#utsEdit-" + index).val() || null;
+            const uas = $("#uasEdit-" + index).val() || null;
+            // console.log({id, tugas, uts, uas});
+            $.ajax({
+                url: "/api/guru/nilai/" + id,
+                method: "PATCH",
+                contentType: "application/json",
+                data: JSON.stringify({tugas, uts, uas}),
+                success: (response) => {
+                    alert(response.status.message);
+                    window.location.reload();
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    alert(message);
+                }
+            });
+        }
+
+        function create(id_murid, id_mata_pelajaran, index) {
+            const tugas = $("#tugasCreate-" + index).val() || null;
+            const uts = $("#utsCreate-" + index).val() || null;
+            const uas = $("#uasCreate-" + index).val() || null;
+            const semester = "ganjil";
+            // console.log({id_murid, id_mata_pelajaran, tugas, uts, uas, semester});
+            $.ajax({
+                url: "/api/guru/nilai",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({id_murid, id_mata_pelajaran, tugas, uts, uas, semester}),
+                success: (response) => {
+                    alert(response.status.message);
+                    window.location.reload();
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    alert(message);
+                    }
+                });
+        }
+
+        function remove(id) {
+            // console.log({id});
+            $.ajax({
+                url: '/api/guru/nilai/' + id,    
+                method: 'DELETE',
+                contentType: "application/json",
+                success: function(response) {
+                    alert(response.status.message);
+                    window.location.reload();
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    alert(message);
+                }
+            });
         }
     </script>
 </body>
