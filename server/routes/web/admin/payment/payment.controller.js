@@ -1,6 +1,8 @@
 import Spp from '../../../../models/spp.model.js';
 import Murid from '../../../../models/murid.model.js';
 import Transaksi from '../../../../models/transaksi.model.js';
+import { periodeFormat } from "../../../../helpers/periodeFormatter.js";
+import moneyFormat from "../../../../helpers/moneyFormatter.js";
 import { checkValidId, hashids } from '../../../../helpers/isValidId.js';
 
 export const getPaymentPage = async(req, res) => {
@@ -57,7 +59,8 @@ export const getTransactionPage = async (req, res) => {
             model: Murid,
             attributes: ["nama"]
         }
-      ]
+      ],
+      order: [['isValid', 'ASC'], ['tanggal_bayar', 'DESC']]
     });
 
     const data = dataTransaksi.map((Transaksi) => {
@@ -65,7 +68,9 @@ export const getTransactionPage = async (req, res) => {
           ...Transaksi.dataValues,
           id: hashids.encode(Transaksi.id),
           id_murid: hashids.encode(Transaksi.id_murid),
-          id_spp: hashids.encode(Transaksi.id_spp)
+          id_spp: hashids.encode(Transaksi.id_spp),
+          periode: periodeFormat(Transaksi.Spp.bulan, Transaksi.Spp.tahun),
+          tagihan: moneyFormat('Rp', Transaksi.Spp.tagihan),
         };
     });
     
