@@ -197,3 +197,55 @@ export const del = async (req, res) => {
     }
 }
 
+export const getUser = async (req, res) => {
+    try {
+        const {role} = req.params;
+        const {email} = req.session.user;
+        let dataUser;
+        let data;
+
+        if(role == 'admin'){
+            dataUser = await Users.findOne({
+                where: { email },
+                attributes: {
+                    exclude: ["password"]
+                },
+            });
+    
+            data = {
+                ...dataUser.dataValues,
+                id: hashids.encode(dataUser.id),
+            };
+        }
+
+        if(role == 'guru'){
+            dataUser = await Guru.findOne({
+                where: { email },
+                attributes: ['id', 'nama', 'foto']
+            });
+    
+            data = {
+                ...dataUser.dataValues,
+                id: hashids.encode(dataUser.id),
+            };
+        }
+
+        if(role == 'murid'){
+            dataUser = await Murid.findOne({
+                where: { email },
+                attributes: ['id', 'nama', 'foto']
+            });
+    
+            data = {
+                ...dataUser.dataValues,
+                id: hashids.encode(dataUser.id),
+            };
+        }
+        
+        responses.res200("Berhasil mengambil data user", data, res);
+    } catch (err) {
+        console.log(err.message);
+        responses.res500(res);
+    }
+}
+
