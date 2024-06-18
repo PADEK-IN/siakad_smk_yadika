@@ -3,6 +3,7 @@ import { compare, hash } from "../../../helpers/hashing.js";
 import Users from "../../../models/users.model.js";
 import Murid from "../../../models/murid.model.js";
 import { checkValidId, hashids } from "../../../helpers/isValidId.js";
+import Guru from "../../../models/guru.model.js";
 
 export const register = async (req, res) => {
     try {
@@ -82,12 +83,33 @@ export const login = async (req, res) => {
 
         if(!correctPassword) return responses.res400("Maaf, password anda salah", res);
         
-        req.session.user = {
-           id: user.id,
-           email: user.email,
-           role: user.role,
-           isValid: user.isValid
-        };
+        let murid = await Murid.findOne({where: {email}});
+        let guru = await Guru.findOne({where: {email}});
+
+        if(murid){
+            req.session.user = {
+                id: user.id,
+                id_murid: murid.id,
+                email: user.email,
+                role: user.role,
+                isValid: user.isValid
+             };
+        } else if(guru) {
+            req.session.user = {
+                id: user.id,
+                id_guru: guru.id,
+                email: user.email,
+                role: user.role,
+                isValid: user.isValid
+            };
+        } else {
+            req.session.user = {
+                id: user.id,
+                email: user.email,
+                role: user.role,
+                isValid: user.isValid
+            };
+        }
 
         responses.res200("Berhasil login", user.role, res);
     } catch (error) {
