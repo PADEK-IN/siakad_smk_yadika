@@ -7,8 +7,8 @@ export const getIndexPage = (req, res) => {
 
 export const getProfilePage = async(req, res) => {
     try {
-         // const  email  = req.session.user.email;
-        const  email  = "guru@gmail.com";
+        const  email  = req.session.user.email;
+        // const  email  = "guru@gmail.com";
         const dataGuru = await Guru.findOne({
             where: { email },
             raw: true

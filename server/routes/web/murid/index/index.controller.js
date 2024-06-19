@@ -14,7 +14,6 @@ export const getIndexPage = async(req, res) => {
         ...dataMurid,
         id: hashids.encode(dataMurid.id),
     }
-    console.log({ murid });
 
     res.render("pages/murid/index");
     } catch (err) {
