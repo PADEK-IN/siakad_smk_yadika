@@ -18,7 +18,7 @@ export const getProfilePage = async(req, res) => {
             ...dataGuru,
             id: hashids.encode(dataGuru.id),
         }
-        console.log({ guru });
+
         res.render("pages/teacher/profile/index", { guru });
     } catch (err) {
         console.log(err.message);
