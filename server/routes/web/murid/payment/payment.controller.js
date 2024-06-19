@@ -9,7 +9,7 @@ import Transaksi from "../../../../models/transaksi.model.js";
 export const getPaymentPage = async (req, res) => {
     try {
         const currentYear = new Date().getFullYear();
-        const id_murid = 1;
+        const {id_murid} = req.session.user;
         const murid = await Murid.findOne({
             where: {id: id_murid},
             attributes: ["nama"],
@@ -57,7 +57,7 @@ export const getPaymentPage = async (req, res) => {
 
 export const historyPayment = async (req, res) => {
     try {
-        const id_murid = 1;
+        const {id_murid} = req.session.user;
         const dataTransaksi = await Transaksi.findAll({
             where: {id_murid},
             include: [

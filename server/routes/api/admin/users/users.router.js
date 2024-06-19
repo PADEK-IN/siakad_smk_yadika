@@ -12,5 +12,6 @@ router.route("/list/:role").get(user.getUserEmailByRole);
 router.route("/valid").patch(user.updateValidUser);
 router.route("/:id").patch(user.update);
 router.route("/:id").delete(user.del);
+router.route("/find/:role").get(user.getUser);
 
 export default router;

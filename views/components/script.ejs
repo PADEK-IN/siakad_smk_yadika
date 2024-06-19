@@ -10,7 +10,26 @@
 
 <script src="/js/main.js"></script>
 <script>
-
+    $(document).ready(()=>{
+        const role = $("#role-user").text();
+        if(role){
+            $.ajax({
+                url: '/api/admin/user/find/' + role,
+                method: 'GET',
+                contentType: "application/json",
+                success: function(response) {
+                    $("#username").text(response.data.nama);
+                    if(response.data.foto){   
+                        $("#fotoprofil").attr("src", `/uploads/${response.data.foto}`);
+                    }
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message
+                    console.log(message);
+                }
+            });
+        }
+    })
     // // // // TAKE PITCHURE
     
     // var video = document.querySelector("#video-webcam");

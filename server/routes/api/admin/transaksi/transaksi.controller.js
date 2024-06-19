@@ -126,3 +126,26 @@ export const del = async (req, res) => {
         responses.res500(res);
     }
 }
+
+export const updateValidTransaksi = async (req, res) => {
+    try {
+        const { idTransaksi } = req.body;
+        console.log({idTransaksi})
+        if(idTransaksi.length == 0) return responses.res400("Maaf, belum ada transaksi yang dipilih", res);
+        const isValid = true;
+        for(let data of idTransaksi){
+            const id = checkValidId(data);
+            console.log({id})
+            await Transaksi.update({ isValid },{
+                where: {
+                    id
+                }
+            });
+        }
+
+        responses.res200("Berhasil memvalidasi data transaksi", null, res);
+    } catch (err) {
+        console.log(err.message);
+        responses.res500(res);
+    }
+}
