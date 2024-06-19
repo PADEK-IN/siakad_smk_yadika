@@ -8,8 +8,8 @@ import { checkValidId, hashids } from '../../../../helpers/isValidId.js';
 
 export const getClassPage = async (req, res) => {
   try {
-    // const  email  = req.session.user.email;
-    const email = 'guru@gmail.com';
+    const  email  = req.session.user.email;
+    // const email = 'guru@gmail.com';
     const dataGuru = await Guru.findOne({
       where: { email },
       raw: true,
@@ -29,8 +29,8 @@ export const getClassPage = async (req, res) => {
       Mata_Pelajaran: mataPelajaranNama || 'Tidak ada mata pelajaran',
       // id_mata_pelajaran: hashids.encode(dataGuru.id_mata_pelajaran),
     };
-    console.log({ guru });
-    console.log(guru.id_mata_pelajaran);
+    // console.log({ guru });
+    // console.log(guru.id_mata_pelajaran);
 
     const dataJadwal = await Jadwal.findAll({
       where: { id_mata_pelajaran: guru.id_mata_pelajaran },
@@ -68,7 +68,7 @@ export const getClassPage = async (req, res) => {
       return acc;
     }, []);
 
-    console.log({ kelas });
+    // console.log({ kelas });
 
     // const jadwal = dataJadwal.map((jadwal) => {
     //     return {
@@ -91,8 +91,8 @@ export const getClassPage = async (req, res) => {
 
 export const detailClassPage = async (req, res) => {
   try {
-    // const  email  = req.session.user.email;
-    const email = 'guru@gmail.com';
+    const  email  = req.session.user.email;
+    // const email = 'guru@gmail.com';
     const dataGuru = await Guru.findOne({
       where: { email },
       raw: true,
@@ -113,7 +113,7 @@ export const detailClassPage = async (req, res) => {
       id_mata_pelajaran: hashids.encode(mataPelajaranId),
       Mata_Pelajaran: mataPelajaranNama || 'Tidak ada mata pelajaran',
     };
-    console.log({ guru });
+    // console.log({ guru });
 
     const parts = req.url.split('/');
     let kelasId = parts[parts.length - 2];
@@ -147,7 +147,7 @@ export const detailClassPage = async (req, res) => {
       kelas: dataKelas.tingkat + '--' + dataKelas.kode,
       id_wali_kelas: hashids.encode(dataKelas.id_wali_kelas),
     };
-    console.log({ kelass });
+    // console.log({ kelass });
 
     // Mengambil data murid berdasarkan id_kelas
     const dataMurid = await Murid.findAll({
@@ -183,7 +183,7 @@ export const detailClassPage = async (req, res) => {
         id_mata_pelajaran: hashids.encode(nilai.id_mata_pelajaran),
       };
     });
-    console.log({ nilai });
+    // console.log({ nilai });
 
     // Menggabungkan nilai dengan murid
     const muridDenganNilai = murid.map((m) => {
@@ -201,7 +201,7 @@ export const detailClassPage = async (req, res) => {
       };
     });
 
-    console.log({ muridDenganNilai });
+    // console.log({ muridDenganNilai });
 
     res.render('pages/teacher/class/detail.ejs', {
       guru,

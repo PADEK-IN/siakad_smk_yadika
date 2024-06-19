@@ -9,8 +9,8 @@ import { checkValidId, hashids } from '../../../../helpers/isValidId.js';
 
 export const getSchadulePage = async(req, res) => {
     try {
-        // const  email  = req.session.user.email;
-        const  email  = "guru@gmail.com";
+        const  email  = req.session.user.email;
+        // const  email  = "guru@gmail.com";
         const dataGuru = await Guru.findOne({
             where: { email },
             raw: true,
@@ -70,8 +70,8 @@ export const addSchadulePage = (req, res) => {
 };
 export const detailSchadulePage = async(req, res) => {
     try {
-        // const  email  = req.session.user.email;
-        const  email  = "guru@gmail.com";
+        const  email  = req.session.user.email;
+        // const  email  = "guru@gmail.com";
         const dataGuru = await Guru.findOne({
             where: { email },
             raw: true,
