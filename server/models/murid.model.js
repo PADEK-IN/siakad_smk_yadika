@@ -116,7 +116,7 @@ Murid.belongsTo(Users, {foreignKey: "email", targetKey: 'email' });
 // Murid.belongsTo(Wali_Murid, {foreignKey: "id_wali"});
 Jurusan.hasMany(Murid, {foreignKey: "id_jurusan"});
 Murid.belongsTo(Jurusan, {foreignKey: "id_jurusan"});
-Kelas.hasMany(Murid, {foreignKey: "id_kelas"});
-Murid.belongsTo(Kelas, {foreignKey: "id_kelas"});
+Kelas.hasMany(Murid, {foreignKey: "id_kelas", onDelete: "SET NULL"});
+Murid.belongsTo(Kelas, {foreignKey: "id_kelas", onDelete: "SET NULL"});
 
 export default Murid;
