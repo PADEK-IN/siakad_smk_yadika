@@ -23,18 +23,42 @@
                 </div>
                 <div class="bg-light  rounded p-4">
                     <div class="alert text-center alert-primary" role="alert">
-                        Detail Transaksi SPP
+                        Detail Nilai Siswa
                     </div>
-
-                    <div class="bg-light rounded">
-                        <div class="testimonial-item text-center">
-                            <h6 class="">XII TKJ</h6>
-                            <h5 class="mb-1">Joko Widodo</h5>
-                        </div>
-                    </div>
+                    <h6 class="text-center">List SPP</h6>
                     <hr>
                     <div class="bg-light rounded h-100">
-                        <h6 class="mb-4">List SPP</h6>
+                        <% for (const data of nilai) {%>
+                            <table class=" table table-striped mb-4">
+                                <tr>
+                                    <td class="text-center bg-info-subtle" colspan="2"><b><%= data.Mata_Pelajaran %></b></td>
+                                </tr>
+                                <tr>
+                                    <td><b>TUGAS</b></td>
+                                    <% if (data.tugas == null) { %>
+                                        <td>-</td>
+                                    <% } else { %>
+                                        <td><%= data.tugas %></td>
+                                    <% } %>
+                                </tr>
+                                <tr>
+                                    <td><b>UTS</b></td>
+                                    <% if (data.uts == null) { %>
+                                        <td>-</td>
+                                    <% } else { %>
+                                        <td><%= data.uts %></td>
+                                    <% } %>
+                                </tr>
+                                <tr>
+                                    <td><b>UAS</b></td>
+                                    <% if (data.uas == null) { %>
+                                        <td>-</td>
+                                    <% } else { %>
+                                        <td><%= data.uas %></td>
+                                    <% } %>
+                                </tr>
+                            </table>
+                        <% } %>
                     </div>
                 </div>       
             </div>
