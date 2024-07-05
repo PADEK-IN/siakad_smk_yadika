@@ -66,31 +66,4 @@ async function pdfGenerate(data, name) {
 
 }
 
-async function pdfEmail(data, name) {
-  // Mengisi template dengan data yang diterima
-  const filledTemplate = await ejs.renderFile(path.join(__dirname,'../views/pdf', 'template-pdf.ejs'), { data });
-  
-  // Menentukan path untuk menyimpan file Html dan mengenerate Html (sementara)
-  const tempHtmlPath   = path.join(__dirname,'../views/pdf/temp/email', name + '.html');
-  await fs.writeFile(tempHtmlPath, filledTemplate, 'utf-8');
-  
-  // Menentukan path untuk menyimpan file PDF
-  const pdfPath = path.join(__dirname,'../views/pdf/temp/email', name + '.pdf');
-
-  await createPdf(tempHtmlPath, pdfPath);
-  
-  setTimeout(() => {
-    try {
-      //Hapus file template Html
-      fileS.unlinkSync(tempHtmlPath)
-      //hapus file pdf
-      fileS.unlinkSync(pdfPath)
-    } catch (error) {
-      // console.log(error.message)
-      // console.log("filenya udah kehapus duluan keanya")
-    }
-  }, 60000);
-
-}
-
-module.exports = {pdfGenerate, pdfEmail}
+module.exports = {pdfGenerate}
