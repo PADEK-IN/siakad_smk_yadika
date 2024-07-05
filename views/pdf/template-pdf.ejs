@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MoM Maker | Algo Network</title>
+    <link rel="icon" type="image/x-icon" href="./img/favicon.ico" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+</head>
+
+  <body>
+    <div id="data" class="container mx-auto w-11/12 px-2 pb-2">
+        <h1 class="text-center text-2xl font-bold p-4">Minutes of Meeting</h1>
+        <%- data %>
+    </div>
+    
+    <script>
+        $(document).ready(function () {
+          
+            $("#editor").addClass("pl-4 text-sm")
+
+            $("h3").addClass("text-base")
+            $("h2").addClass("text-lg")
+            $("h1").addClass("text-xl")
+
+            $(".ql-size-small").addClass("text-xs")
+            $(".ql-size-normal").addClass("text-sm")
+            $(".ql-size-large").addClass("text-lg")
+            $(".ql-size-huge").addClass("text-2xl")
+
+            $('ol li').removeAttr("style")
+            $('ul li').removeAttr("style")
+            $('ol').addClass("list-decimal")
+            $('ul').addClass("list-disc")
+            $("li").addClass("ml-8")
+
+
+            $(".ql-indent-1").replaceWith(function () {
+              return $(`<p class="ml-8">${$(this).text()}</p>`);
+            });
+
+            $(".ql-indent-2").replaceWith(function () {
+              return $(`<p class="ml-16">${$(this).text()}</p>`);
+            });
+
+            $(".ql-indent-3").replaceWith(function () {
+              return $(`<p class="ml-24">${$(this).text()}</p>`);
+            });
+
+            $(".ql-toolbar").remove();
+        });
+    </script>
+  </body>
+</html>
