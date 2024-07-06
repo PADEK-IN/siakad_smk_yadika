@@ -27,16 +27,37 @@
                         <table id="example" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Nis</th>
-                                    <th>Nama</th>
+                                  <th>Nis</th>
+                                  <th>Nama</th>
+                                  <% for (const data of jadwal) { %>
+                                    <th><%= data.pelajaran || 'Mata Pelajaran Kosong' %></th>
+                                  <% } %>
+                                  <th>Total Nilai</th>
+                                  <th>Action</th>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>35267</td>
-                                    <td>Joko Santoso</td>
-                                </tr>
-                            </tbody>
+                              </thead>
+                              <tbody>
+                                <% for (const data of murid) { %>
+                                  <tr>
+                                    <% if (data.nama) { %>
+                                      <td><%= data.nis %></td>
+                                      <td><%= data.nama %></td>
+                                      <% for (const jadwalData of jadwal) { %>
+                                        <td><%= data.pelajaranNilai[jadwalData.pelajaran] %></td>
+                                      <% } %>
+                                      <td><%= data.totalNilai %></td>
+                                      <td>
+                                        <!-- Add your action buttons/links here -->
+                                        <a href="#">Edit</a>
+                                        <a href="#">Delete</a>
+                                      </td>
+                                    <% } else { %>
+                                      <td colspan="<%= jadwal.length + 3 %>">Murid Belum ada</td>
+                                    <% } %>
+                                  </tr>
+                                <% } %>
+                              </tbody>
+                              
                         </table>
                     </div>
                 </div>

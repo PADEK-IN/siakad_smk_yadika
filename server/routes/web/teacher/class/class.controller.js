@@ -157,16 +157,6 @@ export const detailClassPage = async (req, res) => {
       raw: true,
     });
 
-    const nilai = dataNilai.map((nilai) => {
-      return {
-        ...nilai,
-        id: hashids.encode(nilai.id),
-        id_murid: hashids.encode(nilai.id_murid),
-        id_mata_pelajaran: hashids.encode(nilai.id_mata_pelajaran),
-      };
-    });
-    // console.log({ nilai });
-
     // Menggabungkan nilai dengan murid
     const muridDenganNilai = murid.map((m) => {
       const decodedMuridId = hashids.decode(m.id)[0];
@@ -196,13 +186,113 @@ export const detailClassPage = async (req, res) => {
   }
 };
 
-export const classOwnPage = async(req, res) => {
+export const classOwnPage = async (req, res) => {
   try {
-    // const  email  = req.session.user.email;
-    const  email  = 'guru@gmail.com';
-    res.render('pages/teacher/class/own.ejs');
+    const email = 'guru@gmail.com';
+
+    // Temukan guru berdasarkan email
+    const dataGuru = await Guru.findOne({
+      where: { email },
+      raw: true
+    });
+
+    // Temukan kelas berdasarkan ID guru
+    const kelas = await Kelas.findOne({
+      where: { id_wali_kelas: dataGuru.id },
+      raw: true
+    });
+
+    // Temukan semua murid di kelas ini
+    const dataMurid = await Murid.findAll({
+      where: { id_kelas: kelas.id },
+      raw: true
+    });
+
+    // Temukan semua mata pelajaran di kelas ini
+    const dataJadwal = await Jadwal.findAll({
+      where: { id_kelas: kelas.id },
+      include: [
+        {
+          model: Mata_Pelajaran,
+          attributes: ['id', 'nama'],
+        }
+      ],
+      raw: true
+    });
+
+    // Hapus duplikasi mata pelajaran
+    const mataPelajaranMap = new Map();
+    dataJadwal.forEach(jadwal => {
+      const key = jadwal['Mata_Pelajaran.id'];
+      if (!mataPelajaranMap.has(key)) {
+        mataPelajaranMap.set(key, {
+          id_pelajaran: jadwal['Mata_Pelajaran.id'],
+          pelajaran: jadwal['Mata_Pelajaran.nama']
+        });
+      }
+    });
+    const jadwal = Array.from(mataPelajaranMap.values());
+
+    // Ambil ID murid untuk digunakan dalam pencarian nilai
+    const muridIds = dataMurid.map(murid => murid.id);
+
+    // Temukan semua nilai untuk murid-murid ini
+    const dataNilai = await Penilaian.findAll({
+      where: {
+        id_murid: muridIds,
+      },
+      raw: true,
+    });
+
+    // Hitung nilai rata-rata untuk setiap mata pelajaran untuk setiap murid
+    const muridWithNilai = dataMurid.map((m) => {
+      const nilaiMurid = dataNilai.filter(n => n.id_murid === m.id);
+      let totalNilai = 0;
+      const pelajaranNilai = {};
+
+      jadwal.forEach(j => {
+        const nilai = nilaiMurid.filter(n => n.id_mata_pelajaran === j.id_pelajaran);
+        if (nilai.length > 0) {
+          let totalScores = 0;
+          let count = 0;
+          nilai.forEach(n => {
+            if (n.tugas !== null) {
+              totalScores += n.tugas;
+              count++;
+            }
+            if (n.uts !== null) {
+              totalScores += n.uts;
+              count++;
+            }
+            if (n.uas !== null) {
+              totalScores += n.uas;
+              count++;
+            }
+          });
+          const average = count > 0 ? totalScores / count : 0;
+          pelajaranNilai[j.pelajaran] = average.toFixed(2); // Dibulatkan hingga 2 desimal
+          totalNilai += parseFloat(average); // Tambahkan nilai rata-rata ke total nilai
+        } else {
+          pelajaranNilai[j.pelajaran] = 0;
+        }
+      });
+
+      // Hitung rata-rata nilai untuk murid ini
+      const jumlahPelajaran = jadwal.length > 0 ? jadwal.length : 1; // Hindari pembagian dengan nol
+      const rataNilai = totalNilai / jumlahPelajaran;
+
+      return {
+        ...m,
+        pelajaranNilai,
+        totalNilai: rataNilai.toFixed(2), // Dibulatkan hingga 2 desimal
+      };
+    });
+
+    // Render halaman dengan data mata pelajaran (jadwal) dan murid (muridWithNilai)
+    res.render('pages/teacher/class/own.ejs', { jadwal, murid: muridWithNilai });
+
   } catch (err) {
     console.log(err.message);
-    res.render('pages/errors/500');
+    res.render('pages/errors/500'); // Tangani kesalahan dengan baik
   }
 }
