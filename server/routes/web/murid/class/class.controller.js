@@ -74,7 +74,7 @@ export const getClassPage = async(req, res) => {
 
         let jadwalPerHari = groupByDay(dataJadwal);
 
-        const hariList = ['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu'];
+        const hariList = ['senin', 'selasa', 'rabu', 'kamis', 'jumat'];
 
         hariList.forEach(day => {
             if (!jadwalPerHari[day]) {
