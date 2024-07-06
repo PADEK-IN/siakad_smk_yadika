@@ -130,6 +130,7 @@
                 contentType: "application/json",
                 data: JSON.stringify({fileName, content}),
                 success: (response) => {
+                    window.location.href = `/api/pdf/download/${fileName}`;
                     alert('Berhasil download pdf');
                     $("#btn-download").replaceWith(`<span id="btn-download">Download PDF</span>`);
                 },

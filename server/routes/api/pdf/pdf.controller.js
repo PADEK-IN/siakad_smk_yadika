@@ -11,7 +11,7 @@ export const generatePdf = async (req, res) => {
     try {
         const { fileName, content } = req.body;
         await pdfGenerate(content, fileName);
-        res.redirect("/api/pdf/download/" + fileName);
+        responses.res200("PDF generated successfully", null, res);
     } catch (error) {
         console.log(error);
         responses.res500("Internal Server Error", res);
