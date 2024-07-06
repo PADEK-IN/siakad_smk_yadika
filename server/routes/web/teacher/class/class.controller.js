@@ -9,7 +9,6 @@ import { checkValidId, hashids } from '../../../../helpers/isValidId.js';
 export const getClassPage = async (req, res) => {
   try {
     const  email  = req.session.user.email;
-    // const email = 'guru@gmail.com';
     const dataGuru = await Guru.findOne({
       where: { email },
       raw: true,
@@ -29,8 +28,6 @@ export const getClassPage = async (req, res) => {
       Mata_Pelajaran: mataPelajaranNama || 'Tidak ada mata pelajaran',
       // id_mata_pelajaran: hashids.encode(dataGuru.id_mata_pelajaran),
     };
-    // console.log({ guru });
-    // console.log(guru.id_mata_pelajaran);
 
     const dataJadwal = await Jadwal.findAll({
       where: { id_mata_pelajaran: guru.id_mata_pelajaran },
@@ -68,20 +65,6 @@ export const getClassPage = async (req, res) => {
       return acc;
     }, []);
 
-    // console.log({ kelas });
-
-    // const jadwal = dataJadwal.map((jadwal) => {
-    //     return {
-    //         ...jadwal.dataValues,
-    //         id: hashids.encode(jadwal.id),
-    //         id_mata_pelajaran: hashids.encode(jadwal.id_mata_pelajaran),
-    //         Kela: jadwal.Kela.tingkat + "--" +  jadwal.Kela.kode,
-    //         Mata_Pelajaran: jadwal.Mata_Pelajaran.nama,
-    //         Wali_Kelas: jadwal.Kela.Guru.nama,
-    //     }
-    // })
-    // console.log({ jadwal });
-
     res.render('pages/teacher/class/index.ejs', { guru, kelas });
   } catch (err) {
     console.log(err.message);
@@ -92,7 +75,6 @@ export const getClassPage = async (req, res) => {
 export const detailClassPage = async (req, res) => {
   try {
     const  email  = req.session.user.email;
-    // const email = 'guru@gmail.com';
     const dataGuru = await Guru.findOne({
       where: { email },
       raw: true,
@@ -213,3 +195,14 @@ export const detailClassPage = async (req, res) => {
     res.render('pages/errors/500');
   }
 };
+
+export const classOwnPage = async(req, res) => {
+  try {
+    // const  email  = req.session.user.email;
+    const  email  = 'guru@gmail.com';
+    res.render('pages/teacher/class/own.ejs');
+  } catch (err) {
+    console.log(err.message);
+    res.render('pages/errors/500');
+  }
+}

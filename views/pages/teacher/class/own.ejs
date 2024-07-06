@@ -19,41 +19,24 @@
 
             <div class="container-fluid pt-4 px-4 pb-5">
                 <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0">List Kelas</h6>
+                    <h6 class="mb-0">Anggota Kelas Kelas</h6>
                 </div>
                 <div class="bg-light text-center rounded p-4">
                     <div class="table-responsive">
-                        <h4><%= guru.Mata_Pelajaran %></h4>
+                        <h4>List Nilai Murid Kelas ......</h4>
                         <table id="example" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Kelas</th>
-                                    <th>Wali Kelas</th>
-                                    <th>Status</th>
+                                    <th>Nis</th>
+                                    <th>Nama</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <% for (const data of kelas) {%>
                                 <tr>
-                                    <td><a href="/teacher/class/<%= data.id %>/detail"><%= data.kelas %></a></td>
-                                    <td><%= data.Wali_Kelas %></td>
-                                    <td>
-                                        <% if (data.isActive == 1) {%>
-                                            <span class="badge bg-success">Aktif</span>
-                                        <% } else { %>
-                                            <span class="badge bg-danger">Tidak Aktif</span>
-                                        <% } %>
-                                    </td>
+                                    <td>35267</td>
+                                    <td>Joko Santoso</td>
                                 </tr>
-                                <%}%>
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Kelas</th>
-                                    <th>Wali Kelas</th>
-                                    <th>Status</th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>
