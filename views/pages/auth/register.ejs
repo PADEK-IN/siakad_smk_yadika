@@ -43,23 +43,36 @@
 
     <%- include ('./../../components/script.ejs')%>
     <script>
-        $("#register").on("click", () => {
-            const email = $("#email").val();
-            const password = $("#password").val();
-            const confirmPassword = $("#confirmPassword").val();
-
-            $.ajax({
-                url: "/api/auth/register",
-                method: "POST",
-                contentType: "application/json",
-                data: JSON.stringify({email, password, confirmPassword}),
-                success: (response) => {
-                    alert(response.status.message);
-                    window.location.href = `/register/murid?email=${email}`;
-                },
-                error: (response) => {
-                    const message = response.responseJSON.status.message
-                    alert(message);
+        $(document).ready(function() {
+            // Function to handle register
+            function handleRegister() {
+                const email = $("#email").val();
+                const password = $("#password").val();
+                const confirmPassword = $("#confirmPassword").val();
+    
+                $.ajax({
+                    url: "/api/auth/register",
+                    method: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({email, password, confirmPassword}),
+                    success: (response) => {
+                        alert(response.status.message);
+                        window.location.href = `/register/murid?email=${email}`;
+                    },
+                    error: (response) => {
+                        const message = response.responseJSON.status.message;
+                        alert(message);
+                    }
+                });
+            }
+    
+            // Click event for register button
+            $("#register").on("click", handleRegister);
+    
+            // Keypress event for Enter key
+            $(document).on("keypress", function(event) {
+                if(event.key === "Enter") {
+                    handleRegister();
                 }
             });
         });
