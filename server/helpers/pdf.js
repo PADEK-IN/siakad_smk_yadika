@@ -1,8 +1,9 @@
-const ejs = require('ejs');
-const path = require('path'); 
-const fileS = require('fs');
-const fs = require('fs').promises;
-const generatePDF = require("html-template-to-pdf");
+import ejs from 'ejs';
+import path from 'path';
+import fs from 'fs';
+import generatePDF from 'html-template-to-pdf';
+
+const fileS = fs;
 
 async function createPdf(inputFile, outputFile){
   // Set header template
@@ -39,16 +40,16 @@ async function createPdf(inputFile, outputFile){
   fileStream.end();
 }
 
-async function pdfGenerate(data, name) {
+export async function pdfGenerate(data, name) {
   // Mengisi template dengan data yang diterima
-  const filledTemplate = await ejs.renderFile(path.join(__dirname,'../views/pdf', 'template-pdf.ejs'), { data });
+  const filledTemplate = await ejs.renderFile('./views/pdf/template-pdf.ejs', { data });
   
   // Menentukan path untuk menyimpan file Html dan mengenerate Html (sementara)
-  const tempHtmlPath   = path.join(__dirname,'../views/pdf/temp', name + '.html');
+  const tempHtmlPath   = `./views/pdf/temp/${name}.html`;
   await fs.writeFile(tempHtmlPath, filledTemplate, 'utf-8');
   
   // Menentukan path untuk menyimpan file PDF
-  const pdfPath = path.join(__dirname,'../views/pdf/temp', name + '.pdf');
+  const pdfPath = `./views/pdf/temp/${name}.pdf`;
 
   await createPdf(tempHtmlPath, pdfPath);
 
@@ -65,5 +66,3 @@ async function pdfGenerate(data, name) {
   }, 60000);
 
 }
-
-module.exports = {pdfGenerate}

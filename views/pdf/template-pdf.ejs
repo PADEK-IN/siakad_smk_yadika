@@ -1,57 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MoM Maker | Algo Network</title>
-    <link rel="icon" type="image/x-icon" href="./img/favicon.ico" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIAKAD -  SMK Yadika</title>
+    <!-- Favicon -->
+    <link href="/images/icons/logo-smk.ico" rel="icon"> 
 
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="/public/images/favicon.ico" type="ico" />
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/css/library/bootstrap.min.css" rel="stylesheet">
+    <!-- Template Stylesheet -->
+    <link href="/css/library/style.css" rel="stylesheet">
+    <style>
+        @media print {
+            @page {
+                margin: 20mm;
+            }
+            body {
+                -webkit-print-color-adjust: exact;
+                margin: 0;
+                padding: 0;
+            }
+            .no-print {
+                display: none;
+            }
+            table {
+                width: 100%;
+                table-layout: fixed;
+            }
+            th, td {
+                word-wrap: break-word;
+            }
+        }
+        p {
+            font-size: 13px;
+            margin: 0;
+        }
+        .kop-surat {
+            margin-bottom: 20px;
+        }
+        .kop-surat .line {
+            border-top: 2px solid #000;
+            margin: 5px 0;
+        }
+        .footer {
+            margin: 50px 50px 10px 50px;
+            width: 200px;
+        }
+        .footer .signature-line {
+            display: block;
+            margin-top: 50px;
+            border-top: 1px solid black;
+        }
+ 
+    </style>
 </head>
-
-  <body>
-    <div id="data" class="container mx-auto w-11/12 px-2 pb-2">
-        <h1 class="text-center text-2xl font-bold p-4">Minutes of Meeting</h1>
-        <%- data %>
+<body>
+    <div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <button class="btn btn-primary no-print" onclick="history.back()">Kembali</button>
+        <button class="btn btn-info no-print" onclick="window.print()">Cetak</button>
     </div>
-    
-    <script>
-        $(document).ready(function () {
-          
-            $("#editor").addClass("pl-4 text-sm")
+        <!-- Kop Surat -->
+        <div class="kop-surat text-center">
+            <h3>Sekolah Menengah Kejuruan Yadika Jambi</h3>
+            <p>Jln. Abdul Muis Lorong Anggrek Rt 38 (Jerambah Bolong), kel. Lingkar Sel., Kec. Jambi Sel., Kota Jambi, Jambi 36136</p>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
 
-            $("h3").addClass("text-base")
-            $("h2").addClass("text-lg")
-            $("h1").addClass("text-xl")
+        <%- data %>
+        <div class="bg-light text-center rounded p-4">
+          <div class="table-responsive">
+              <table id="example" class="table table-striped" style="width:100%">
+                  <thead>
+                      <tr>
+                          <th>No</th>
+                          <th>NIP</th>
+                          <th>Nama</th>
+                          <th>Email</th>
+                          <th>JK</th>
+                          <th>Mata Pelajaran</th>
+                          <th>Aktif</th>
+                          <th>Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>                             
+                      <tr>
+                        <td>No</td>
+                        <td>NIP</td>
+                        <td>Nama</td>
+                        <td>Email</td>
+                        <td>JK</td>
+                        <td>Matkul</td>
+                        <td>Aktif</td>
+                        <td>Action</td>
+                      </tr>
+                  </tbody>
+                  <tfoot>
+                      <tr>
+                          <th>No</th>
+                          <th>NIP</th>
+                          <th>Nama</th>
+                          <th>Email</th>
+                          <th>JK</th>
+                          <th>Matkul</th>
+                          <th>Aktif</th>
+                          <th>Action</th>
+                      </tr>
+                  </tfoot>
+              </table>
+          </div>
+      </div>
+        <footer class="d-flex justif justify-content-end">
+            <div class="footer">
+                <p>Jambi, <span id="current-date"></span></p>
+                <span class="signature-line"></span>
+            </div>
+        </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
-            $(".ql-size-small").addClass("text-xs")
-            $(".ql-size-normal").addClass("text-sm")
-            $(".ql-size-large").addClass("text-lg")
-            $(".ql-size-huge").addClass("text-2xl")
-
-            $('ol li').removeAttr("style")
-            $('ul li').removeAttr("style")
-            $('ol').addClass("list-decimal")
-            $('ul').addClass("list-disc")
-            $("li").addClass("ml-8")
-
-
-            $(".ql-indent-1").replaceWith(function () {
-              return $(`<p class="ml-8">${$(this).text()}</p>`);
-            });
-
-            $(".ql-indent-2").replaceWith(function () {
-              return $(`<p class="ml-16">${$(this).text()}</p>`);
-            });
-
-            $(".ql-indent-3").replaceWith(function () {
-              return $(`<p class="ml-24">${$(this).text()}</p>`);
-            });
-
-            $(".ql-toolbar").remove();
-        });
-    </script>
-  </body>
+</body>
 </html>

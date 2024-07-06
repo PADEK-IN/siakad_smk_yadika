@@ -41,6 +41,7 @@ import adminPenilaianRouter from './routes/api/admin/penilaian/penilaian.router.
 import adminJadwalPelajaranRouter from './routes/api/admin/jadwal_pelajaran/jadwal_pelajaran.router.js';
 import adminJadwalAbsenRouter from './routes/api/admin/jadwal_absen/jadwal_absen.router.js';
 import adminAbsenRouter from './routes/api/admin/absen/absen.router.js';
+import pdfRouter from './routes/api/pdf/pdf.router.js';
 // Murid
 import muridProfileRouter from './routes/api/murid/profile/profile.router.js';
 import muridKelasRouter from './routes/api/murid/kelas/kelas.router.js';
@@ -103,6 +104,8 @@ app.use('/murid/nilai', nilaiMuridRouter);
 // // ROUTES API
 // Auth
 app.use('/api/auth', authRouter);
+// PDF
+app.use('/api/pdf', pdfRouter);
 // Admin
 app.use('/api/admin/user', adminUserRouter);
 app.use('/api/admin/jurusan', adminJurusanRouter);
