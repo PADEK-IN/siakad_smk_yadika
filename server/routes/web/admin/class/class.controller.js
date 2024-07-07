@@ -63,6 +63,12 @@ export const editClassPage = async(req, res) => {
         },
       ],
     });
+
+    // Pastikan data kelas ditemukan
+    if (!dataClass) {
+      return res.render('pages/errors/404');
+    }
+
     const kelas = {
       ...dataClass.dataValues,
       id: hashids.encode(dataClass.id),
@@ -70,13 +76,19 @@ export const editClassPage = async(req, res) => {
     };
 
     const dataGuru = await Guru.findAll();
+    const kelases = await Kelas.findAll();
 
-    const guru = dataGuru.map((guru) => {
-        return {
+    const guruIdsInKelas = kelases.map((kelases) => kelases.id_wali_kelas);
+
+    const guru = dataGuru.reduce((result, guru) => {
+      if (!guruIdsInKelas.includes(guru.id)) {
+        result.push({
           ...guru.dataValues,
           id: hashids.encode(guru.id)
-        };
-      });
+        });
+      }
+      return result;
+    }, []);
     res.render("pages/admin/class/edit.ejs", { kelas, guru });
   } catch (err) {
     console.log(err.message);

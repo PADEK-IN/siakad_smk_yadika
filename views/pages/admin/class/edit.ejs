@@ -66,8 +66,12 @@
                                 <select class="form-select" id="id_wali_kelas"
                                     aria-label="Floating label select example">
                                     <option selected undefined disabled>Wali Kelas</option>
-                                    <% for (const data of guru) { %>
-                                        <option value="<%= data.id %>" <%= data.id === kelas.GuruId ? 'selected' : '' %>><%= data.nama %></option>
+                                    <% if (guru && guru.length > 0) { %>
+                                        <% for (const data of guru) { %>
+                                            <option value="<%= data.id %>"><%= data.nama %></option>
+                                        <% } %>
+                                    <% } else { %>
+                                        <option disabled>Semua Guru Sudah Memiliki Kelas</option>
                                     <% } %>
                                 </select>
                                 <label for="floatingSelect">Wali Kelas</label>
