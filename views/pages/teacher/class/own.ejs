@@ -23,41 +23,51 @@
                 </div>
                 <div class="bg-light text-center rounded p-4">
                     <div class="table-responsive">
-                        <h4>List Nilai Murid Kelas ......</h4>
+                        <h4>List Nilai Murid Kelas <%= kelas.tingkat%>--<%= kelas.kode%></h4>
                         <table id="example" class="table table-striped" style="width:100%">
-                            <thead>
-                                <tr>
-                                  <th>Nis</th>
-                                  <th>Nama</th>
-                                  <% for (const data of jadwal) { %>
-                                    <th><%= data.pelajaran || 'Mata Pelajaran Kosong' %></th>
+                          <thead>
+                            <tr>
+                              <th>ID</th>
+                              <th>Nis</th>
+                              <th>Nama</th>
+                              <% for (const data of jadwal) { %>
+                                <th><%= data.pelajaran || 'Mata Pelajaran Kosong' %></th>
+                              <% } %>
+                              <th>Total Nilai</th>
+                              <th>Status</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <% for (const data of murid) { %>
+                              <tr>
+                                <% if (data.nama) { %>
+                                  <td><%= data.id %></td>
+                                  <td><%= data.nis %></td>
+                                  <td><%= data.nama %></td>
+                                  <% for (const jadwalData of jadwal) { %>
+                                    <td><%= data.pelajaranNilai[jadwalData.pelajaran] !== null ? data.pelajaranNilai[jadwalData.pelajaran] : '-' %></td>
                                   <% } %>
-                                  <th>Total Nilai</th>
-                                  <th>Action</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <% for (const data of murid) { %>
-                                  <tr>
-                                    <% if (data.nama) { %>
-                                      <td><%= data.nis %></td>
-                                      <td><%= data.nama %></td>
-                                      <% for (const jadwalData of jadwal) { %>
-                                        <td><%= data.pelajaranNilai[jadwalData.pelajaran] %></td>
-                                      <% } %>
-                                      <td><%= data.totalNilai %></td>
-                                      <td>
-                                        <!-- Add your action buttons/links here -->
-                                        <a href="#">Edit</a>
-                                        <a href="#">Delete</a>
-                                      </td>
-                                    <% } else { %>
-                                      <td colspan="<%= jadwal.length + 3 %>">Murid Belum ada</td>
-                                    <% } %>
-                                  </tr>
+                                  <td><%= data.totalNilai %></td>
+                                  <% if (data.status === "Lulus") { %>
+                                    <td class="text-success"><%= data.status %></td>
+                                  <% } else if (data.status === "Nilai Belum Lengkap") { %>
+                                    <td class="text-warning"><%= data.status %></td>
+                                  <% } else { %>
+                                    <td class="text-danger"><%= data.status %></td>
+                                  <% } %>
+                                  </td>
+                                  <td>
+                                    <a href="#" class="btn btn-success">Naikan</a>
+                                    <a href="#" class="btn btn-warning">Tetap</a>
+                                  </td>
+                                <% } else { %>
+                                  <td colspan="<%= jadwal.length + 4 %>">Murid Belum ada</td>
                                 <% } %>
-                              </tbody>
-                              
+                              </tr>
+                            <% } %>
+                          </tbody>
+                          
                         </table>
                     </div>
                 </div>

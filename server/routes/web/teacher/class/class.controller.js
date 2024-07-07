@@ -201,6 +201,7 @@ export const classOwnPage = async (req, res) => {
       where: { id_wali_kelas: dataGuru.id },
       raw: true
     });
+    // console.log({kelas})
 
     // Temukan semua murid di kelas ini
     const dataMurid = await Murid.findAll({
@@ -248,7 +249,9 @@ export const classOwnPage = async (req, res) => {
     const muridWithNilai = dataMurid.map((m) => {
       const nilaiMurid = dataNilai.filter(n => n.id_murid === m.id);
       let totalNilai = 0;
+      let countPelajaran = 0;
       const pelajaranNilai = {};
+      let incompleteData = false;
 
       jadwal.forEach(j => {
         const nilai = nilaiMurid.filter(n => n.id_mata_pelajaran === j.id_pelajaran);
@@ -257,39 +260,50 @@ export const classOwnPage = async (req, res) => {
           let count = 0;
           nilai.forEach(n => {
             if (n.tugas !== null) {
-              totalScores += n.tugas;
+              totalScores += parseFloat(n.tugas) || 0;
               count++;
             }
             if (n.uts !== null) {
-              totalScores += n.uts;
+              totalScores += parseFloat(n.uts) || 0;
               count++;
             }
             if (n.uas !== null) {
-              totalScores += n.uas;
+              totalScores += parseFloat(n.uas) || 0;
               count++;
             }
           });
           const average = count > 0 ? totalScores / count : 0;
           pelajaranNilai[j.pelajaran] = average.toFixed(2); // Dibulatkan hingga 2 desimal
           totalNilai += parseFloat(average); // Tambahkan nilai rata-rata ke total nilai
+          countPelajaran++;
         } else {
-          pelajaranNilai[j.pelajaran] = 0;
+          pelajaranNilai[j.pelajaran] = '-'; // Nilai belum lengkap
+          incompleteData = true;
         }
       });
 
       // Hitung rata-rata nilai untuk murid ini
-      const jumlahPelajaran = jadwal.length > 0 ? jadwal.length : 1; // Hindari pembagian dengan nol
-      const rataNilai = totalNilai / jumlahPelajaran;
+      const rataNilai = countPelajaran > 0 ? totalNilai / countPelajaran : 0;
+
+      // Tentukan status kelulusan
+      let status;
+      if (incompleteData) {
+        status = 'Nilai Belum Lengkap';
+      } else if (rataNilai >= 60) {
+        status = 'Lulus';
+      } else {
+        status = 'Belum Lulus';
+      }
 
       return {
         ...m,
         pelajaranNilai,
         totalNilai: rataNilai.toFixed(2), // Dibulatkan hingga 2 desimal
+        status
       };
     });
 
-    // Render halaman dengan data mata pelajaran (jadwal) dan murid (muridWithNilai)
-    res.render('pages/teacher/class/own.ejs', { jadwal, murid: muridWithNilai });
+    res.render('pages/teacher/class/own.ejs', { kelas, jadwal, murid: muridWithNilai });
 
   } catch (err) {
     console.log(err.message);
