@@ -188,7 +188,8 @@ export const detailClassPage = async (req, res) => {
 
 export const classOwnPage = async (req, res) => {
   try {
-    const email = 'guru@gmail.com';
+    // const email = 'guru@gmail.com';
+    const  email  = req.session.user.email;
 
     // Temukan guru berdasarkan email
     const dataGuru = await Guru.findOne({
