@@ -17,13 +17,18 @@
             <%- include ('./../../../components/navbar-teacher.ejs')%>
             <!-- navar end -->
 
-            <div class="container-fluid pt-4 px-4 pb-5">
-                <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0">Anggota Kelas Kelas</h6>
+            <div class="container-fluid pt-4 px-4 pb-5" id="content">
+                <div class="d-flex align-items-center justify-content-between mb-4" id="action-button">
+                    <h6 class="mb-0">Anggota Kelas</h6>
+                    <div class="d-flex justify-content-end gap-1">
+                      <button type="button" class="btn btn-sm btn-warning" onclick="downloadPdf()">
+                          <span id="btn-download">Download PDF</span>
+                      </button>
+                    </div>
                 </div>
                 <div class="bg-light text-center rounded p-4">
+                  <h5>List Murid Kelas <%= kelas.tingkat%>--<%= kelas.kode%></h5>
                     <div class="table-responsive">
-                        <h4>List Nilai Murid Kelas <%= kelas.tingkat%>--<%= kelas.kode%></h4>
                         <table id="example" class="table table-striped" style="width:100%">
                           <thead>
                             <tr>
@@ -126,7 +131,7 @@
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
     <script>
-        new DataTable('#example');
+        let exampleTable = new DataTable('#example');
         function naikan(id, id_kelas) {
           const kelas = $("#kelas-" + id_kelas).val() || null;
           console.log({id, kelas})
@@ -153,6 +158,31 @@
                 alert('Pilih kelas untuk menaikkan murid.');
             }
         }
+
+        function downloadPdf(){
+            $("#btn-download").replaceWith(`<span id="btn-download"><img src="/images/loading.gif" alt="download-pdf" width="18px"> Downloading ...</span>`);
+            exampleTable.destroy();
+            const content = $("#content").html();
+            exampleTable = new DataTable('#example');
+            let fileName = $("h5").text();
+            fileName = fileName.replace(/\s/g, "-");
+            $.ajax({
+                url: `/api/pdf`,
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({fileName, content}),
+                success: (response) => {
+                    window.location.href = `/api/pdf/download/${fileName}`;
+                    alert('Berhasil download pdf');
+                    $("#btn-download").replaceWith(`<span id="btn-download">Download PDF</span>`);
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message;
+                    alert(message);
+                }
+            });
+        }
+
 
     </script>
 </body>
