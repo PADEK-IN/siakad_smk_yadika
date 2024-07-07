@@ -31,7 +31,6 @@ export const getNilaiPage = async (req, res) => {
       };
     });
 
-    console.log(nilai);
     res.render('pages/murid/nilai/index', { nilai });
   } catch (err) {
     console.log(err.message);
