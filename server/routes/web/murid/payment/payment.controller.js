@@ -87,3 +87,52 @@ export const historyPayment = async (req, res) => {
         res.render("pages/errors/500.ejs")
     }
 };
+
+export const previewPage = async (req, res) => {
+    try {
+        const currentYear = new Date().getFullYear();
+        const {id_murid} = req.session.user;
+        const murid = await Murid.findOne({
+            where: {id: id_murid},
+            attributes: ["nama"],
+            include: [{
+                model: Kelas,
+                attributes: ["tingkat", "kode"],
+            }],
+        })
+
+        const spp = await Spp.findAll({
+            where: {tahun: currentYear, tingkat: murid.Kela.tingkat},
+            order: [["bulan", "DESC"], ["tahun", "DESC"]]
+        });
+        const dataTransaksi = await Transaksi.findAll({
+            where: {id_murid},
+            include: [{
+                model: Murid,
+                attributes: ["nama"]
+            }],
+        })
+
+        const data = spp.map(sppItem => {
+            let transaksi = dataTransaksi.find(item => item.id_spp == sppItem.id);
+            if(transaksi?.dataValues){
+                transaksi["id"] = hashids.encode(transaksi.id);
+                transaksi["id_spp"] = hashids.encode(transaksi.id_spp);
+                transaksi["id_murid"] = hashids.encode(transaksi.id_murid);
+            } else {
+                transaksi = false;
+            }
+            return {
+                ...sppItem.toJSON(),
+                id: hashids.encode(sppItem.id),
+                periode: periodeFormat(sppItem.bulan, sppItem.tahun),
+                tagihan: moneyFormat('Rp', sppItem.tagihan),
+                transaksi: transaksi
+            };
+        });
+        res.render("pages/murid/payment/preview", {data, murid});
+    } catch (error) {
+        console.log(error.message);
+        res.render("pages/errors/500.ejs");
+    }
+};

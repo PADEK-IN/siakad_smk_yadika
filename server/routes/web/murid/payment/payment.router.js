@@ -10,6 +10,7 @@ const router = express.Router();
 // router.route("/add").get(isAuth, isMurid, index.historyPayment);
 router.route("/").get(index.getPaymentPage);
 router.route("/history").get(index.historyPayment);
+router.route("/preview").get(index.previewPage);
 
 
 export default router;
