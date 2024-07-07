@@ -28,12 +28,19 @@ export const getClassPage = async(req, res) => {
 export const addClassPage = async(req, res) => {
   try {
     const dataGuru = await Guru.findAll();
-    const guru = dataGuru.map((guru) => {
-        return {
+    const kelas = await Kelas.findAll();
+
+    const guruIdsInKelas = kelas.map((kelas) => kelas.id_wali_kelas);
+
+    const guru = dataGuru.reduce((result, guru) => {
+      if (!guruIdsInKelas.includes(guru.id)) {
+        result.push({
           ...guru.dataValues,
           id: hashids.encode(guru.id)
-        };
-      });
+        });
+      }
+      return result;
+    }, []);
     res.render("pages/admin/class/add.ejs", {guru});
   } catch (err) {
     console.log(err.message);
