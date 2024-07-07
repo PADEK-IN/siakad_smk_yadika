@@ -188,7 +188,7 @@ export const detailClassPage = async (req, res) => {
 
 export const classOwnPage = async (req, res) => {
   try {
-    const email = 'guru@gmail.com'; // Ganti dengan req.session.user.email jika menggunakan session
+    const email = req.session.user.email; // Ganti dengan req.session.user.email jika menggunakan session
 
     const dataGuru = await Guru.findOne({
       where: { email },
@@ -302,11 +302,10 @@ export const classOwnPage = async (req, res) => {
           tingkat: kelas.tingkat
         },
         id_murid: hashids.encode(m.id),
-        id_kelas: hashids.encode(kelas.id),
-        // encodedId: JSON.stringify({ muridId: m.id, kelasId: kelas.id }) // Encode murid ID dan kelas ID
+        id_kelas: hashids.encode(kelas.id)
       };
     });
-    console.log({muridWithNilai});
+    // console.log({muridWithNilai});
 
     const daftarKelas = await Kelas.findAll();
     const listKelas = daftarKelas.map((daftarKelas) => {

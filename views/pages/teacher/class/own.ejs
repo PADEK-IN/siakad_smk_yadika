@@ -78,7 +78,7 @@
                                             </div>
                                             <div class="modal-footer">
                                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                              <button type="button" onclick="naikan(`<%= data.id %>`)" class="btn btn-primary">Naikan</button>
+                                              <button type="button" onclick="naikan('<%= data.id_murid %>', '<%= data.id %>')" class="btn btn-primary">Naikan</button>
                                             </div>
                                           </div>
                                         </div>
@@ -127,19 +127,19 @@
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
     <script>
         new DataTable('#example');
-        function naikan(id) {
-          const kelas = $("#kelas-" + id).val() || null;
-          
-          
-          console.log("Nilai kelas:", kelas); // Tambahkan ini untuk debugging
+        function naikan(id, id_kelas) {
+          const kelas = $("#kelas-" + id_kelas).val() || null;
+          console.log({id, kelas})
+          console.log(kelas)
 
           // Pastikan kelas tidak kosong atau undefined sebelum melakukan AJAX
             if (kelas) {
                 $.ajax({
-                    url: `/api/admin/murid/${id}`,
+                  url: "/api/guru/murid/" + id,
+                    // url: `/api/guru/murid/${id}`,
                     method: "PATCH",
                     contentType: "application/json",
-                    data: JSON.stringify({ kelas }),
+                    data: JSON.stringify({ id_kelas: kelas }),
                     success: (response) => {
                         alert(response.status.message);
                         window.location.reload();
