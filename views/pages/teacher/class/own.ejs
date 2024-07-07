@@ -33,7 +33,7 @@
                           <thead>
                             <tr>
                               <th>ID</th>
-                              <th>Nis</th>
+                              <th>NIS</th>
                               <th>Nama</th>
                               <th>Kelas</th>
                               <% for (const data of jadwal) { %>
@@ -95,7 +95,7 @@
                                   <% } else { %>
                                     <td class="text-danger"><%= data.status %></td>
                                     <td>
-                                      <a href="#" class="btn btn-sm btn-warning">Tetap</a>
+                                      <button onclick="showAlert('<%= data.nama%>', '<%= data.nis%>')" class="btn btn-sm btn-warning">Tetap</button>
                                     </td>
                                   <% } %>
                                 <% } else { %>
@@ -115,6 +115,9 @@
                               } else {
                                 alert('Pilih kelas untuk menaikkan murid.');
                               }
+                            }
+                            function showAlert(nama, nis){
+                              alert(`Nilai ${nama} (NIS: ${nis}), Belum cukup untuk naik kelas, ${nama} Masih Stay di kelas ini`);
                             }
                           </script>
                           
