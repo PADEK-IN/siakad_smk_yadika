@@ -121,14 +121,25 @@ export const del = async (req, res) => {
         const validId = checkValidId(id);
         if(!validId) return responses.res400("ID murid tidak valid", res);
         
-        const respons = await Murid.destroy({
+        const murid = await Murid.findOne({
+            where: { id: validId },
+        });
+
+        if(!murid) return responses.res400("Maaf, data murid tidak ditemukan", res);
+
+        const email = murid.email;
+
+        await Murid.destroy({
             where: {id: validId}
         });
-       
-        if(!respons) return responses.res400("Maaf, data murid tidak ditemukan", res);
+
+        await Users.destroy({
+            where: {email}
+        });
+
         responses.res200("Data murid berhasil hapus", null, res);
     } catch (err) {
-        console.log(err.message);
+        console.log(err);
         responses.res500(res);
     }
 }
