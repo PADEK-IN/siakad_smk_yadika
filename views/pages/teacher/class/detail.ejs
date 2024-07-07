@@ -17,26 +17,32 @@
             <%- include ('./../../../components/navbar-teacher.ejs')%>
             <!-- navar end -->
 
-            <div class="container-fluid pt-4 px-4 pb-5">
-                <div class="d-flex mb-4">
-                    <a href="/teacher/class" class="d-inline-flex text-decoration-none bi bi-arrow-left pr-4"></a>
-                    <h6 class="px-3">Kembali</h6>
+            <div class="container-fluid pt-4 px-4 pb-5" id="content">
+                <div class="d-flex mb-4 justify-content-between">
+                    <span class="d-inline-flex text-decoration-none remove-tag">
+                        <a href="/teacher/class" class=" bi bi-arrow-left pr-4"></a>
+                        <h6 class="px-3 pt-1">Kembali</h6>
+                    </span>
+                    <div class="d-flex justify-content-end gap-1" id="action-button">
+                        <button type="button" class="btn btn-sm btn-warning" onclick="downloadPdf()">
+                            <span id="btn-download">Download PDF</span>
+                        </button>
+                      </div>
                 </div>
-                <div class="bg-light  rounded p-4">
-                    <div class="alert text-center alert-primary" role="alert">
-                        Detail Data Kelas
+                <div class="bg-light rounded">
+                    <div class="alert text-center alert-primary remove-tag" role="alert" id="title">
+                        <h6>Detail Data Nilai Kelas</h6>
                     </div>
-
                     <div class="bg-light rounded">
                         <div class="testimonial-item text-center">
-                            <h6 class=""><%= kelass.kelas %></h6>
+                            <h5 class=""><%= kelass.kelas %></h5>
                             <h5 class="mb-1"><%= guru.Mata_Pelajaran %></h5>
                             <p><%= kelass.Wali_Kelas %></p>
                         </div>
                     </div>
                     <hr>
                     <div class="bg-light rounded h-100">
-                        <h6 class="mb-4">List Murid</h6>
+                        <h6 class="mb-4 remove-tag">List Nilai Murid</h6>
                         <!-- all start -->
                         <div class="tab-pane fade show active" id="nav-semua" role="tabpanel" aria-labelledby="nav-semua-tab">
                             <table id="example" class="table table-striped text-center" style="width:100%">
@@ -202,7 +208,7 @@
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
     <script>
-        new DataTable('#example');
+        let exampleTable = new DataTable('#example');
 
         function edit(id, index) {
             const tugas = $("#tugasEdit-" + index).val() || null;
@@ -263,6 +269,33 @@
                 }
             });
         }
+        
+        function downloadPdf(){
+            $("#btn-download").replaceWith(`<span id="btn-download"><img src="/images/loading.gif" alt="download-pdf" width="18px"> Downloading ...</span>`);
+            exampleTable.destroy();
+            const content = $("#content").html();
+            exampleTable = new DataTable('#example');
+            let fileName = $("#title h6").text();
+            fileName = fileName.replace(/\s/g, "-");
+            $.ajax({
+                url: `/api/pdf`,
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({fileName, content}),
+                success: (response) => {
+                    window.location.href = `/api/pdf/download/${fileName}`;
+                    alert('Berhasil download pdf');
+                    $("#btn-download").replaceWith(`<span id="btn-download">Download PDF</span>`);
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message;
+                    alert(message);
+                }
+            });
+        }
+
+
+    
     </script>
 </body>
 
