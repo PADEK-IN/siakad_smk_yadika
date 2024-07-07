@@ -30,6 +30,7 @@
                               <th>ID</th>
                               <th>Nis</th>
                               <th>Nama</th>
+                              <th>Kelas</th>
                               <% for (const data of jadwal) { %>
                                 <th><%= data.pelajaran || 'Mata Pelajaran Kosong' %></th>
                               <% } %>
@@ -45,28 +46,72 @@
                                   <td><%= data.id %></td>
                                   <td><%= data.nis %></td>
                                   <td><%= data.nama %></td>
+                                  <td><%= data.kelas.kode %> (<%= data.kelas.tingkat %>)</td> <!-- Menampilkan kode dan tingkat kelas -->
                                   <% for (const jadwalData of jadwal) { %>
                                     <td><%= data.pelajaranNilai[jadwalData.pelajaran] !== null ? data.pelajaranNilai[jadwalData.pelajaran] : '-' %></td>
                                   <% } %>
                                   <td><%= data.totalNilai %></td>
                                   <% if (data.status === "Lulus") { %>
                                     <td class="text-success"><%= data.status %></td>
+                                    <td>
+                                      <a href="#" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#createNilai-<%= data.id %>">Naikan</a>
+                                      <!-- Modal Create -->
+                                      <div class="modal fade" id="createNilai-<%= data.id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="createNilaiLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h5 class="modal-title" id="createNilaiLabel">Naikan Kelas</h5>
+                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                              <div class="form-floating mb-3">
+                                                <select class="form-select" id="kelas-<%= data.id %>" aria-label="Floating label select example">
+                                                  <option selected disabled>Pilih Kelas</option>
+                                                  <% for (const kelas of listKelas) { %>
+                                                    <% if (kelas.tingkat > data.currentTingkat) { %>
+                                                      <option value="<%= kelas.id %>" id="kelas"><%= kelas.kode %> (<%= kelas.tingkat %>)</option>
+                                                    <% } %>
+                                                  <% } %>
+                                                </select>
+                                                <label for="kelas-<%= data.id %>">Kelas</label>
+                                              </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                              <button type="button" onclick="naikan(`<%= data.id %>`)" class="btn btn-primary">Naikan</button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </td>
                                   <% } else if (data.status === "Nilai Belum Lengkap") { %>
-                                    <td class="text-warning"><%= data.status %></td>
+                                    <td class="text-warning" colspan="2"><%= data.status %></td>
+                                    <td class="d-none"></td>
                                   <% } else { %>
                                     <td class="text-danger"><%= data.status %></td>
+                                    <td>
+                                      <a href="#" class="btn btn-sm btn-warning">Tetap</a>
+                                    </td>
                                   <% } %>
-                                  </td>
-                                  <td>
-                                    <a href="#" class="btn btn-success">Naikan</a>
-                                    <a href="#" class="btn btn-warning">Tetap</a>
-                                  </td>
                                 <% } else { %>
                                   <td colspan="<%= jadwal.length + 4 %>">Murid Belum ada</td>
                                 <% } %>
                               </tr>
                             <% } %>
                           </tbody>
+                          
+                          
+                          <script>
+                            function naikan(studentId) {
+                              const selectedClass = document.getElementById(`kelas-${studentId}`).value;
+                              if (selectedClass) {
+                                // Logic to update the student's class in the database
+                                console.log(`Murid dengan ID ${studentId} dinaikkan ke kelas dengan ID ${selectedClass}`);
+                              } else {
+                                alert('Pilih kelas untuk menaikkan murid.');
+                              }
+                            }
+                          </script>
                           
                         </table>
                     </div>
@@ -82,6 +127,33 @@
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
     <script>
         new DataTable('#example');
+        function naikan(id) {
+          const kelas = $("#kelas-" + id).val() || null;
+          
+          
+          console.log("Nilai kelas:", kelas); // Tambahkan ini untuk debugging
+
+          // Pastikan kelas tidak kosong atau undefined sebelum melakukan AJAX
+            if (kelas) {
+                $.ajax({
+                    url: `/api/admin/murid/${id}`,
+                    method: "PATCH",
+                    contentType: "application/json",
+                    data: JSON.stringify({ kelas }),
+                    success: (response) => {
+                        alert(response.status.message);
+                        window.location.reload();
+                    },
+                    error: (response) => {
+                        const message = response.responseJSON.status.message;
+                        alert(message);
+                    }
+                });
+            } else {
+                alert('Pilih kelas untuk menaikkan murid.');
+            }
+        }
+
     </script>
 </body>
 

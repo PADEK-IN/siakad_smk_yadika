@@ -188,29 +188,29 @@ export const detailClassPage = async (req, res) => {
 
 export const classOwnPage = async (req, res) => {
   try {
-    // const email = 'guru@gmail.com';
-    const  email  = req.session.user.email;
+    const email = 'guru@gmail.com'; // Ganti dengan req.session.user.email jika menggunakan session
 
-    // Temukan guru berdasarkan email
     const dataGuru = await Guru.findOne({
       where: { email },
       raw: true
     });
 
-    // Temukan kelas berdasarkan ID guru
     const kelas = await Kelas.findOne({
       where: { id_wali_kelas: dataGuru.id },
       raw: true
     });
-    // console.log({kelas})
 
-    // Temukan semua murid di kelas ini
     const dataMurid = await Murid.findAll({
       where: { id_kelas: kelas.id },
+      include: [
+        {
+          model: Kelas,
+          attributes: ['tingkat', 'kode'],
+        }
+      ],
       raw: true
     });
 
-    // Temukan semua mata pelajaran di kelas ini
     const dataJadwal = await Jadwal.findAll({
       where: { id_kelas: kelas.id },
       include: [
@@ -222,7 +222,6 @@ export const classOwnPage = async (req, res) => {
       raw: true
     });
 
-    // Hapus duplikasi mata pelajaran
     const mataPelajaranMap = new Map();
     dataJadwal.forEach(jadwal => {
       const key = jadwal['Mata_Pelajaran.id'];
@@ -235,10 +234,8 @@ export const classOwnPage = async (req, res) => {
     });
     const jadwal = Array.from(mataPelajaranMap.values());
 
-    // Ambil ID murid untuk digunakan dalam pencarian nilai
     const muridIds = dataMurid.map(murid => murid.id);
 
-    // Temukan semua nilai untuk murid-murid ini
     const dataNilai = await Penilaian.findAll({
       where: {
         id_murid: muridIds,
@@ -246,7 +243,6 @@ export const classOwnPage = async (req, res) => {
       raw: true,
     });
 
-    // Hitung nilai rata-rata untuk setiap mata pelajaran untuk setiap murid
     const muridWithNilai = dataMurid.map((m) => {
       const nilaiMurid = dataNilai.filter(n => n.id_murid === m.id);
       let totalNilai = 0;
@@ -274,19 +270,17 @@ export const classOwnPage = async (req, res) => {
             }
           });
           const average = count > 0 ? totalScores / count : 0;
-          pelajaranNilai[j.pelajaran] = average.toFixed(2); // Dibulatkan hingga 2 desimal
-          totalNilai += parseFloat(average); // Tambahkan nilai rata-rata ke total nilai
+          pelajaranNilai[j.pelajaran] = average.toFixed(2);
+          totalNilai += parseFloat(average);
           countPelajaran++;
         } else {
-          pelajaranNilai[j.pelajaran] = '-'; // Nilai belum lengkap
+          pelajaranNilai[j.pelajaran] = '-';
           incompleteData = true;
         }
       });
 
-      // Hitung rata-rata nilai untuk murid ini
       const rataNilai = countPelajaran > 0 ? totalNilai / countPelajaran : 0;
 
-      // Tentukan status kelulusan
       let status;
       if (incompleteData) {
         status = 'Nilai Belum Lengkap';
@@ -299,15 +293,33 @@ export const classOwnPage = async (req, res) => {
       return {
         ...m,
         pelajaranNilai,
-        totalNilai: rataNilai.toFixed(2), // Dibulatkan hingga 2 desimal
-        status
+        totalNilai: rataNilai.toFixed(2),
+        status,
+        currentTingkat: kelas.tingkat,
+        kelas: {
+          id: hashids.encode(kelas.id),
+          kode: kelas.kode,
+          tingkat: kelas.tingkat
+        },
+        id_murid: hashids.encode(m.id),
+        id_kelas: hashids.encode(kelas.id),
+        // encodedId: JSON.stringify({ muridId: m.id, kelasId: kelas.id }) // Encode murid ID dan kelas ID
+      };
+    });
+    console.log({muridWithNilai});
+
+    const daftarKelas = await Kelas.findAll();
+    const listKelas = daftarKelas.map((daftarKelas) => {
+      return {
+        id: hashids.encode(daftarKelas.id),
+        kode: daftarKelas.kode,
+        tingkat: daftarKelas.tingkat
       };
     });
 
-    res.render('pages/teacher/class/own.ejs', { kelas, jadwal, murid: muridWithNilai });
-
+    res.render('pages/teacher/class/own.ejs', { kelas, listKelas, jadwal, murid: muridWithNilai });
   } catch (err) {
     console.log(err.message);
-    res.render('pages/errors/500'); // Tangani kesalahan dengan baik
+    res.render('pages/errors/500');
   }
 }
