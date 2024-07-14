@@ -84,9 +84,9 @@
                         </div>
                         <div class="mb-3">
                             <label for="mata_pelajaran">Mata Pelajaran</label>
-                            <div id="currentMapel" class="d-none"><%= guru.id_mata_pelajaran %></div>
                             <select class="form-select" id="mata_pelajaran" aria-label="Floating label select example">
-                                <option selected undefined disabled>Pilih Mata Pelajaran</option>
+                                <option undefined disabled>Pilih Mata Pelajaran</option>
+                                <option value="<%= guru.id_mata_pelajaran%>" selected><%= guru.pelajaran%></option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -151,7 +151,6 @@
         
         $(document).ready(()=>{
             const currentEmail = $("#currentEmail").text();
-            const currentMapel = $("#currentMapel").text();
             // fetch data mata pelajaran
             $.ajax({
                 url: "/api/admin/mata-pelajaran/",

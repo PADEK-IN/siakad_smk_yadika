@@ -194,11 +194,15 @@ export const detailTeacherPage = async (req, res) => {
     if(!validId) return res.render("pages/errors/400", { message: "ID guru tidak valid" });
     const dataGuru = await Guru.findOne({
         where: { id: validId },
+        include: [{
+          model: Mata_Pelajaran
+        }]
     });
 
     const guru = {
         ...dataGuru.dataValues,
         id: hashids.encode(dataGuru.id),
+        pelajaran: dataGuru.Mata_Pelajaran.nama
     };
 
     const dataJadwal = await Jadwal.findAll({
@@ -240,12 +244,17 @@ export const editTeacherPage = async (req, res) => {
     if(!validId) return res.render("pages/errors/400", { message: "ID guru tidak valid" });
     const dataGuru = await Guru.findOne({
         where: { id: validId },
+        include: [{
+          model: Mata_Pelajaran
+        }]
     });
     const guru = {
         ...dataGuru.dataValues,
         id: hashids.encode(dataGuru.id),
         id_mata_pelajaran: hashids.encode(dataGuru.id_mata_pelajaran),
+        pelajaran: dataGuru.Mata_Pelajaran.nama
     };
+    console.log({guru});
     res.render('pages/admin/user/teacher-edit.ejs', {guru});
   } catch (err) {
     console.log(err.message);
