@@ -15,7 +15,7 @@ export const getNilaiPage = async (req, res) => {
       include: [
         {
           model: Mata_Pelajaran,
-          attributes: ['nama'],
+          attributes: ['nama','tingkat'],
         },
       ],
       raw: true,
@@ -26,8 +26,10 @@ export const getNilaiPage = async (req, res) => {
       return {
         ...data,
         id: hashids.encode(data.id),
-        Mata_Pelajaran:
-          data['Mata_Pelajaran.nama'] || 'Tidak ada mata pelajaran',
+        Mata_Pelajaran: {
+          nama: data['Mata_Pelajaran.nama'] || 'Tidak ada mata pelajaran',
+          tingkat: data['Mata_Pelajaran.tingkat'] || 'Tidak ada mata pelajaran',
+        },
       };
     });
 
