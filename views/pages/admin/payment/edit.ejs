@@ -39,6 +39,17 @@
                             <label for="tingkat">Tingkat</label>
                         </div>
 
+                        <!-- Tingkatan -->
+                        <div class="form-floating mb-3">
+                            <select class="form-select" id="jurusan"
+                                aria-label="Floating label select example">
+                                <% for(const item of jurusans) { %>
+                                    <option value="<%= item.id %>" <%= spp.jurusan === item.id ? 'selected' : '' %>><%= item.nama %></option>
+                                <% } %>
+                            </select>
+                            <label for="tingkat">Jurusan</label>
+                        </div>
+
                         <div class="mb-3">
                             <label for="inputTagihan" class="form-label">Jumlah Tagihan</label>
                             <input type="number" class="form-control" id="tagihan"
@@ -69,13 +80,14 @@
     <script>
         function edit(id) {
         const tingkat = $("#tingkat").val();
+        const jurusan = $("#jurusan").val();
         const tagihan = $("#tagihan").val();
         const periode = $("#bulan").val();
         $.ajax({
                 url: "/api/admin/spp/"+ id,
                 method: "PATCH",
                 contentType: "application/json",
-                data: JSON.stringify({tingkat, tagihan, periode}),
+                data: JSON.stringify({tingkat, jurusan, tagihan, periode}),
                 success: (response) => {
                     alert(response.status.message);
                     return window.location.href = `/admin/payment`;

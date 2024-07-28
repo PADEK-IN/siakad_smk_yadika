@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../configs/database.js";
+import Jurusan from "./jurusan.model.js";
 
 const Spp = sequelize.define(
   "Spp",
@@ -13,6 +14,14 @@ const Spp = sequelize.define(
     tingkat: {
       type: DataTypes.ENUM(["10", "11", "12"]),
       allowNull: false,
+    },
+    id_jurusan: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: Jurusan,
+        key: "id"
+      }
     },
     tagihan: {
       type: DataTypes.DECIMAL(11, 2),
@@ -28,5 +37,8 @@ const Spp = sequelize.define(
     },
   },
 );
+
+Jurusan.hasMany(Spp, {foreignKey: "id_jurusan"});
+Spp.belongsTo(Jurusan, {foreignKey: "id_jurusan"})
 
 export default Spp;

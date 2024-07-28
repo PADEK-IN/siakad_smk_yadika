@@ -4,10 +4,18 @@ import Transaksi from '../../../../models/transaksi.model.js';
 import { periodeFormat } from "../../../../helpers/periodeFormatter.js";
 import moneyFormat from "../../../../helpers/moneyFormatter.js";
 import { checkValidId, hashids } from '../../../../helpers/isValidId.js';
+import Jurusan from '../../../../models/jurusan.model.js';
 
 export const getPaymentPage = async(req, res) => {
   try {
-    const dataSpp = await Spp.findAll();
+    const dataSpp = await Spp.findAll({
+      include: [
+        {
+          model: Jurusan,
+          attributes: ["nama"]
+        }
+      ]
+    });
     const spp = dataSpp.map((spp) => {
       return {
         ...spp.dataValues,
@@ -20,9 +28,16 @@ export const getPaymentPage = async(req, res) => {
     res.render('pages/errors/500');
   }};
   
-export const addPaymentPage = (req, res) => {
-    res.render("pages/admin/payment/add.ejs");
-  };
+export const addPaymentPage = async (req, res) => {
+  const jurusan = await Jurusan.findAll();
+  const jurusans = jurusan.map((jurusan) => {
+    return {
+      ...jurusan.dataValues,
+      id: hashids.encode(jurusan.id),
+    };
+  });
+  res.render("pages/admin/payment/add.ejs", { jurusans });
+};
   
 export const editPaymentPage = async(req, res) => {
   try {
@@ -34,13 +49,21 @@ export const editPaymentPage = async(req, res) => {
       where: { id: decodedMapelId },
     })
 
+    const jurusan = await Jurusan.findAll();
+    const jurusans = jurusan.map((jurusan) => {
+      return {
+        ...jurusan.dataValues,
+        id: hashids.encode(jurusan.id),
+      };
+    });
+
     const spp = {
       ...dataSpp.dataValues,
       id: hashids.encode(dataSpp.id),
       periode: Number(dataSpp.bulan) > 9 ? dataSpp.tahun+"-"+dataSpp.bulan : dataSpp.tahun+"-0"+dataSpp.bulan
     };
 
-    res.render("pages/admin/payment/edit.ejs", { spp });
+    res.render("pages/admin/payment/edit.ejs", { spp, jurusans });
   } catch (err) {
     console.log(err.message);
     res.render('pages/errors/500');
