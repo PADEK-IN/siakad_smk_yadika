@@ -52,10 +52,10 @@ const Murid = sequelize.define(
       type: DataTypes.STRING(15),
       allowNull: false,
     },
-    hobi: {
-      type: DataTypes.STRING(70),
-      allowNull: true,
-    },
+    // hobi: {
+    //   type: DataTypes.STRING(70),
+    //   allowNull: true,
+    // },
     no_hp: {
       type: DataTypes.STRING(15),
       allowNull: false,
@@ -64,10 +64,10 @@ const Murid = sequelize.define(
       type: DataTypes.STRING(70),
       allowNull: true,
     },
-    no_ijazah: {
-      type: DataTypes.STRING(70),
-      allowNull: true,
-    },
+    // no_ijazah: {
+    //   type: DataTypes.STRING(70),
+    //   allowNull: true,
+    // },
     tahun_masuk: {
       type: DataTypes.INTEGER(4),
       allowNull: false,
