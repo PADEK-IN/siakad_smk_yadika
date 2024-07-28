@@ -74,7 +74,8 @@ export const getClassPage = async (req, res) => {
 
 export const detailClassPage = async (req, res) => {
   try {
-    const  email  = req.session.user.email;
+    // const  email  = req.session.user.email;
+    const  email  = "guru1@gmail.com";
     const dataGuru = await Guru.findOne({
       where: { email },
       raw: true,
@@ -149,18 +150,19 @@ export const detailClassPage = async (req, res) => {
     // Mengumpulkan semua id murid
     const muridIds = murid.map((m) => hashids.decode(m.id)[0]);
 
-    const dataNilai = await Penilaian.findAll({
+    const dataNilaiGanjil = await Penilaian.findAll({
       where: {
         id_murid: muridIds,
+        semester: 'ganjil',
         id_mata_pelajaran: mataPelajaranId,
       },
       raw: true,
     });
 
-    // Menggabungkan nilai dengan murid
-    const muridDenganNilai = murid.map((m) => {
+    // Menggabungkan nilai dengan murid Ganjil
+    const muridDenganNilaiGanjil = murid.map((m) => {
       const decodedMuridId = hashids.decode(m.id)[0];
-      const nilaiMurid = dataNilai
+      const nilaiMurid = dataNilaiGanjil
         .filter((n) => n.id_murid === decodedMuridId)
         .map((n) => ({
           ...n,
@@ -173,12 +175,39 @@ export const detailClassPage = async (req, res) => {
       };
     });
 
-    // console.log({ muridDenganNilai });
+    const dataNilaiGenap = await Penilaian.findAll({
+      where: {
+        id_murid: muridIds,
+        semester: 'genap',
+        id_mata_pelajaran: mataPelajaranId,
+      },
+      raw: true,
+    });
+
+    // Menggabungkan nilai dengan murid Genap
+    const muridDenganNilaiGenap = murid.map((m) => {
+      const decodedMuridId = hashids.decode(m.id)[0];
+      const nilaiMurid = dataNilaiGenap
+        .filter((n) => n.id_murid === decodedMuridId)
+        .map((n) => ({
+          ...n,
+          id: hashids.encode(n.id),
+        }));
+
+      return {
+        ...m,
+        nilai: nilaiMurid,
+      };
+    });
+
+
+    console.log({ muridDenganNilaiGanjil, muridDenganNilaiGenap });
 
     res.render('pages/teacher/class/detail.ejs', {
       guru,
       kelass,
-      muridDenganNilai,
+      muridDenganNilaiGanjil,
+      muridDenganNilaiGenap
     });
   } catch (err) {
     console.log(err.message);
