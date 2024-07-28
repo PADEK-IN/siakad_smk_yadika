@@ -7,7 +7,7 @@ const router = express.Router();
 
 // Routes
 router.route("/").get(isAuth, isGuru, index.getClassPage);
-router.route("/:id/detail").get( index.detailClassPage);
+router.route("/:id/detail").get(isAuth, isGuru, index.detailClassPage);
 router.route("/detail").get(isAuth, isGuru, index.classOwnPage);
 
 

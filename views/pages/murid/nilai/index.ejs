@@ -34,25 +34,27 @@
                         <table class=" table table-striped mb-4">
                             <thead class="text-center">
                                 <tr>
-                                        <th rowspan="2" style="vertical-align: middle; text-align: center;">No</th>
-                                        <th rowspan="2" style="vertical-align: middle; text-align: center;">Mata Pelajaran</th>
-                                        <th rowspan="2" style="vertical-align: middle; text-align: center;">Kelas</th>
-                                        <th colspan="4">Nilai</th>
-                                    </tr>
-                                    <tr>
-                                        <th>Tugas</th>
-                                        <th>UTS</th>
-                                        <th>UAS</th>
-                                        <th>Akhir</th>
-                                        <th class="d-none"></th>
-                                    </tr>
-                                </thead>
+                                    <th rowspan="2" style="vertical-align: middle; text-align: center;">No</th>
+                                    <th rowspan="2" style="vertical-align: middle; text-align: center;">Mata Pelajaran</th>
+                                    <th rowspan="2" style="vertical-align: middle; text-align: center;">Kelas</th>
+                                    <th colspan="5">Nilai</th>
+                                </tr>
+                                <tr>
+                                    <th>Semester</th>
+                                    <th>Tugas</th>
+                                    <th>UTS</th>
+                                    <th>UAS</th>
+                                    <th>Akhir</th>
+                                    <!-- <th class="d-none"></th> -->
+                                </tr>
+                            </thead>
                                 <tbody>
                                     <% for (const [index, data] of nilai.entries()) {%>
                                     <tr>
                                         <td class="text-center"><%= index + 1 %></td>
                                         <td><%= data.Mata_Pelajaran.nama %></td>
                                         <td class="text-center"><%= data.Mata_Pelajaran.tingkat %></td>
+                                        <td class="text-center"><%= data.semester != 0?data.semester:'-'  %></td>
                                         <td class="text-center"><%= data.tugas %></td>
                                         <td class="text-center"><%= data.uts != 0?data.uts:'-'  %></td>
                                         <td class="text-center"><%= data.uas != 0?data.uas:'-'  %></td>
