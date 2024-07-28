@@ -12,7 +12,7 @@ export const getPaymentPage = async (req, res) => {
         const {id_murid} = req.session.user;
         const murid = await Murid.findOne({
             where: {id: id_murid},
-            attributes: ["nama"],
+            attributes: ["nama", "id_jurusan"],
             include: [{
                 model: Kelas,
                 attributes: ["tingkat", "kode"],
@@ -20,7 +20,7 @@ export const getPaymentPage = async (req, res) => {
         })
 
         const spp = await Spp.findAll({
-            where: {tahun: currentYear, tingkat: murid.Kela.tingkat},
+            where: {tahun: currentYear, tingkat: murid.Kela.tingkat, id_jurusan: murid.id_jurusan},
             order: [["bulan", "DESC"], ["tahun", "DESC"]]
         });
         const dataTransaksi = await Transaksi.findAll({
