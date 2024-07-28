@@ -72,8 +72,11 @@ export const editClassPage = async(req, res) => {
     const kelas = {
       ...dataClass.dataValues,
       id: hashids.encode(dataClass.id),
+      idWaliKelas: hashids.encode(dataClass.id_wali_kelas),
       GuruId: hashids.encode(dataClass.Guru.id),
+      waliKelas: dataClass.Guru.nama,
     };
+    // console.log(kelas);
 
     const dataGuru = await Guru.findAll();
     const kelases = await Kelas.findAll();
