@@ -113,27 +113,27 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <div class="mb-3 row">
-                                                                        <label for="tugasEdit-<%= index %>" class="col-sm-4 col-form-label">Nilai Tugas</label>
+                                                                        <label for="tugasEditGanjil-<%= index %>" class="col-sm-4 col-form-label">Nilai Tugas</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="number" class="form-control" id="tugasEdit-<%= index %>" value="<%= data.nilai[0] ? data.nilai[0].tugas : '' %>">
+                                                                            <input type="number" class="form-control" id="tugasEditGanjil-<%= index %>" value="<%= data.nilai[0] ? data.nilai[0].tugas : '' %>">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
-                                                                        <label for="utsEdit-<%= index %>" class="col-sm-4 col-form-label">Nilai UTS</label>
+                                                                        <label for="utsEditGanjil-<%= index %>" class="col-sm-4 col-form-label">Nilai UTS</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="number" class="form-control" id="utsEdit-<%= index %>" value="<%= data.nilai[0] ? data.nilai[0].uts : '' %>">
+                                                                            <input type="number" class="form-control" id="utsEditGanjil-<%= index %>" value="<%= data.nilai[0] ? data.nilai[0].uts : '' %>">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
-                                                                        <label for="uasEdit-<%= index %>" class="col-sm-4 col-form-label">Nilai UAS</label>
+                                                                        <label for="uasEditGanjil-<%= index %>" class="col-sm-4 col-form-label">Nilai UAS</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="number" class="form-control" id="uasEdit-<%= index %>" value="<%= data.nilai[0] ? data.nilai[0].uas : '' %>">
+                                                                            <input type="number" class="form-control" id="uasEditGanjil-<%= index %>" value="<%= data.nilai[0] ? data.nilai[0].uas : '' %>">
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                                                    <button type="button" onclick="edit('<%= data.nilai[0].id %>', '<%= index %>')" class="btn btn-primary">Edit</button>
+                                                                    <button type="button" onclick="edit('<%= data.nilai[0].id %>', '<%= index %>','ganjil')" class="btn btn-primary">Edit</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -281,27 +281,27 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <div class="mb-3 row">
-                                                                        <label for="tugasEdit-<%= index %>" class="col-sm-4 col-form-label">Nilai Tugas</label>
+                                                                        <label for="tugasEditGenap-<%= index %>" class="col-sm-4 col-form-label">Nilai Tugas</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="number" class="form-control" id="tugasEdit-<%= index %>" value="<%= data.nilai[0] ? data.nilai[0].tugas : '' %>">
+                                                                            <input type="number" class="form-control" id="tugasEditGenap-<%= index %>" value="<%= data.nilai[0] ? data.nilai[0].tugas : '' %>">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
-                                                                        <label for="utsEdit-<%= index %>" class="col-sm-4 col-form-label">Nilai UTS</label>
+                                                                        <label for="utsEditGenap-<%= index %>" class="col-sm-4 col-form-label">Nilai UTS</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="number" class="form-control" id="utsEdit-<%= index %>" value="<%= data.nilai[0] ? data.nilai[0].uts : '' %>">
+                                                                            <input type="number" class="form-control" id="utsEditGenap-<%= index %>" value="<%= data.nilai[0] ? data.nilai[0].uts : '' %>">
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-3 row">
-                                                                        <label for="uasEdit-<%= index %>" class="col-sm-4 col-form-label">Nilai UAS</label>
+                                                                        <label for="uasEditGenap-<%= index %>" class="col-sm-4 col-form-label">Nilai UAS</label>
                                                                         <div class="col-sm-8">
-                                                                            <input type="number" class="form-control" id="uasEdit-<%= index %>" value="<%= data.nilai[0] ? data.nilai[0].uas : '' %>">
+                                                                            <input type="number" class="form-control" id="uasEditGenap-<%= index %>" value="<%= data.nilai[0] ? data.nilai[0].uas : '' %>">
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                                                    <button type="button" onclick="edit('<%= data.nilai[0].id %>', '<%= index %>')" class="btn btn-primary">Edit</button>
+                                                                    <button type="button" onclick="edit('<%= data.nilai[0].id %>', '<%= index %>', 'genap')" class="btn btn-primary">Edit</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -388,11 +388,17 @@
     <script>
         let exampleTable = new DataTable('.table');
 
-        function edit(id, index) {
-            const tugas = $("#tugasEdit-" + index).val() || null;
-            const uts = $("#utsEdit-" + index).val() || null;
-            const uas = $("#uasEdit-" + index).val() || null;
-            // console.log({id, tugas, uts, uas});
+        function edit(id, index, need) {
+            let tugas, uts, uas;
+            if(need == 'ganjil') {
+                tugas = $("#tugasEditGanjil-" + index).val() || null;
+                uts = $("#utsEditGanjil-" + index).val() || null;
+                uas = $("#uasEditGanjil-" + index).val() || null;
+            } else {
+                tugas = $("#tugasEditGenap-" + index).val() || null;
+                uts = $("#utsEditGenap-" + index).val() || null;
+                uas = $("#uasEditGenap-" + index).val() || null;
+            }
             $.ajax({
                 url: "/api/guru/nilai/" + id,
                 method: "PATCH",
