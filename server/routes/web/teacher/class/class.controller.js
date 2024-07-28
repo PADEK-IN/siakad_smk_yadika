@@ -74,8 +74,7 @@ export const getClassPage = async (req, res) => {
 
 export const detailClassPage = async (req, res) => {
   try {
-    // const  email  = req.session.user.email;
-    const  email  = "guru1@gmail.com";
+    const  email  = req.session.user.email;
     const dataGuru = await Guru.findOne({
       where: { email },
       raw: true,
