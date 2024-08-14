@@ -101,11 +101,21 @@ export const del = async (req, res) => {
         const validId = checkValidId(id);
         if(!validId) return responses.res400("ID guru tidak valid", res);
         
-        const respons = await Guru.destroy({
+        const guru = await Guru.findOne({
+            where: { id: validId },
+        });
+        
+        if(!guru) return responses.res400("Maaf, data guru tidak ditemukan", res);
+
+        const email = guru.email;
+
+        await Users.destroy({
+            where: {email}
+        });
+
+        await Guru.destroy({
             where: {id: validId}
         });
-       
-        if(!respons) return responses.res400("Maaf, data guru tidak ditemukan", res);
         responses.res200("Data guru berhasil hapus", null, res);
     } catch (err) {
         console.log(err.message);
