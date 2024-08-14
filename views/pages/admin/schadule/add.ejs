@@ -33,9 +33,9 @@
                             <select class="form-select" id="kelas" aria-label="Floating label select example">
                                 <option selected disabled>Kelas</option>
                                 <% for (const data of kelas) {%>
-                                <option value="<%= data.id %>" data-tingkat="<%= data.tingkat %>">
-                                    <%= data.kode %>(<%= data.tingkat %>)
-                                </option>
+                                    <option value="<%= data.id %>" data-tingkat="<%= data.tingkat %>">
+                                        <%= data.kode %>(<%= data.tingkat %>)
+                                    </option>
                                 <% } %>
                             </select>
                             <label for="kelas">Kelas</label>

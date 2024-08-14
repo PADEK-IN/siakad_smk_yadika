@@ -38,7 +38,9 @@
                                 aria-label="Floating label select example">
                                 <option selected undefined disabled>Kelas</option>
                                 <% for (const data of kelas) {%>
-                                    <option value="<%= data.id %>" <%= data.id === jadwal.idKelas ? 'selected' : '' %>><%= data.kode %></option>
+                                    <option value="<%= data.id %>" <%= data.id === jadwal.idKelas ? 'selected' : '' %>>
+                                        <%= data.kode %>(<%= data.tingkat %>)
+                                    </option>
                                 <% } %>
                             </select>
                             <label for="floatingSelect">Kelas</label>
