@@ -228,6 +228,12 @@ export const classOwnPage = async (req, res) => {
       raw: true
     });
 
+    if (!kelas) {
+      // If no class is found, render a page with a message
+      res.render('pages/teacher/class/not-walikelas.ejs', { message: 'Kamu Bukan Wali Kelas' });
+      return;
+    }
+
     const dataMurid = await Murid.findAll({
       where: { id_kelas: kelas.id },
       include: [
