@@ -189,7 +189,7 @@
                     const data = response.data;
                     for (const kelas of data) {
                         $("#id_kelas").append(`
-                            <option value="${kelas.id}">${kelas.tingkat} - ${kelas.kode}</option>
+                            <option value="${kelas.id}">${kelas.tingkat} - ${kelas.kode} - (Jumlah Murid: ${kelas.totalMuridAtKelas}) </option>
                         `);
                     }
                 },

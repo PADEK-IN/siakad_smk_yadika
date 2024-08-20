@@ -1,6 +1,7 @@
 import * as responses from "../../../../helpers/response.js";
 import Kelas from "../../../../models/kelas.model.js";
 import Guru from "../../../../models/guru.model.js";
+import Murid from "../../../../models/murid.model.js";
 import { checkValidId, hashids } from "../../../../helpers/isValidId.js";
 
 export const getAll = async (req, res) => {
@@ -11,16 +12,22 @@ export const getAll = async (req, res) => {
                     model: Guru,
                     attributes: [ "nama"],
                 },
-            ]
+            ],
         });
-        // console.log(dataKelas)
 
-        const data = dataKelas.map((Kelas) => {
-            return {
+        const data = await Promise.all(
+            dataKelas.map(async (Kelas) => {
+                const totalMuridAtKelas = await Murid.count({
+                    where: { id_kelas: Kelas.id },
+                });
+        
+                return {
                 ...Kelas.dataValues,
                 id: hashids.encode(Kelas.id),
-            };
-        });
+                totalMuridAtKelas,
+                };
+            })
+        );
 
         responses.res200("Berhasil mengambil data kelas", data, res);
     } catch (err) {
