@@ -49,6 +49,7 @@
         .footer .signature-line {
             display: block;
             margin-top: 50px;
+            margin-bottom: 0;
             border-top: 1px solid black;
             width: 120px;
         }
@@ -74,6 +75,7 @@
             <div class="footer">
                 <p>Jambi, <span id="current-date"></span></p>
                 <span class="signature-line"></span>
+                <p id="signature-name"></p>
             </div>
         </footer>
     </div>
@@ -92,6 +94,10 @@
         $("#title").remove();
         $("h4").text(title);
         $("table th:last-child, table td:last-child").remove();
+        let wali_kelas = $("#wali_kelas").text();
+        if (wali_kelas) {
+            $("#signature-name").text(wali_kelas);
+        }
     </script>
 </body>
 </html>
