@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIAKAD -  SMK Yadika</title>
+    <!-- Favicon -->
+    <link href="/images/icons/logo-smk.ico" rel="icon"> 
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Template Stylesheet -->
+    <!-- <link href="/css/library/style.css" rel="stylesheet"> -->
+    <style>
+        @media print {
+            @page {
+                margin: 20mm;
+            }
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            .no-print {
+                display: none;
+            }
+            table {
+                width: 100%;
+                table-layout: fixed;
+            }
+            th, td {
+                word-wrap: break-word;
+            }
+        }
+        p {
+            font-size: 13px;
+            margin: 0;
+        }
+        .kop-surat {
+            margin-bottom: 20px;
+        }
+        .kop-surat .line {
+            border-top: 2px solid #000;
+            margin: 5px 0;
+        }
+        .footer {
+            margin: 50px 50px 10px 50px;
+            width: 200px;
+        }
+        .footer .signature-line {
+            display: block;
+            margin-top: 50px;
+            margin-bottom: 0;
+            border-top: 1px solid black;
+            width: 120px;
+        }
+ 
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+
+        <!-- Kop Surat -->
+        <div class="kop-surat text-center">
+            <h3>Sekolah Menengah Kejuruan Yadika Jambi</h3>
+            <p>Jln. Abdul Muis Lorong Anggrek Rt 38 (Jerambah Bolong), kel. Lingkar Sel., Kec. Jambi Sel., Kota Jambi, Jambi 36136</p>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+
+        <div>
+          <h4 class='mb-0 text-center'></h4>
+          <%- data %>
+        </div>
+        <footer class="d-flex justif justify-content-end">
+            <div class="footer">
+                <p>Jambi, <span id="current-date"></span></p>
+                <span class="signature-line"></span>
+                <p id="signature-name"></p>
+            </div>
+        </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function formatDate(date) {
+            const options = { day: '2-digit', month: 'long', year: 'numeric' };
+            return date.toLocaleDateString('id-ID', options);
+        }
+        // Set current date
+        document.getElementById('current-date').textContent = formatDate(new Date());
+        $(".remove-tag").remove();
+        $("#action-button").remove();
+        let title = $("h6").text();
+        $("#title").remove();
+        $("h4").text(title);
+        $("table th:last-child, table td:last-child").remove();
+        let wali_kelas = $("#wali_kelas").text();
+        if (wali_kelas) {
+            $("#signature-name").text(wali_kelas);
+        }
+    </script>
+</body>
+</html>

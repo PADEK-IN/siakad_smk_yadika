@@ -1,6 +1,8 @@
 import * as responses from "../../../../helpers/response.js";
 import Mata_Pelajaran from "../../../../models/mata_pelajaran.model.js";
 import { checkValidId, hashids } from "../../../../helpers/isValidId.js";
+import { Op } from 'sequelize';
+import Guru from "../../../../models/guru.model.js";
 
 export const getAll = async (req, res) => {
     try {
@@ -13,7 +15,27 @@ export const getAll = async (req, res) => {
             };
           });
 
-        responses.res200("Berhasil mengambil data mata pelajaran", data, res);
+        // Ambil ID mata pelajaran yang sudah dimiliki oleh guru
+        const assignedSubjects = await Guru.findAll({
+            attributes: ['id_mata_pelajaran'],
+            where: { id_mata_pelajaran: { [Op.not]: null } }
+        });
+
+        // Buat daftar ID mata pelajaran yang sudah dimiliki
+        const assignedSubjectIds = assignedSubjects.map(guru => guru.id_mata_pelajaran);
+
+        // Filter mata pelajaran yang belum dimiliki oleh guru
+        const unassignedSubjects = dataMataPelajaran.filter(subject => {
+            // Pastikan ID adalah tipe data yang sama
+            return !assignedSubjectIds.includes(subject.id);
+        }).map((subject) => {
+            return {
+                ...subject.dataValues,
+                id: hashids.encode(subject.id)
+            };
+        });
+
+        responses.res200("Berhasil mengambil data mata pelajaran", { data, unassignedSubjects }, res);
     } catch (err) {
         console.log(err.message);
         responses.res500(res);

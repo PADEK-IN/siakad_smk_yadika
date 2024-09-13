@@ -29,9 +29,6 @@
                                 <tr>
                                     <th>Kelas</th>
                                     <th>Wali Kelas</th>
-                                    <!-- <th>Tugas</th>
-                                    <th>UTS</th>
-                                    <th>UAS</th> -->
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -40,9 +37,6 @@
                                 <tr>
                                     <td><a href="/teacher/class/<%= data.id %>/detail"><%= data.kelas %></a></td>
                                     <td><%= data.Wali_Kelas %></td>
-                                    <!-- <td><span class="badge bg-primary">Tuntas</span></td>
-                                    <td><span class="badge bg-danger">Belum</span></td>
-                                    <td><span class="badge bg-danger">Belum</span></td> -->
                                     <td>
                                         <% if (data.isActive == 1) {%>
                                             <span class="badge bg-success">Aktif</span>
@@ -57,9 +51,6 @@
                                 <tr>
                                     <th>Kelas</th>
                                     <th>Wali Kelas</th>
-                                    <!-- <th>Tugas</th>
-                                    <th>UTS</th>
-                                    <th>UAS</th> -->
                                     <th>Status</th>
                                 </tr>
                             </tfoot>

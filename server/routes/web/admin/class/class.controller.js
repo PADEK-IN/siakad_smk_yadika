@@ -28,12 +28,19 @@ export const getClassPage = async(req, res) => {
 export const addClassPage = async(req, res) => {
   try {
     const dataGuru = await Guru.findAll();
-    const guru = dataGuru.map((guru) => {
-        return {
+    const kelas = await Kelas.findAll();
+
+    const guruIdsInKelas = kelas.map((kelas) => kelas.id_wali_kelas);
+
+    const guru = dataGuru.reduce((result, guru) => {
+      if (!guruIdsInKelas.includes(guru.id)) {
+        result.push({
           ...guru.dataValues,
           id: hashids.encode(guru.id)
-        };
-      });
+        });
+      }
+      return result;
+    }, []);
     res.render("pages/admin/class/add.ejs", {guru});
   } catch (err) {
     console.log(err.message);
@@ -56,20 +63,35 @@ export const editClassPage = async(req, res) => {
         },
       ],
     });
+
+    // Pastikan data kelas ditemukan
+    if (!dataClass) {
+      return res.render('pages/errors/404');
+    }
+
     const kelas = {
       ...dataClass.dataValues,
       id: hashids.encode(dataClass.id),
+      idWaliKelas: hashids.encode(dataClass.id_wali_kelas),
       GuruId: hashids.encode(dataClass.Guru.id),
+      waliKelas: dataClass.Guru.nama,
     };
+    // console.log(kelas);
 
     const dataGuru = await Guru.findAll();
+    const kelases = await Kelas.findAll();
 
-    const guru = dataGuru.map((guru) => {
-        return {
+    const guruIdsInKelas = kelases.map((kelases) => kelases.id_wali_kelas);
+
+    const guru = dataGuru.reduce((result, guru) => {
+      if (!guruIdsInKelas.includes(guru.id)) {
+        result.push({
           ...guru.dataValues,
           id: hashids.encode(guru.id)
-        };
-      });
+        });
+      }
+      return result;
+    }, []);
     res.render("pages/admin/class/edit.ejs", { kelas, guru });
   } catch (err) {
     console.log(err.message);

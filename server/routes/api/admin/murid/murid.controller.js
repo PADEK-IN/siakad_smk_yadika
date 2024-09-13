@@ -50,7 +50,7 @@ export const create = async (req, res) => {
     try {
         const {
             nis, email, nama, tempat_lahir, tanggal_lahir, alamat, jenis_kelamin,
-            agama, hobi, no_hp, sekolah_asal, no_ijazah, tahun_masuk, id_jurusan, id_kelas, status
+            agama, no_hp, sekolah_asal, tahun_masuk, id_jurusan, id_kelas, status
         } = JSON.parse(req.body.data);
        
         const idJurusan = checkValidId(id_jurusan);
@@ -67,7 +67,7 @@ export const create = async (req, res) => {
 
         await Murid.create({
             nis, email, nama, tempat_lahir, tanggal_lahir, alamat, jenis_kelamin,
-            agama, hobi, no_hp, sekolah_asal, no_ijazah, tahun_masuk, 
+            agama, no_hp, sekolah_asal, tahun_masuk, 
             id_jurusan: idJurusan, id_kelas: idKelas, foto, status
         });
 
@@ -84,7 +84,7 @@ export const update = async (req, res) => {
     try {
         const {
             nis, email, nama, tempat_lahir, tanggal_lahir, alamat, jenis_kelamin, agama,
-            hobi, no_hp, sekolah_asal, no_ijazah, tahun_masuk, id_jurusan, id_kelas, status
+            no_hp, sekolah_asal, tahun_masuk, id_jurusan, id_kelas, status
         } = JSON.parse(req.body.data);
         const {id} = req.params;
 
@@ -99,7 +99,7 @@ export const update = async (req, res) => {
 
         const respons = await Murid.update({
             nis, email, nama, tempat_lahir, tanggal_lahir, alamat, jenis_kelamin,
-            agama, hobi, no_hp, sekolah_asal, no_ijazah, tahun_masuk, 
+            agama, no_hp, sekolah_asal, tahun_masuk, 
             id_jurusan: idJurusan, id_kelas: idKelas, foto, status
         },{
             where: {
@@ -121,14 +121,25 @@ export const del = async (req, res) => {
         const validId = checkValidId(id);
         if(!validId) return responses.res400("ID murid tidak valid", res);
         
-        const respons = await Murid.destroy({
+        const murid = await Murid.findOne({
+            where: { id: validId },
+        });
+
+        if(!murid) return responses.res400("Maaf, data murid tidak ditemukan", res);
+
+        const email = murid.email;
+
+        await Murid.destroy({
             where: {id: validId}
         });
-       
-        if(!respons) return responses.res400("Maaf, data murid tidak ditemukan", res);
+
+        await Users.destroy({
+            where: {email}
+        });
+
         responses.res200("Data murid berhasil hapus", null, res);
     } catch (err) {
-        console.log(err.message);
+        console.log(err);
         responses.res500(res);
     }
 }

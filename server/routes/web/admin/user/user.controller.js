@@ -3,7 +3,7 @@ import Murid from "../../../../models/murid.model.js";
 import Users from "../../../../models/users.model.js";
 import Mata_Pelajaran from "../../../../models/mata_pelajaran.model.js";
 import Kelas from "../../../../models/kelas.model.js";
-import Jadwal_Pelajaran from "../../../../models/jadwal_pelajaran.model.js";
+import Jadwal from "../../../../models/jadwal_pelajaran.model.js";
 import { checkValidId, hashids } from "../../../../helpers/isValidId.js";
 import Jurusan from "../../../../models/jurusan.model.js";
 
@@ -194,26 +194,42 @@ export const detailTeacherPage = async (req, res) => {
     if(!validId) return res.render("pages/errors/400", { message: "ID guru tidak valid" });
     const dataGuru = await Guru.findOne({
         where: { id: validId },
+        include: [{
+          model: Mata_Pelajaran
+        }]
     });
-
-    // const jadwal = await Jadwal_Pelajaran.findAll({
-    //   where: { id_mata_pelajaran: dataGuru.id_mata_pelajaran },
-    //   include: [
-    //     { model: Mata_Pelajaran},
-    //     { model: Kelas,
-    //       include:  [{
-    //         model: Guru
-    //       }]
-    //     },
-    //   ]
-    // })
 
     const guru = {
         ...dataGuru.dataValues,
         id: hashids.encode(dataGuru.id),
+        pelajaran: dataGuru.Mata_Pelajaran.nama
     };
+
+    const dataJadwal = await Jadwal.findAll({
+      where: { id_mata_pelajaran: guru.id_mata_pelajaran },
+      include: [
+          { 
+              model: Kelas,
+              attributes: [ "tingkat", "kode", "id_wali_kelas" ],
+              include:  [
+                  {   
+                      model: Guru,
+                      attributes: [ "nama" ] }
+                ]
+            },
+        ],
+    })
+    const jadwal = dataJadwal.map((jadwal) => {
+      return {
+          ...jadwal.dataValues,
+          id: hashids.encode(jadwal.id),
+          id_mata_pelajaran: hashids.encode(jadwal.id_mata_pelajaran),
+          Kela: jadwal.Kela.tingkat + "--" +  jadwal.Kela.kode,
+          Wali_Kelas: jadwal.Kela.Guru.nama,
+      }
+  })
     
-    res.render('pages/admin/user/teacher-detail.ejs', { guru });
+    res.render('pages/admin/user/teacher-detail.ejs', { guru, jadwal });
   } catch (err) {
     console.log(err.message);
     res.render("pages/errors/500");
@@ -228,12 +244,17 @@ export const editTeacherPage = async (req, res) => {
     if(!validId) return res.render("pages/errors/400", { message: "ID guru tidak valid" });
     const dataGuru = await Guru.findOne({
         where: { id: validId },
+        include: [{
+          model: Mata_Pelajaran
+        }]
     });
     const guru = {
         ...dataGuru.dataValues,
         id: hashids.encode(dataGuru.id),
         id_mata_pelajaran: hashids.encode(dataGuru.id_mata_pelajaran),
+        pelajaran: dataGuru.Mata_Pelajaran.nama
     };
+    console.log({guru});
     res.render('pages/admin/user/teacher-edit.ejs', {guru});
   } catch (err) {
     console.log(err.message);

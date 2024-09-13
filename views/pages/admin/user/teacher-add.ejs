@@ -156,11 +156,17 @@
                 method: "GET",
                 contentType: "application/json",
                 success: (response) => {
-                    const data = response.data;
-                    for (const mapel of data) {
+                    const data = response.data.unassignedSubjects;
+                    if (data.length === 0) {
                         $("#mata_pelajaran").append(`
-                            <option value="${mapel.id}">${mapel.nama}</option>
-                        `)    
+                            <option value="" disabled selected>Tidak ada mata pelajaran yang kosong</option>
+                        `);
+                    } else {
+                        for (const mapel of data) {
+                            $("#mata_pelajaran").append(`
+                                <option value="${mapel.id}">${mapel.nama}-${mapel.tingkat}</option>
+                            `);
+                        }
                     }
                 },
                 error: (response) => {

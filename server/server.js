@@ -41,6 +41,7 @@ import adminPenilaianRouter from './routes/api/admin/penilaian/penilaian.router.
 import adminJadwalPelajaranRouter from './routes/api/admin/jadwal_pelajaran/jadwal_pelajaran.router.js';
 import adminJadwalAbsenRouter from './routes/api/admin/jadwal_absen/jadwal_absen.router.js';
 import adminAbsenRouter from './routes/api/admin/absen/absen.router.js';
+import pdfRouter from './routes/api/pdf/pdf.router.js';
 // Murid
 import muridProfileRouter from './routes/api/murid/profile/profile.router.js';
 import muridKelasRouter from './routes/api/murid/kelas/kelas.router.js';
@@ -54,6 +55,7 @@ import guruNilaiRouter from './routes/api/guru/nilai/nilai.router.js';
 import guruJadwalPelajaranRouter from './routes/api/guru/jadwal_pelajaran/jadwal_pelajaran.router.js';
 import guruJadwalAbsenRouter from './routes/api/guru/jadwal_absen/jadwal_absen.router.js';
 import guruAbsenRouter from './routes/api/guru/absen/absen.router.js';
+import guruKelasRouter from './routes/api/guru/kelas/kelas.router.js';
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -103,6 +105,8 @@ app.use('/murid/nilai', nilaiMuridRouter);
 // // ROUTES API
 // Auth
 app.use('/api/auth', authRouter);
+// PDF
+app.use('/api/pdf', pdfRouter);
 // Admin
 app.use('/api/admin/user', adminUserRouter);
 app.use('/api/admin/jurusan', adminJurusanRouter);
@@ -129,6 +133,7 @@ app.use('/api/guru/nilai', guruNilaiRouter);
 app.use('/api/guru/jadwal-pelajaran', guruJadwalPelajaranRouter);
 app.use('/api/guru/jadwal-absen', guruJadwalAbsenRouter);
 app.use('/api/guru/absen', guruAbsenRouter);
+app.use('/api/guru/murid', guruKelasRouter);
 
 // Routes Not Found
 app.use(notFoundHandler);

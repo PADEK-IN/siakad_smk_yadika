@@ -21,6 +21,7 @@
                 <div class="d-flex align-items-center justify-content-between mb-4">
                     <h6 class="mb-0">List SPP</h6>
                     <div>
+                        <a class="btn btn-sm btn-warning" href="/murid/payment/preview">Laporan</a>
                         <a class="btn btn-sm btn-primary" href="/murid/payment/history">History Pembayaran</a>
                     </div>
                 </div>
@@ -39,7 +40,7 @@
                     <div class="bg-light rounded h-100">
                         <h6 class="mb-4">List SPP</h6>
                         <div class="accordion accordion-flush" id="accordionFlushExample">
-                            <% for(const spp of data) { %>
+                            <% data.forEach((spp, index) => { %>
                             <!-- payment content start -->
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="acc-head-<%= spp.id %>">
@@ -47,9 +48,9 @@
                                         data-bs-toggle="collapse" data-bs-target="#acc-coll-<%= spp.id %>"
                                         aria-expanded="false" aria-controls="acc-coll-<%= spp.id %>">
                                         <span><%= spp.periode.toUpperCase() %></span>
-                                        <% if(!spp.transaksi) {%>
+                                        <% if(!spp.transaksi) { %>
                                             <span class="badge bg-danger mx-2">Belum Bayar</span>
-                                        <% } else if(!spp.transaksi.isValid) {%>
+                                        <% } else if(!spp.transaksi.isValid) { %>
                                             <span class="badge bg-warning mx-2">Pending</span>
                                         <% } else { %>
                                             <span class="badge bg-success mx-2">Lunas</span>
@@ -68,7 +69,7 @@
                                                     <td class="fw-bold">Tagihan</td>
                                                     <td><%= spp.tagihan %></td>
                                                 </tr>
-                                                <% if(spp.transaksi) {%>
+                                                <% if(spp.transaksi) { %>
                                                 <tr>
                                                     <td class="fw-bold">Tanggal Bayar</td>
                                                     <td><%= spp.transaksi.tanggal_bayar %></td>
@@ -77,9 +78,9 @@
                                                 <tr>
                                                     <td class="fw-bold">Status</td>
                                                     <td>
-                                                        <% if(!spp.transaksi) {%>
+                                                        <% if(!spp.transaksi) { %>
                                                             <span class="badge bg-danger">Belum Bayar</span>
-                                                        <% } else if(!spp.transaksi.isValid) {%>
+                                                        <% } else if(!spp.transaksi.isValid) { %>
                                                             <span class="badge bg-warning">Pending</span>
                                                         <% } else { %>
                                                             <span class="badge bg-success">Lunas</span>
@@ -89,16 +90,33 @@
                                                 <tr>
                                                     <td class="fw-bold">Bukti</td>
                                                     <td class="text-center">
-                                                        <% if(!spp.transaksi) {%>
-                                                                <span>-</span>  
+                                                        <% if (!spp.transaksi) { %>
+                                                            <span>-</span>  
                                                         <% } else { %>
-                                                                <img class="img-fluid mx-auto mb-4" src="/uploads/<%= spp.transaksi.bukti_bayar %>" alt="bukti_bayar" style="width: 100px;">
+                                                            <img class="img-fluid mx-auto mb-4" src="/uploads/<%= spp.transaksi.bukti_bayar %>" alt="bukti_bayar" style="width: 100px;" data-bs-toggle="modal" data-bs-target="#exampleModal<%= index %>">
+                                                            <!-- Modal -->
+                                                            <div class="modal fade" id="exampleModal<%= index %>" tabindex="-1" aria-labelledby="exampleModalLabel<%= index %>" aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLabel<%= index %>">Modal title</h5>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <img class="img-fluid mx-auto mb-4" src="/uploads/<%= spp.transaksi.bukti_bayar %>" alt="" style="width: 500px">
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         <% } %>
-                                                        
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <% if(!spp.transaksi) {%>
+                                                    <% if(!spp.transaksi) { %>
                                                     <td class="fw-bold text-center" colspan="2">
                                                         <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#bayar-<%= spp.id %>">Bayar</button>  
                                                     </td>
@@ -133,9 +151,9 @@
                                 </div>
                             </div>
                             <!-- payment content end -->
-                            <% } %>
-                            
+                            <% }); %>
                         </div>
+                        
                     </div>
                 </div>       
             </div>

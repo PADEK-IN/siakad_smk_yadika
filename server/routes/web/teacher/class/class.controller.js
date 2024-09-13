@@ -9,7 +9,6 @@ import { checkValidId, hashids } from '../../../../helpers/isValidId.js';
 export const getClassPage = async (req, res) => {
   try {
     const  email  = req.session.user.email;
-    // const email = 'guru@gmail.com';
     const dataGuru = await Guru.findOne({
       where: { email },
       raw: true,
@@ -29,8 +28,6 @@ export const getClassPage = async (req, res) => {
       Mata_Pelajaran: mataPelajaranNama || 'Tidak ada mata pelajaran',
       // id_mata_pelajaran: hashids.encode(dataGuru.id_mata_pelajaran),
     };
-    // console.log({ guru });
-    // console.log(guru.id_mata_pelajaran);
 
     const dataJadwal = await Jadwal.findAll({
       where: { id_mata_pelajaran: guru.id_mata_pelajaran },
@@ -68,20 +65,6 @@ export const getClassPage = async (req, res) => {
       return acc;
     }, []);
 
-    // console.log({ kelas });
-
-    // const jadwal = dataJadwal.map((jadwal) => {
-    //     return {
-    //         ...jadwal.dataValues,
-    //         id: hashids.encode(jadwal.id),
-    //         id_mata_pelajaran: hashids.encode(jadwal.id_mata_pelajaran),
-    //         Kela: jadwal.Kela.tingkat + "--" +  jadwal.Kela.kode,
-    //         Mata_Pelajaran: jadwal.Mata_Pelajaran.nama,
-    //         Wali_Kelas: jadwal.Kela.Guru.nama,
-    //     }
-    // })
-    // console.log({ jadwal });
-
     res.render('pages/teacher/class/index.ejs', { guru, kelas });
   } catch (err) {
     console.log(err.message);
@@ -92,7 +75,6 @@ export const getClassPage = async (req, res) => {
 export const detailClassPage = async (req, res) => {
   try {
     const  email  = req.session.user.email;
-    // const email = 'guru@gmail.com';
     const dataGuru = await Guru.findOne({
       where: { email },
       raw: true,
@@ -167,28 +149,19 @@ export const detailClassPage = async (req, res) => {
     // Mengumpulkan semua id murid
     const muridIds = murid.map((m) => hashids.decode(m.id)[0]);
 
-    const dataNilai = await Penilaian.findAll({
+    const dataNilaiGanjil = await Penilaian.findAll({
       where: {
         id_murid: muridIds,
+        semester: 'ganjil',
         id_mata_pelajaran: mataPelajaranId,
       },
       raw: true,
     });
 
-    const nilai = dataNilai.map((nilai) => {
-      return {
-        ...nilai,
-        id: hashids.encode(nilai.id),
-        id_murid: hashids.encode(nilai.id_murid),
-        id_mata_pelajaran: hashids.encode(nilai.id_mata_pelajaran),
-      };
-    });
-    // console.log({ nilai });
-
-    // Menggabungkan nilai dengan murid
-    const muridDenganNilai = murid.map((m) => {
+    // Menggabungkan nilai dengan murid Ganjil
+    const muridDenganNilaiGanjil = murid.map((m) => {
       const decodedMuridId = hashids.decode(m.id)[0];
-      const nilaiMurid = dataNilai
+      const nilaiMurid = dataNilaiGanjil
         .filter((n) => n.id_murid === decodedMuridId)
         .map((n) => ({
           ...n,
@@ -201,15 +174,185 @@ export const detailClassPage = async (req, res) => {
       };
     });
 
-    // console.log({ muridDenganNilai });
+    const dataNilaiGenap = await Penilaian.findAll({
+      where: {
+        id_murid: muridIds,
+        semester: 'genap',
+        id_mata_pelajaran: mataPelajaranId,
+      },
+      raw: true,
+    });
+
+    // Menggabungkan nilai dengan murid Genap
+    const muridDenganNilaiGenap = murid.map((m) => {
+      const decodedMuridId = hashids.decode(m.id)[0];
+      const nilaiMurid = dataNilaiGenap
+        .filter((n) => n.id_murid === decodedMuridId)
+        .map((n) => ({
+          ...n,
+          id: hashids.encode(n.id),
+        }));
+
+      return {
+        ...m,
+        nilai: nilaiMurid,
+      };
+    });
+
+
+    console.log({ muridDenganNilaiGanjil, muridDenganNilaiGenap });
 
     res.render('pages/teacher/class/detail.ejs', {
       guru,
       kelass,
-      muridDenganNilai,
+      muridDenganNilaiGanjil,
+      muridDenganNilaiGenap
     });
   } catch (err) {
     console.log(err.message);
     res.render('pages/errors/500');
   }
 };
+
+export const classOwnPage = async (req, res) => {
+  try {
+    const email = req.session.user.email; // Ganti dengan req.session.user.email jika menggunakan session
+
+    const dataGuru = await Guru.findOne({
+      where: { email },
+      raw: true
+    });
+
+    const kelas = await Kelas.findOne({
+      where: { id_wali_kelas: dataGuru.id },
+      raw: true
+    });
+
+    if (!kelas) {
+      // If no class is found, render a page with a message
+      res.render('pages/teacher/class/not-walikelas.ejs', { message: 'Kamu Bukan Wali Kelas' });
+      return;
+    }
+
+    const dataMurid = await Murid.findAll({
+      where: { id_kelas: kelas.id },
+      include: [
+        {
+          model: Kelas,
+          attributes: ['tingkat', 'kode'],
+        }
+      ],
+      raw: true
+    });
+
+    const dataJadwal = await Jadwal.findAll({
+      where: { id_kelas: kelas.id },
+      include: [
+        {
+          model: Mata_Pelajaran,
+          attributes: ['id', 'nama'],
+        }
+      ],
+      raw: true
+    });
+
+    const mataPelajaranMap = new Map();
+    dataJadwal.forEach(jadwal => {
+      const key = jadwal['Mata_Pelajaran.id'];
+      if (!mataPelajaranMap.has(key)) {
+        mataPelajaranMap.set(key, {
+          id_pelajaran: jadwal['Mata_Pelajaran.id'],
+          pelajaran: jadwal['Mata_Pelajaran.nama']
+        });
+      }
+    });
+    const jadwal = Array.from(mataPelajaranMap.values());
+
+    const muridIds = dataMurid.map(murid => murid.id);
+
+    const dataNilai = await Penilaian.findAll({
+      where: {
+        id_murid: muridIds,
+      },
+      raw: true,
+    });
+
+    const muridWithNilai = dataMurid.map((m) => {
+      const nilaiMurid = dataNilai.filter(n => n.id_murid === m.id);
+      let totalNilai = 0;
+      let countPelajaran = 0;
+      const pelajaranNilai = {};
+      let incompleteData = false;
+
+      jadwal.forEach(j => {
+        const nilai = nilaiMurid.filter(n => n.id_mata_pelajaran === j.id_pelajaran);
+        if (nilai.length > 0) {
+          let totalScores = 0;
+          let count = 0;
+          nilai.forEach(n => {
+            if (n.tugas !== null) {
+              totalScores += parseFloat(n.tugas) || 0;
+              count++;
+            }
+            if (n.uts !== null) {
+              totalScores += parseFloat(n.uts) || 0;
+              count++;
+            }
+            if (n.uas !== null) {
+              totalScores += parseFloat(n.uas) || 0;
+              count++;
+            }
+          });
+          const average = count > 0 ? totalScores / count : 0;
+          pelajaranNilai[j.pelajaran] = average.toFixed(2);
+          totalNilai += parseFloat(average);
+          countPelajaran++;
+        } else {
+          pelajaranNilai[j.pelajaran] = '-';
+          incompleteData = true;
+        }
+      });
+
+      const rataNilai = countPelajaran > 0 ? totalNilai / countPelajaran : 0;
+
+      let status;
+      if (incompleteData) {
+        status = 'Nilai Belum Lengkap';
+      } else if (rataNilai >= 60) {
+        status = 'Lulus';
+      } else {
+        status = 'Belum Lulus';
+      }
+
+      return {
+        ...m,
+        pelajaranNilai,
+        totalNilai: rataNilai.toFixed(2),
+        status,
+        currentTingkat: kelas.tingkat,
+        kelas: {
+          id: hashids.encode(kelas.id),
+          kode: kelas.kode,
+          tingkat: kelas.tingkat
+        },
+        id_murid: hashids.encode(m.id),
+        id_kelas: hashids.encode(kelas.id)
+      };
+    });
+    // console.log({muridWithNilai});
+
+    const daftarKelas = await Kelas.findAll();
+    const listKelas = daftarKelas.map((daftarKelas) => {
+      return {
+        id: hashids.encode(daftarKelas.id),
+        kode: daftarKelas.kode,
+        tingkat: daftarKelas.tingkat
+      };
+    });
+
+    res.render('pages/teacher/class/own.ejs', { kelas, listKelas, jadwal, murid: muridWithNilai });
+  } catch (err) {
+    console.log(err.message);
+    res.render('pages/errors/500');
+  }
+}

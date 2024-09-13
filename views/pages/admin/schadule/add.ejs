@@ -30,28 +30,29 @@
                     <form>
                         <!-- Kelas -->
                         <div class="form-floating mb-3">
-                            <select class="form-select" id="kelas"
-                                aria-label="Floating label select example">
-                                <option selected undefined disabled>Kelas</option>
+                            <select class="form-select" id="kelas" aria-label="Floating label select example">
+                                <option selected disabled>Kelas</option>
                                 <% for (const data of kelas) {%>
-                                <option value="<%= data.id %>"><%= data.kode %></option>
+                                    <option value="<%= data.id %>" data-tingkat="<%= data.tingkat %>">
+                                        <%= data.kode %>(<%= data.tingkat %>)
+                                    </option>
                                 <% } %>
                             </select>
-                            <label for="floatingSelect">Kelas</label>
+                            <label for="kelas">Kelas</label>
                         </div>
 
-                        <!-- pelajaran -->
+                        <!-- Pelajaran -->
                         <div class="form-floating mb-3">
-                            <select class="form-select" id="mataPelajaran"
-                                aria-label="Floating label select example">
-                                <option selected undefined disabled>Pelajaran</option>
+                            <select class="form-select" id="mataPelajaran" aria-label="Floating label select example">
+                                <option selected disabled>Pelajaran</option>
                                 <% for (const data of mataPelajaran) {%>
-                                <option value="<%= data.id %>"><%= data.nama %></option>
+                                <option value="<%= data.id %>" data-tingkat="<%= data.tingkat %>">
+                                    <%= data.nama %>(<%= data.tingkat %>)
+                                </option>
                                 <% } %>
                             </select>
-                            <label for="floatingSelect">Pelajaran</label>
+                            <label for="mataPelajaran">Pelajaran</label>
                         </div>
-
                         <!-- Hari -->
                         <div class="form-floating mb-3">
                             <select class="form-select" id="hari"
@@ -62,23 +63,22 @@
                                 <option value="rabu">Rabu</option>
                                 <option value="kamis">Kamis</option> 
                                 <option value="jumat">Jum'at</option>
-                                <option value="sabtu">Sabtu</option>
                             </select>
                             <label for="floatingSelect">Hari</label>
                         </div>
 
                         <div class="mb-3">
                             <label for="inputMulai" class="form-label">Jam Mulai</label>
-                            <input type="time" class="form-control" id="mulai"
-                                aria-describedby="mulaiHelp">
+                            <input type="time" class="form-control" id="mulai" aria-describedby="mulaiHelp">
                         </div>
                         <div class="mb-3">
                             <label for="inputBerakhir" class="form-label">Jam Berakhir</label>
-                            <input type="time" class="form-control" id="selesai"
-                                aria-describedby="berakhirHelp">
+                            <input type="time" class="form-control" id="selesai" aria-describedby="berakhirHelp">
+                            <div id="timeError" style="color: red; display: none;">Jam berakhir harus lebih dari jam mulai.</div>
                         </div>
-
-                        <button type="button" id="add-schadule" class="btn btn-primary">Buat</button>
+                        
+                        <button type="button" id="add-schadule" class="btn btn-primary" disabled>Buat</button>
+                        
                     </form>
                 </div>
             </div>
@@ -87,6 +87,56 @@
     </div>
 
     <%- include ('./../../../components/script.ejs')%>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Event Tingkatan
+        const kelasSelect = document.getElementById('kelas');
+        const mataPelajaranSelect = document.getElementById('mataPelajaran');
+        const allMataPelajaranOptions = Array.from(mataPelajaranSelect.options);
+
+        kelasSelect.addEventListener('change', function () {
+            const selectedTingkat = this.options[this.selectedIndex].getAttribute('data-tingkat');
+
+            // Clear existing options in mataPelajaranSelect
+            mataPelajaranSelect.innerHTML = '<option selected disabled>Pelajaran</option>';
+
+            // Filter and add relevant options
+            allMataPelajaranOptions.forEach(option => {
+                if (option.getAttribute('data-tingkat') === selectedTingkat) {
+                    mataPelajaranSelect.appendChild(option);
+                }
+            });
+        });
+
+        // Event Jam Pelajaran
+        const mulaiInput = document.getElementById('mulai');
+        const selesaiInput = document.getElementById('selesai');
+        const timeError = document.getElementById('timeError');
+        const addButton = document.getElementById('add-schadule');
+
+        function validateTime() {
+            const mulaiTime = mulaiInput.value;
+            const selesaiTime = selesaiInput.value;
+
+            if (mulaiTime && selesaiTime) {
+                if (selesaiTime <= mulaiTime) {
+                    timeError.style.display = 'block';
+                    selesaiInput.setCustomValidity('Jam berakhir harus lebih dari jam mulai.');
+                    addButton.disabled = true;
+                } else {
+                    timeError.style.display = 'none';
+                    selesaiInput.setCustomValidity('');
+                    addButton.disabled = false;
+                }
+            } else {
+                addButton.disabled = true; // Disable button if either time input is empty
+            }
+        }
+
+        mulaiInput.addEventListener('change', validateTime);
+        selesaiInput.addEventListener('change', validateTime);
+    });
+    </script>
     <script>
         $("#add-schadule").on("click", () => {
         const id_kelas = $("#kelas").val();

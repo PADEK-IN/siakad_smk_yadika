@@ -1,0 +1,139 @@
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar-murid.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar-murid.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5" id="content">
+                <div class="d-flex align-items-center justify-content-between mb-4" id="action-button">
+                    <h6 class="mb-0">List SPP</h6>
+                    <button type="button" class="btn btn-sm btn-warning" onclick="downloadPdf()">
+                        <span id="btn-download">Download PDF</span>
+                    </button>
+                </div>
+                <div class="bg-light rounded p-4">
+                    <div class="alert text-center alert-primary" role="alert" id="title">
+                        <h6>Tagihan Pembayaran SPP</h6>
+                    </div>
+
+                    <div class="bg-light rounded">
+                        <div class="testimonial-item text-center remove-tag">
+                            <h6><%= murid.Kela.tingkat %> <%= murid.Kela.kode %></h6>
+                            <h5 class="mb-1"><%= murid.nama.toUpperCase() %></h5>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="bg-light rounded h-100">
+                        <h6 class="mb-4 remove-tag">List SPP</h6>
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            <table class="table table-stripped" id="example">
+                                <thead class="text-center">
+                                    <th>No</th>
+                                    <th>Bulan</th>
+                                    <th>Tahun</th>
+                                    <th>Tagihan</th>
+                                    <th>Tanggal Bayar</th>
+                                    <th>Status</th>
+                                    <th class="d-none"></th>
+                                </thead>
+                                <tbody>
+                                    <% for (const [index, spp] of data.entries()) { %>
+                                    <tr class="text-center">
+                                        <td><%= index + 1 %></td>
+                                        <td><%= spp.bulan %></td>
+                                        <td><%= spp.tahun %></td>
+                                        <td><%= spp.tagihan %></td>
+                                        <td><%= spp.transaksi.tanggal_bayar %></td>
+                                        <td>
+                                            <% if(!spp.transaksi) {%>
+                                                <span class="badge bg-danger mx-2">Belum Bayar</span>
+                                            <% } else if(!spp.transaksi.isValid) {%>
+                                                <span class="badge bg-warning mx-2">Pending</span>
+                                            <% } else { %>
+                                                <span class="badge bg-success mx-2">Lunas</span>
+                                            <% } %>
+                                        </td>
+                                        <td class="d-none"></td>
+                                    </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>       
+            </div>
+        </div>
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <%- include ('./../../../components/script.ejs')%>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+    <script>
+        let exampleTable = new DataTable('#example');
+        function kirimBukti(idSpp){
+            const fileInput = document.getElementById('bukti_bayar');
+            const file = fileInput.files[0];
+            if(!file) return alert("Maaf, harap upload bukti pembayaran");
+            const formData = new FormData();
+            formData.append('foto', file);
+            
+            $.ajax({
+                url: "/api/murid/payment/spp/"+idSpp,
+                method: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: (response) => {
+                    alert(response.status.message);
+                    location.reload();
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message;
+                    alert(message);
+                }
+            });
+        }
+
+        function downloadPdf(){
+            $("#btn-download").replaceWith(`<span id="btn-download"><img src="/images/loading.gif" alt="download-pdf" width="18px"> Downloading ...</span>`);
+            exampleTable.destroy();
+            const content = $("#content").html();
+            exampleTable = new DataTable('#example');
+            let fileName = $("#title h6").text();
+            fileName = fileName.replace(/\s/g, "-");
+            $.ajax({
+                url: `/api/pdf`,
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({fileName, content}),
+                success: (response) => {
+                    window.location.href = `/api/pdf/download/${fileName}`;
+                    alert('Berhasil download pdf');
+                    $("#btn-download").replaceWith(`<span id="btn-download">Download PDF</span>`);
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message;
+                    alert(message);
+                }
+            });
+        }
+
+
+    </script>
+</body>
+
+</html>

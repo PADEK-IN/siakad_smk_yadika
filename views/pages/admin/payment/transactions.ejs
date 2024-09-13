@@ -51,7 +51,26 @@
                                     <td><%= transaksi.tagihan %></td>
                                     <td><%= transaksi.Murid.nama %></td>
                                     <td><%= transaksi.tanggal_bayar %></td>
-                                    <td><img src="/uploads/<%= transaksi.bukti_bayar %>" alt="foto" width="30px"></td>
+                                    <td>
+                                        <img src="/uploads/<%= transaksi.bukti_bayar %>" class="click img-fluid" alt="foto" style="width: 30px" data-bs-toggle="modal" data-bs-target="#exampleModal<%= index %>">
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal<%= index %>" tabindex="-1" aria-labelledby="exampleModalLabel<%= index %>" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel<%= index %>">Bukti Pembayaran</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <img class="img-fluid mx-auto mb-4" src="/uploads/<%= transaksi.bukti_bayar %>" alt="" style="width: 500px">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
                                     <td>
                                         <% if(transaksi.isValid) { %>
                                             <span class="badge bg-success">Valid</span>

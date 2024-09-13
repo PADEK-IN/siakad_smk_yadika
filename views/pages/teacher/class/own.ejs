@@ -1,0 +1,193 @@
+<%- include ('./../../../components/head.ejs')%>
+
+<body>
+    <div class="container-xxl position-relative bg-white d-flex p-0">
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
+        <!-- sidebar start -->
+        <%- include ('./../../../components/sidebar-teacher.ejs')%>
+        <!-- sidebar end -->
+
+        <div class="content">
+            <!-- navbar start -->
+            <%- include ('./../../../components/navbar-teacher.ejs')%>
+            <!-- navar end -->
+
+            <div class="container-fluid pt-4 px-4 pb-5" id="content">
+                <div class="d-flex align-items-center justify-content-between mb-4" id="action-button">
+                    <h6 class="mb-0">Anggota Kelas</h6>
+                    <div class="d-flex justify-content-end gap-1">
+                      <button type="button" class="btn btn-sm btn-warning" onclick="downloadPdf()">
+                          <span id="btn-download">Download PDF</span>
+                      </button>
+                    </div>
+                </div>
+                <div class="bg-light text-center rounded p-4">
+                  <h5>List Murid Kelas <%= kelas.tingkat%>--<%= kelas.kode%></h5>
+                    <div class="table-responsive">
+                        <table id="example" class="table table-striped" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th>ID</th>
+                              <th>NIS</th>
+                              <th>Nama</th>
+                              <th>Kelas</th>
+                              <% for (const data of jadwal) { %>
+                                <th><%= data.pelajaran || 'Mata Pelajaran Kosong' %></th>
+                              <% } %>
+                              <th>Total Nilai</th>
+                              <th>Status</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <% for (const data of murid) { %>
+                              <tr>
+                                <% if (data.nama) { %>
+                                  <td><%= data.id %></td>
+                                  <td><%= data.nis %></td>
+                                  <td><%= data.nama %></td>
+                                  <td><%= data.kelas.kode %> (<%= data.kelas.tingkat %>)</td> <!-- Menampilkan kode dan tingkat kelas -->
+                                  <% for (const jadwalData of jadwal) { %>
+                                    <td><%= data.pelajaranNilai[jadwalData.pelajaran] !== null ? data.pelajaranNilai[jadwalData.pelajaran] : '-' %></td>
+                                  <% } %>
+                                  <td><%= data.totalNilai %></td>
+                                  <% if (data.status === "Lulus") { %>
+                                    <td class="text-success"><%= data.status %></td>
+                                    <td>
+                                      <a href="#" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#createNilai-<%= data.id %>">Naikan</a>
+                                      <!-- Modal Create -->
+                                      <div class="modal fade" id="createNilai-<%= data.id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="createNilaiLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h5 class="modal-title" id="createNilaiLabel">Naikan Kelas</h5>
+                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                              <div class="form-floating mb-3">
+                                                <select class="form-select" id="kelas-<%= data.id %>" aria-label="Floating label select example">
+                                                  <option selected disabled>Pilih Kelas</option>
+                                                  <% for (const kelas of listKelas) { %>
+                                                    <% if (kelas.tingkat > data.currentTingkat) { %>
+                                                      <option value="<%= kelas.id %>" id="kelas"><%= kelas.kode %> (<%= kelas.tingkat %>)</option>
+                                                    <% } %>
+                                                  <% } %>
+                                                </select>
+                                                <label for="kelas-<%= data.id %>">Kelas</label>
+                                              </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                              <button type="button" onclick="naikan('<%= data.id_murid %>', '<%= data.id %>')" class="btn btn-primary">Naikan</button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  <% } else if (data.status === "Nilai Belum Lengkap") { %>
+                                    <td class="text-warning" colspan="2"><%= data.status %></td>
+                                    <td class="d-none"></td>
+                                  <% } else { %>
+                                    <td class="text-danger"><%= data.status %></td>
+                                    <td>
+                                      <button onclick="showAlert('<%= data.nama%>', '<%= data.nis%>')" class="btn btn-sm btn-warning">Tetap</button>
+                                    </td>
+                                  <% } %>
+                                <% } else { %>
+                                  <td colspan="<%= jadwal.length + 4 %>">Murid Belum ada</td>
+                                <% } %>
+                              </tr>
+                            <% } %>
+                          </tbody>
+                          
+                          
+                          <script>
+                            function naikan(studentId) {
+                              const selectedClass = document.getElementById(`kelas-${studentId}`).value;
+                              if (selectedClass) {
+                                // Logic to update the student's class in the database
+                                console.log(`Murid dengan ID ${studentId} dinaikkan ke kelas dengan ID ${selectedClass}`);
+                              } else {
+                                alert('Pilih kelas untuk menaikkan murid.');
+                              }
+                            }
+                            function showAlert(nama, nis){
+                              alert(`Nilai ${nama} (NIS: ${nis}), Belum cukup untuk naik kelas, ${nama} Masih Stay di kelas ini`);
+                            }
+                          </script>
+                          
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <%- include ('./../../../components/script.ejs')%>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+    <script>
+        let exampleTable = new DataTable('#example');
+        function naikan(id, id_kelas) {
+          const kelas = $("#kelas-" + id_kelas).val() || null;
+          console.log({id, kelas})
+          console.log(kelas)
+
+          // Pastikan kelas tidak kosong atau undefined sebelum melakukan AJAX
+            if (kelas) {
+                $.ajax({
+                  url: "/api/guru/murid/" + id,
+                    // url: `/api/guru/murid/${id}`,
+                    method: "PATCH",
+                    contentType: "application/json",
+                    data: JSON.stringify({ id_kelas: kelas }),
+                    success: (response) => {
+                        alert(response.status.message);
+                        window.location.reload();
+                    },
+                    error: (response) => {
+                        const message = response.responseJSON.status.message;
+                        alert(message);
+                    }
+                });
+            } else {
+                alert('Pilih kelas untuk menaikkan murid.');
+            }
+        }
+
+        function downloadPdf(){
+            $("#btn-download").replaceWith(`<span id="btn-download"><img src="/images/loading.gif" alt="download-pdf" width="18px"> Downloading ...</span>`);
+            exampleTable.destroy();
+            const content = $("#content").html();
+            exampleTable = new DataTable('#example');
+            let fileName = $("h5").text();
+            fileName = fileName.replace(/\s/g, "-");
+            $.ajax({
+                url: `/api/pdf`,
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({fileName, content}),
+                success: (response) => {
+                    window.location.href = `/api/pdf/download/${fileName}`;
+                    alert('Berhasil download pdf');
+                    $("#btn-download").replaceWith(`<span id="btn-download">Download PDF</span>`);
+                },
+                error: (response) => {
+                    const message = response.responseJSON.status.message;
+                    alert(message);
+                }
+            });
+        }
+
+
+    </script>
+</body>
+
+</html>

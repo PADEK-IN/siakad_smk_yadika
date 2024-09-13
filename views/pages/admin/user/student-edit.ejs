@@ -77,18 +77,18 @@
                             <label for="no_hp" class="form-label">Nomor Telepon</label>
                             <input type="text" class="form-control" id="no_hp" placeholder="081234567890" value="<%= murid.no_hp %>">
                         </div>
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                             <label for="hobi" class="form-label">Hobi</label>
                             <input type="text" class="form-control" id="hobi" placeholder="Hobi Murid" value="<%= murid.hobi %>">
-                        </div>
+                        </div> -->
                         <div class="mb-3">
                             <label for="sekolah_asal" class="form-label">Sekolah Asal</label>
                             <input type="text" class="form-control" id="sekolah_asal" placeholder="Sekolah Asal Murid" value="<%= murid.sekolah_asal %>">
                         </div>
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                             <label for="no_ijazah" class="form-label">No Ijazah</label>
                             <input type="text" class="form-control" id="no_ijazah" placeholder="Nomor Ijazah Murid" value="<%= murid.no_ijazah %>">
-                        </div>
+                        </div> -->
                         <div class="mb-3">
                             <label for="tahun_masuk" class="form-label">Tahun Masuk</label>
                             <select class="form-select" id="tahun_masuk"
@@ -148,8 +148,8 @@
             const alamat = $("#alamat").val();
             const agama = $("#agama").val();
             const no_hp = $("#no_hp").val();
-            const no_ijazah = $("#no_ijazah").val();
-            const hobi = $("#hobi").val();
+            // const no_ijazah = $("#no_ijazah").val();
+            // const hobi = $("#hobi").val();
             const sekolah_asal = $("#sekolah_asal").val();
             const tahun_masuk= $("#tahun_masuk").val();
             const id_kelas = $("#id_kelas").val();
@@ -160,7 +160,7 @@
             const formData = new FormData();
 
             formData.append('foto', file);
-            formData.append('data', JSON.stringify({nis, email, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, no_ijazah, hobi, sekolah_asal, tahun_masuk, id_kelas, id_jurusan, status}));
+            formData.append('data', JSON.stringify({nis, email, nama, jenis_kelamin, tempat_lahir, tanggal_lahir, alamat, agama, no_hp, sekolah_asal, tahun_masuk, id_kelas, id_jurusan, status}));
             
             $.ajax({
                 url: `/api/admin/murid/${id}`,

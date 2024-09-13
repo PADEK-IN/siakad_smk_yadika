@@ -18,9 +18,11 @@
             <!-- navar end -->
 
             <div class="container-fluid pt-4 px-4 pb-5">
-                <div class="d-flex mb-4">
-                    <a href="/murid/dashboard" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"></a>
-                    <h6 class="px-3">Kembali</h6>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="d-inline-flex align-items-center">
+                        <a href="/murid/dashboard" class="text-decoration-none bi bi-arrow-left pr-4"></a>
+                        <h6 class="px-3 mb-0">Kembali</h6>
+                    </div>
                 </div>
                 <div class="bg-light  rounded p-4">
                     <div class="text-center">
@@ -51,7 +53,7 @@
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Nama</td>
-                                        <td><%= murid.nama %></td>
+                                        <th><%= murid.nama %></th>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Email</td>
@@ -78,20 +80,12 @@
                                         <td><%= murid.agama %></td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-bold">Hobi</td>
-                                        <td><%= murid.hobi %></td>
-                                    </tr>
-                                    <tr>
                                         <td class="fw-bold">No Handphone</td>
                                         <td><%= murid.no_hp %></td>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Sekolah Asal</td>
                                         <td><%= murid.sekolah_asal %></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="fw-bold">Nomor Ijazah</td>
-                                        <td><%= murid.no_ijazah %></td>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold">Tahun Masuk</td>

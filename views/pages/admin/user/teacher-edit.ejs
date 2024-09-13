@@ -20,7 +20,7 @@
             <div class="container-fluid pt-4 px-4 pb-5">
                 <div class="bg-light rounded h-100 p-4">
                     <div class="pb-4">
-                        <a href="/admin/user/teachers/<%= guru.id %>" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"><h6 class="d-inline px-2">Kembali</h6></a>
+                        <a href="/admin/user/teacher/<%= guru.id %>" class="d-inline-flex text-decoration-nonebi bi-arrow-left pr-4"><h6 class="d-inline px-2">Kembali</h6></a>
                     </div>
                     <h6>Edit Guru</h6>
                     <hr>
@@ -84,9 +84,9 @@
                         </div>
                         <div class="mb-3">
                             <label for="mata_pelajaran">Mata Pelajaran</label>
-                            <div id="currentMapel" class="d-none"><%= guru.id_mata_pelajaran %></div>
                             <select class="form-select" id="mata_pelajaran" aria-label="Floating label select example">
-                                <option selected undefined disabled>Pilih Mata Pelajaran</option>
+                                <option undefined disabled>Pilih Mata Pelajaran</option>
+                                <option value="<%= guru.id_mata_pelajaran%>" selected><%= guru.pelajaran%></option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -151,18 +151,23 @@
         
         $(document).ready(()=>{
             const currentEmail = $("#currentEmail").text();
-            const currentMapel = $("#currentMapel").text();
             // fetch data mata pelajaran
             $.ajax({
                 url: "/api/admin/mata-pelajaran/",
                 method: "GET",
                 contentType: "application/json",
                 success: (response) => {
-                    const data = response.data;
-                    for (const mapel of data) {
+                    const data = response.data.unassignedSubjects;
+                    if (data.length === 0) {
                         $("#mata_pelajaran").append(`
-                            <option ${currentMapel==mapel.id?"Selected":""} value="${mapel.id}">${mapel.nama}</option>
-                        `)    
+                            <option value="" disabled selected>Tidak ada mata pelajaran yang kosong</option>
+                        `);
+                    } else {
+                        for (const mapel of data) {
+                            $("#mata_pelajaran").append(`
+                                <option value="${mapel.id}">${mapel.nama}</option>
+                            `);
+                        }
                     }
                 },
                 error: (response) => {
